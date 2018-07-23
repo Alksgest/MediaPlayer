@@ -41,9 +41,10 @@
             this.checkBoxRepeatCircle = new System.Windows.Forms.CheckBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCurrentListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ChooseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChooseColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dsToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PauseButton = new System.Windows.Forms.Button();
@@ -176,14 +177,22 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFilesToolStripMenuItem,
             this.openFolderToolStripMenuItem,
             this.clearCurrentListToolStripMenuItem,
-            this.ChooseToolStripMenuItem,
+            this.ChooseColorToolStripMenuItem,
             this.dsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // openFilesToolStripMenuItem
+            // 
+            this.openFilesToolStripMenuItem.Name = "openFilesToolStripMenuItem";
+            this.openFilesToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.openFilesToolStripMenuItem.Text = "Open files";
+            this.openFilesToolStripMenuItem.Click += new System.EventHandler(this.openFilesToolStripMenuItem_Click);
             // 
             // openFolderToolStripMenuItem
             // 
@@ -201,12 +210,12 @@
             this.clearCurrentListToolStripMenuItem.ToolTipText = "Очищает текущий список воспроизведения";
             this.clearCurrentListToolStripMenuItem.Click += new System.EventHandler(this.clearCurrentListToolStripMenuItem_Click);
             // 
-            // ChooseToolStripMenuItem
+            // ChooseColorToolStripMenuItem
             // 
-            this.ChooseToolStripMenuItem.Name = "ChooseToolStripMenuItem";
-            this.ChooseToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.ChooseToolStripMenuItem.Text = "Choose color scheme";
-            this.ChooseToolStripMenuItem.Click += new System.EventHandler(this.cHooseToolStripMenuItem_Click);
+            this.ChooseColorToolStripMenuItem.Name = "ChooseColorToolStripMenuItem";
+            this.ChooseColorToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.ChooseColorToolStripMenuItem.Text = "Choose color scheme";
+            this.ChooseColorToolStripMenuItem.Click += new System.EventHandler(this.chooseColorToolStripMenuItem_Click);
             // 
             // dsToolStripMenuItem
             // 
@@ -519,8 +528,9 @@
         private System.Windows.Forms.Button OpenFileButton;
         private System.Windows.Forms.Label TotalDurationLabel;
         private System.Windows.Forms.CheckBox checkBoxSavePathToFolder;
-        private System.Windows.Forms.ToolStripMenuItem ChooseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ChooseColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator dsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFilesToolStripMenuItem;
     }
 }
 

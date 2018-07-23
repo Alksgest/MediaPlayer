@@ -44,11 +44,16 @@ namespace MediaPlayer
 
             if (args != null)
             {
-                if (File.Exists(Directory.GetCurrentDirectory() + "\\" + "currentDir.dat"))
-                    File.Delete(Directory.GetCurrentDirectory() + "\\" + "currentDir.dat");
+                this.listBoxMedia.Items.Clear();
+                this.checkBoxSavePathToFolder.Checked = false;
                 foreach (var str in args)
+                {
                     if (AcceptedFormat(str))
-                        this.listBoxMedia.Items.Add(str);
+                    {
+                        PathHolder item = new PathHolder(str);
+                        this.listBoxMedia.Items.Add(item);
+                    }
+                }
                 PlaySound();
             }
         }
@@ -86,7 +91,9 @@ namespace MediaPlayer
             this.contextMenuStripNI.Renderer = new ContextMenuStripExtraRenderer();
         }
 
-        private void AudioPlayer_FormClosing(object sender, FormClosingEventArgs e)
+        private void AudioPlayer_FormClosing(object sender, FormClosingEventArgs e) => SaveSettings();
+
+        private void SaveSettings()
         {
             Properties.Settings.Default.repeatByCircle = this.checkBoxRepeatCircle.Checked;
             Properties.Settings.Default.savePathToFolder = this.checkBoxSavePathToFolder.Checked;
@@ -250,8 +257,6 @@ namespace MediaPlayer
             }
         }
 
-
-
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             if (!isPaused)
@@ -328,8 +333,6 @@ namespace MediaPlayer
             }
             catch { }
         }
-
-
 
         private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) => CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
 
@@ -473,7 +476,8 @@ namespace MediaPlayer
         }
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => OpenFolder();
-        private void cHooseToolStripMenuItem_Click(object sender, EventArgs e) => ShowColoDialog();
+        private void chooseColorToolStripMenuItem_Click(object sender, EventArgs e) => ShowColoDialog();
+        private void openFilesToolStripMenuItem_Click(object sender, EventArgs e) => OpenFiles();
         private void ButtonPause_Click(object sender, EventArgs e) => PauseAudio();
 
         private void ShowColoDialog()
@@ -562,11 +566,7 @@ namespace MediaPlayer
                 PlaySound();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e) =>
-            this.Close();
-
         private void ButtonClose_Click(object sender, EventArgs e) => this.Close();
-
         private void ButtonRollUp_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
@@ -585,6 +585,7 @@ namespace MediaPlayer
         private void stopToolStripMenuItem_Click(object sender, EventArgs e) => StopPlaying();
         private void nextToolStripMenuItem_Click(object sender, EventArgs e) => NextAudio();
         private void previousToolStripMenuItem_Click(object sender, EventArgs e) => PreviousAudio();
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) => this.Close();
         private void OpenFileButton_Click(object sender, EventArgs e) => OpenFiles();
 
         private void OpenFiles()
@@ -596,16 +597,18 @@ namespace MediaPlayer
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     if (fileDialog.FileNames.Length != 0)
+                    {
+                        listBoxMedia.Items.Clear();
                         foreach (var str in fileDialog.FileNames)
                         {
-                            listBoxMedia.Items.Clear();
                             PathHolder item = new PathHolder(str);
                             listBoxMedia.Items.Add(item);
                         }
-                    PlaySound();
+                    }
+                    if (fileDialog.FileNames.Length == 1)
+                        PlaySound();
                 }
             }
         }
-
     }
 }
