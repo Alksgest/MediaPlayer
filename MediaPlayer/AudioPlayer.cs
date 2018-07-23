@@ -76,12 +76,23 @@ namespace MediaPlayer
 
             this.toolStrip1.MouseDown += ToolStrip1_MouseDown;
             this.toolStrip1.MouseMove += ToolStrip1_MouseMove;
+
+            this.FormClosing += AudioPlayer_FormClosing;
         }
 
         private void InitializeCustomGraphic()
         {
             this.toolStrip1.Renderer = new ToolStripExtraRenderer();
             this.contextMenuStripNI.Renderer = new ContextMenuStripExtraRenderer();
+        }
+
+        private void AudioPlayer_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.savePathToFolder = this.checkBoxSavePathToFolder.Checked;
+            Properties.Settings.Default.currentVolume = this.SoundLevelTrackBar.Value;
+            if (Properties.Settings.Default.savePathToFolder)
+                Properties.Settings.Default.pathToFolder = PathToFolder;
+            Properties.Settings.Default.Save();
         }
 
         private void ToolStrip1_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
@@ -157,7 +168,7 @@ namespace MediaPlayer
         }
 
         private void ListBoxMedia_DoubleClick(object sender, EventArgs e) => PlaySound();
-        
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             //TrackBarAudio.Value += (int)reader.TotalTime.TotalSeconds;
@@ -207,9 +218,9 @@ namespace MediaPlayer
                         reader.Dispose();
                         reader = null;
                     }
-
+                    string fullPath = (this.listBoxMedia.SelectedItem as PathHolder).FullPath;
                     this.waveOut = new WaveOut();
-                    this.reader = new AudioFileReader(this.listBoxMedia.SelectedItem.ToString());
+                    this.reader = new AudioFileReader(fullPath);
                     this.reader.Position = this.TrackBarAudio.Value * (int)Math.Round(reader.TotalTime.TotalSeconds);
                     this.waveOut.Init(reader);
                     this.waveOut.Play();
@@ -232,10 +243,10 @@ namespace MediaPlayer
                 NotifyIcon notifyIcon = new NotifyIcon();
                 notifyIcon.BalloonTipText = "Directory was not choosed.";
                 notifyIcon.ShowBalloonTip(2000);
-               // MessageBox.Show("File is not choosed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // MessageBox.Show("File is not choosed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-    
+
 
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs e)
@@ -272,9 +283,9 @@ namespace MediaPlayer
         }
 
         private void StopButton_Click(object sender, EventArgs e) => StopPlaying();
-        private void SelectFolder_Click(object sender, EventArgs e) => SelectFolder();
+        private void SelectFolder_Click(object sender, EventArgs e) => OpenFolder();
 
-        private void SelectFolder()
+        private void OpenFolder()
         {
             using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
@@ -283,21 +294,17 @@ namespace MediaPlayer
                 try
                 {
                     var files = Directory.EnumerateFiles(dialog.SelectedPath, "*.*", SearchOption.TopDirectoryOnly)
-                               .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac"));
+                               .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg"));
                     PathToFolder = dialog.SelectedPath;
                     listBoxMedia.Items.Clear();
 
-                    foreach (var c in files)
-                        listBoxMedia.Items.Add(c);
-
-                    var filesX = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-                               .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp"));
-                    var filesImage = filesX.ToArray();
-                    if (filesImage.Length != 0)
+                    foreach (var str in files)
                     {
-                        titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                        titlePictureBox.Image = new Bitmap(filesImage[0]);
+                        PathHolder item = new PathHolder(str);
+                        listBoxMedia.Items.Add(item);
                     }
+
+                    LoadTitlePicture();
                 }
                 catch
                 {
@@ -325,29 +332,14 @@ namespace MediaPlayer
 
         private void AudioPlayer_Load(object sender, EventArgs e)
         {
+            LoadPreviousSettings();
+
             LoadImages();
 
-            LoadPreviousAudioList();
-            LoadTitlePicture();
-        }
-
-        private void LoadTitlePicture()
-        {
-            if (!String.IsNullOrEmpty(PathToFolder))
+            if (Properties.Settings.Default.savePathToFolder)
             {
-                var filesX = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-            .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp"));
-                var files = filesX.ToArray();
-                if (files.Length != 0)
-                {
-                    titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                    titlePictureBox.Image = new Bitmap(files[0]);
-                }
-                else if (File.Exists(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg"))
-                {
-                    titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                    titlePictureBox.Image = new Bitmap(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg");
-                }
+                LoadPreviousAudioList();
+                LoadTitlePicture();
             }
             else if (File.Exists(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg"))
             {
@@ -355,37 +347,63 @@ namespace MediaPlayer
                 titlePictureBox.Image = new Bitmap(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg");
             }
         }
+   
+        private void LoadPreviousSettings()
+        {
+            this.checkBoxSavePathToFolder.Checked = Properties.Settings.Default.savePathToFolder;
+            this.SoundLevelTrackBar.Value = Properties.Settings.Default.currentVolume;
+        }
+
+        private void LoadTitlePicture()
+        {
+            if (!String.IsNullOrEmpty(PathToFolder))
+            {
+                var images = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
+                      .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
+                if (images.Length != 0)
+                {
+                    titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    titlePictureBox.Image = new Bitmap(images[0]);
+                }
+                else if(Directory.Exists(PathToFolder + "//Cover"))
+                {
+                    images = Directory.EnumerateFiles(PathToFolder + "//Cover", "*.*", SearchOption.TopDirectoryOnly)
+                      .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
+                    if (images.Length != 0)
+                    {
+                        titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        titlePictureBox.Image = new Bitmap(images[0]);
+                    }
+                }
+            }
+        }
 
         private void LoadPreviousAudioList()
         {
-            if (File.Exists(Directory.GetCurrentDirectory() + "\\currentDir.dat"))
+            bool pathToFolderNotEmpty = !String.IsNullOrEmpty(Properties.Settings.Default.pathToFolder);
+            if (pathToFolderNotEmpty)
             {
                 try
                 {
-                    bool isExistPath = false;
-                    using (BinaryReader reader = new BinaryReader(File.Open(Directory.GetCurrentDirectory() +
-                        "\\currentDir.dat", FileMode.Open)))
+                    PathToFolder = Properties.Settings.Default.pathToFolder;
+                    if (Directory.Exists(PathToFolder))
                     {
-                        PathToFolder = reader.ReadString();
-                        if (Directory.Exists(PathToFolder))
+                        pathToFolderNotEmpty = true;
+                        var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
+                                 .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg"));
+                        foreach (var str in files)
                         {
-                            isExistPath = true;
-                            var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-                                     .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac"));
-                            foreach (var c in files)
-                                listBoxMedia.Items.Add(c);
+                            PathHolder item = new PathHolder(str);
+                            listBoxMedia.Items.Add(item);
                         }
                     }
-                    if (!isExistPath)
-                    {
-                        PathToFolder = null;
-                        File.Delete(Directory.GetCurrentDirectory() + "\\currentDir.dat");
-                    }
+                    if (!pathToFolderNotEmpty) 
+                        PathToFolder = null;                  
                 }
                 catch { }
             }
         }
-
+    
         private void LoadImages()
         {
             this.notifyIcon.Icon = Icon.FromHandle(Properties.Resources.music_player.GetHicon());
@@ -418,16 +436,6 @@ namespace MediaPlayer
             if (File.Exists("currentDir.dat"))
                 File.Delete(("currentDir.dat"));
         }
-
-        private void savePathToFolderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (BinaryWriter writer = new BinaryWriter(File.Open("currentDir.dat", FileMode.Create)))
-            {
-                if (!String.IsNullOrEmpty(PathToFolder))
-                    writer.Write(PathToFolder);
-            }
-        }
-
         private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentList();
 
         private void ClearCurrentList()
@@ -448,7 +456,7 @@ namespace MediaPlayer
             this.titlePictureBox.Image = null;
         }
 
-        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => SelectFolder();
+        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => OpenFolder();
         private void ButtonPause_Click(object sender, EventArgs e) => PauseAudio();
 
         private void PauseAudio()
@@ -552,12 +560,16 @@ namespace MediaPlayer
             using (OpenFileDialog fileDialog = new OpenFileDialog())
             {
                 fileDialog.Multiselect = true;
-                fileDialog.Filter = "Audio Files (*.mp3; *.wav; *.wma) |*.mp3;*.wav;*.wma";
+                fileDialog.Filter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg) |*.mp3;*.wav;*.wma;*.flac;*.ogg";
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     if (fileDialog.FileNames.Length != 0)
-                        foreach (var c in fileDialog.FileNames)
-                            listBoxMedia.Items.Add(c);
+                        foreach (var str in fileDialog.FileNames)
+                        {
+                            listBoxMedia.Items.Clear();
+                            PathHolder item = new PathHolder(str);
+                            listBoxMedia.Items.Add(item);
+                        }
                     PlaySound();
                 }
             }

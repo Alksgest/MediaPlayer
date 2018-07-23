@@ -33,7 +33,7 @@
             this.listBoxMedia = new System.Windows.Forms.ListBox();
             this.StartButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
-            this.SelectFolderButton = new System.Windows.Forms.Button();
+            this.OpenFolderButton = new System.Windows.Forms.Button();
             this.TrackBarAudio = new System.Windows.Forms.TrackBar();
             this.SoundLevelTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeLabel = new System.Windows.Forms.Label();
@@ -43,7 +43,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCurrentListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.savePathToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPathToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PauseButton = new System.Windows.Forms.Button();
@@ -68,6 +67,7 @@
             this.ButtonRollUp = new System.Windows.Forms.Button();
             this.OpenFileButton = new System.Windows.Forms.Button();
             this.TotalDurationLabel = new System.Windows.Forms.Label();
+            this.checkBoxSavePathToFolder = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -105,15 +105,15 @@
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
-            // SelectFolderButton
+            // OpenFolderButton
             // 
-            this.SelectFolderButton.Location = new System.Drawing.Point(108, 571);
-            this.SelectFolderButton.Name = "SelectFolderButton";
-            this.SelectFolderButton.Size = new System.Drawing.Size(75, 23);
-            this.SelectFolderButton.TabIndex = 3;
-            this.SelectFolderButton.Text = "Select folder";
-            this.SelectFolderButton.UseVisualStyleBackColor = true;
-            this.SelectFolderButton.Click += new System.EventHandler(this.SelectFolder_Click);
+            this.OpenFolderButton.Location = new System.Drawing.Point(108, 571);
+            this.OpenFolderButton.Name = "OpenFolderButton";
+            this.OpenFolderButton.Size = new System.Drawing.Size(75, 23);
+            this.OpenFolderButton.TabIndex = 3;
+            this.OpenFolderButton.Text = "Open folder";
+            this.OpenFolderButton.UseVisualStyleBackColor = true;
+            this.OpenFolderButton.Click += new System.EventHandler(this.SelectFolder_Click);
             // 
             // TrackBarAudio
             // 
@@ -138,7 +138,7 @@
             // 
             this.VolumeLabel.AutoSize = true;
             this.VolumeLabel.Enabled = false;
-            this.VolumeLabel.Location = new System.Drawing.Point(480, 284);
+            this.VolumeLabel.Location = new System.Drawing.Point(478, 284);
             this.VolumeLabel.Name = "VolumeLabel";
             this.VolumeLabel.Size = new System.Drawing.Size(42, 13);
             this.VolumeLabel.TabIndex = 6;
@@ -170,7 +170,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(523, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(520, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -179,7 +179,6 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderToolStripMenuItem,
             this.clearCurrentListToolStripMenuItem,
-            this.savePathToFolderToolStripMenuItem,
             this.clearPathToFolderToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -201,14 +200,6 @@
             this.clearCurrentListToolStripMenuItem.Text = "Clear current list";
             this.clearCurrentListToolStripMenuItem.ToolTipText = "Очищает текущий список воспроизведения";
             this.clearCurrentListToolStripMenuItem.Click += new System.EventHandler(this.clearCurrentListToolStripMenuItem_Click);
-            // 
-            // savePathToFolderToolStripMenuItem
-            // 
-            this.savePathToFolderToolStripMenuItem.Name = "savePathToFolderToolStripMenuItem";
-            this.savePathToFolderToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.savePathToFolderToolStripMenuItem.Text = "Save path to folder";
-            this.savePathToFolderToolStripMenuItem.ToolTipText = "Сохраняет путь к папке, открытой ранее";
-            this.savePathToFolderToolStripMenuItem.Click += new System.EventHandler(this.savePathToFolderToolStripMenuItem_Click);
             // 
             // clearPathToFolderToolStripMenuItem
             // 
@@ -306,7 +297,7 @@
             this.toolStripButtonRepeat});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(24, 580);
+            this.toolStrip1.Size = new System.Drawing.Size(24, 576);
             this.toolStrip1.TabIndex = 12;
             // 
             // toolStripButtonRepeat
@@ -430,12 +421,23 @@
             this.TotalDurationLabel.TabIndex = 16;
             this.TotalDurationLabel.Text = "00:00:00";
             // 
+            // checkBoxSavePathToFolder
+            // 
+            this.checkBoxSavePathToFolder.AutoSize = true;
+            this.checkBoxSavePathToFolder.Location = new System.Drawing.Point(277, 283);
+            this.checkBoxSavePathToFolder.Name = "checkBoxSavePathToFolder";
+            this.checkBoxSavePathToFolder.Size = new System.Drawing.Size(116, 17);
+            this.checkBoxSavePathToFolder.TabIndex = 17;
+            this.checkBoxSavePathToFolder.Text = "Save path to folder";
+            this.checkBoxSavePathToFolder.UseVisualStyleBackColor = true;
+            // 
             // AudioPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(523, 604);
+            this.ClientSize = new System.Drawing.Size(520, 600);
+            this.Controls.Add(this.checkBoxSavePathToFolder);
             this.Controls.Add(this.TotalDurationLabel);
             this.Controls.Add(this.OpenFileButton);
             this.Controls.Add(this.ButtonRollUp);
@@ -448,14 +450,15 @@
             this.Controls.Add(this.VolumeLabel);
             this.Controls.Add(this.SoundLevelTrackBar);
             this.Controls.Add(this.TrackBarAudio);
-            this.Controls.Add(this.SelectFolderButton);
+            this.Controls.Add(this.OpenFolderButton);
             this.Controls.Add(this.StopButton);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(this.listBoxMedia);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(1200000, 500000);
+            this.MaximumSize = new System.Drawing.Size(520, 600);
+            this.MinimumSize = new System.Drawing.Size(520, 600);
             this.Name = "AudioPlayer";
             this.Text = "AudioPlayer";
             this.Load += new System.EventHandler(this.AudioPlayer_Load);
@@ -477,7 +480,7 @@
         private System.Windows.Forms.ListBox listBoxMedia;
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.Button StopButton;
-        private System.Windows.Forms.Button SelectFolderButton;
+        private System.Windows.Forms.Button OpenFolderButton;
         private System.Windows.Forms.TrackBar TrackBarAudio;
         private System.Windows.Forms.TrackBar SoundLevelTrackBar;
         private System.Windows.Forms.Label VolumeLabel;
@@ -486,7 +489,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearPathToFolderToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem savePathToFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCurrentListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.PictureBox titlePictureBox;
@@ -512,6 +514,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Button OpenFileButton;
         private System.Windows.Forms.Label TotalDurationLabel;
+        private System.Windows.Forms.CheckBox checkBoxSavePathToFolder;
     }
 }
 
