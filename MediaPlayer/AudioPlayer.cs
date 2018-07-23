@@ -341,13 +341,19 @@ namespace MediaPlayer
                 LoadPreviousAudioList();
                 LoadTitlePicture();
             }
-            else if (File.Exists(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg"))
+            else
+                LoadDefaultImage();
+        }
+
+        private void LoadDefaultImage()
+        {
+            if (File.Exists(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg"))
             {
                 titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 titlePictureBox.Image = new Bitmap(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg");
             }
         }
-   
+
         private void LoadPreviousSettings()
         {
             this.checkBoxSavePathToFolder.Checked = Properties.Settings.Default.savePathToFolder;
@@ -365,7 +371,7 @@ namespace MediaPlayer
                     titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     titlePictureBox.Image = new Bitmap(images[0]);
                 }
-                else if(Directory.Exists(PathToFolder + "//Cover"))
+                else if (Directory.Exists(PathToFolder + "//Cover"))
                 {
                     images = Directory.EnumerateFiles(PathToFolder + "//Cover", "*.*", SearchOption.TopDirectoryOnly)
                       .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
@@ -386,6 +392,8 @@ namespace MediaPlayer
                     }
                 }
             }
+            else
+                LoadDefaultImage(); 
         }
 
         private void LoadPreviousAudioList()
