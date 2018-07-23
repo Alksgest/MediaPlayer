@@ -321,13 +321,7 @@ namespace MediaPlayer
 
 
 
-        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //StartButton.Enabled = true;
-            //StopButton_Click(sender, e);
-            //PlaySound();
-
-        }
+        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) => CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
 
         private void AudioPlayer_Load(object sender, EventArgs e)
         {

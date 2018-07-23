@@ -79,15 +79,15 @@
             // listBoxMedia
             // 
             this.listBoxMedia.AllowDrop = true;
-            this.listBoxMedia.Location = new System.Drawing.Point(639, 27);
+            this.listBoxMedia.Location = new System.Drawing.Point(26, 366);
             this.listBoxMedia.Name = "listBoxMedia";
-            this.listBoxMedia.Size = new System.Drawing.Size(525, 303);
+            this.listBoxMedia.Size = new System.Drawing.Size(450, 199);
             this.listBoxMedia.TabIndex = 0;
             this.listBoxMedia.SelectedIndexChanged += new System.EventHandler(this.listBoxMedia_SelectedIndexChanged);
             // 
             // StartButton
             // 
-            this.StartButton.Location = new System.Drawing.Point(27, 336);
+            this.StartButton.Location = new System.Drawing.Point(27, 283);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(75, 23);
             this.StartButton.TabIndex = 1;
@@ -97,7 +97,7 @@
             // 
             // StopButton
             // 
-            this.StopButton.Location = new System.Drawing.Point(189, 336);
+            this.StopButton.Location = new System.Drawing.Point(189, 283);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(75, 23);
             this.StopButton.TabIndex = 2;
@@ -107,7 +107,7 @@
             // 
             // SelectFolderButton
             // 
-            this.SelectFolderButton.Location = new System.Drawing.Point(727, 337);
+            this.SelectFolderButton.Location = new System.Drawing.Point(108, 571);
             this.SelectFolderButton.Name = "SelectFolderButton";
             this.SelectFolderButton.Size = new System.Drawing.Size(75, 23);
             this.SelectFolderButton.TabIndex = 3;
@@ -117,19 +117,19 @@
             // 
             // TrackBarAudio
             // 
-            this.TrackBarAudio.Location = new System.Drawing.Point(24, 365);
+            this.TrackBarAudio.Location = new System.Drawing.Point(26, 315);
             this.TrackBarAudio.Maximum = 1000;
             this.TrackBarAudio.Name = "TrackBarAudio";
-            this.TrackBarAudio.Size = new System.Drawing.Size(533, 45);
+            this.TrackBarAudio.Size = new System.Drawing.Size(451, 45);
             this.TrackBarAudio.TabIndex = 4;
             // 
             // SoundLevelTrackBar
             // 
-            this.SoundLevelTrackBar.Location = new System.Drawing.Point(566, 95);
+            this.SoundLevelTrackBar.Location = new System.Drawing.Point(483, 24);
             this.SoundLevelTrackBar.Maximum = 100;
             this.SoundLevelTrackBar.Name = "SoundLevelTrackBar";
             this.SoundLevelTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.SoundLevelTrackBar.Size = new System.Drawing.Size(45, 235);
+            this.SoundLevelTrackBar.Size = new System.Drawing.Size(45, 253);
             this.SoundLevelTrackBar.TabIndex = 5;
             this.SoundLevelTrackBar.Value = 100;
             this.SoundLevelTrackBar.Scroll += new System.EventHandler(this.trackBar1_Scroll);
@@ -138,7 +138,7 @@
             // 
             this.VolumeLabel.AutoSize = true;
             this.VolumeLabel.Enabled = false;
-            this.VolumeLabel.Location = new System.Drawing.Point(558, 68);
+            this.VolumeLabel.Location = new System.Drawing.Point(480, 284);
             this.VolumeLabel.Name = "VolumeLabel";
             this.VolumeLabel.Size = new System.Drawing.Size(42, 13);
             this.VolumeLabel.TabIndex = 6;
@@ -147,7 +147,7 @@
             // TimeLabel
             // 
             this.TimeLabel.AutoSize = true;
-            this.TimeLabel.Location = new System.Drawing.Point(27, 401);
+            this.TimeLabel.Location = new System.Drawing.Point(27, 347);
             this.TimeLabel.Name = "TimeLabel";
             this.TimeLabel.Size = new System.Drawing.Size(49, 13);
             this.TimeLabel.TabIndex = 7;
@@ -156,7 +156,7 @@
             // checkBoxRepeatCircle
             // 
             this.checkBoxRepeatCircle.AutoSize = true;
-            this.checkBoxRepeatCircle.Location = new System.Drawing.Point(558, 36);
+            this.checkBoxRepeatCircle.Location = new System.Drawing.Point(399, 283);
             this.checkBoxRepeatCircle.Name = "checkBoxRepeatCircle";
             this.checkBoxRepeatCircle.Size = new System.Drawing.Size(75, 17);
             this.checkBoxRepeatCircle.TabIndex = 8;
@@ -170,7 +170,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1200, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(523, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -227,7 +227,7 @@
             // 
             // PauseButton
             // 
-            this.PauseButton.Location = new System.Drawing.Point(108, 336);
+            this.PauseButton.Location = new System.Drawing.Point(108, 283);
             this.PauseButton.Name = "PauseButton";
             this.PauseButton.Size = new System.Drawing.Size(75, 23);
             this.PauseButton.TabIndex = 11;
@@ -240,7 +240,7 @@
             this.titlePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.titlePictureBox.Location = new System.Drawing.Point(27, 27);
             this.titlePictureBox.Name = "titlePictureBox";
-            this.titlePictureBox.Size = new System.Drawing.Size(525, 303);
+            this.titlePictureBox.Size = new System.Drawing.Size(450, 250);
             this.titlePictureBox.TabIndex = 10;
             this.titlePictureBox.TabStop = false;
             // 
@@ -306,7 +306,7 @@
             this.toolStripButtonRepeat});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(24, 441);
+            this.toolStrip1.Size = new System.Drawing.Size(24, 580);
             this.toolStrip1.TabIndex = 12;
             // 
             // toolStripButtonRepeat
@@ -392,7 +392,7 @@
             // ButtonClose
             // 
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ButtonClose.Location = new System.Drawing.Point(1173, 4);
+            this.ButtonClose.Location = new System.Drawing.Point(491, 4);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(20, 20);
             this.ButtonClose.TabIndex = 13;
@@ -404,7 +404,7 @@
             // 
             this.ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ButtonRollUp.Image = global::MediaPlayer.Properties.Resources.minus;
-            this.ButtonRollUp.Location = new System.Drawing.Point(1147, 4);
+            this.ButtonRollUp.Location = new System.Drawing.Point(465, 4);
             this.ButtonRollUp.Name = "ButtonRollUp";
             this.ButtonRollUp.Size = new System.Drawing.Size(20, 20);
             this.ButtonRollUp.TabIndex = 14;
@@ -413,7 +413,7 @@
             // 
             // OpenFileButton
             // 
-            this.OpenFileButton.Location = new System.Drawing.Point(646, 337);
+            this.OpenFileButton.Location = new System.Drawing.Point(26, 571);
             this.OpenFileButton.Name = "OpenFileButton";
             this.OpenFileButton.Size = new System.Drawing.Size(75, 23);
             this.OpenFileButton.TabIndex = 15;
@@ -424,7 +424,7 @@
             // TotalDurationLabel
             // 
             this.TotalDurationLabel.AutoSize = true;
-            this.TotalDurationLabel.Location = new System.Drawing.Point(503, 404);
+            this.TotalDurationLabel.Location = new System.Drawing.Point(432, 347);
             this.TotalDurationLabel.Name = "TotalDurationLabel";
             this.TotalDurationLabel.Size = new System.Drawing.Size(49, 13);
             this.TotalDurationLabel.TabIndex = 16;
@@ -435,7 +435,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(1184, 426);
+            this.ClientSize = new System.Drawing.Size(523, 604);
             this.Controls.Add(this.TotalDurationLabel);
             this.Controls.Add(this.OpenFileButton);
             this.Controls.Add(this.ButtonRollUp);
@@ -455,8 +455,7 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(1200, 500);
-            this.MinimumSize = new System.Drawing.Size(1200, 465);
+            this.MaximumSize = new System.Drawing.Size(1200000, 500000);
             this.Name = "AudioPlayer";
             this.Text = "AudioPlayer";
             this.Load += new System.EventHandler(this.AudioPlayer_Load);

@@ -15,15 +15,19 @@ namespace MediaPlayer
         [STAThread]
         static void Main(string[] args)
         {
-            Mutex mutex = new Mutex(true, "MediaPlayer", out bool oneOnly);
-            if (oneOnly)
+            using (Mutex mutex = new Mutex(true, "MediaPlayer", out bool oneOnly))
             {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new AudioPlayer(args.Length == 0 ? null : args));
+                if (oneOnly)
+                {
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(new AudioPlayer(args.Length == 0 ? null : args));
+                    mutex.ReleaseMutex();
+                }
+                else if (args.Length != 0)
+                {
+                }
             }
-            else;
-               // MessageBox.Show("Aplication is already run!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }
