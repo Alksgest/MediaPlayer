@@ -58,5 +58,17 @@ namespace MediaPlayer.Properties {
                 this["currentVolume"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool repeatByCircle {
+            get {
+                return ((bool)(this["repeatByCircle"]));
+            }
+            set {
+                this["repeatByCircle"] = value;
+            }
+        }
     }
 }

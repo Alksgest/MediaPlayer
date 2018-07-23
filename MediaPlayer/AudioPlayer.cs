@@ -23,7 +23,6 @@ namespace MediaPlayer
         private Timer timer;
 
         private int CurrentPositionInListMedia = -1;
-        private bool RepeatByCircle = false;
         private string PathToFolder = null;
         private bool isPaused = false;
 
@@ -78,6 +77,7 @@ namespace MediaPlayer
             this.toolStrip1.MouseMove += ToolStrip1_MouseMove;
 
             this.FormClosing += AudioPlayer_FormClosing;
+
         }
 
         private void InitializeCustomGraphic()
@@ -88,6 +88,7 @@ namespace MediaPlayer
 
         private void AudioPlayer_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Properties.Settings.Default.repeatByCircle = this.checkBoxRepeatCircle.Checked;
             Properties.Settings.Default.savePathToFolder = this.checkBoxSavePathToFolder.Checked;
             Properties.Settings.Default.currentVolume = this.SoundLevelTrackBar.Value;
             if (Properties.Settings.Default.savePathToFolder)
@@ -240,8 +241,10 @@ namespace MediaPlayer
             }
             catch
             {
-                NotifyIcon notifyIcon = new NotifyIcon();
-                notifyIcon.BalloonTipText = "Directory was not choosed.";
+                NotifyIcon notifyIcon = new NotifyIcon
+                {
+                    BalloonTipText = "Directory was not choosed."
+                };
                 notifyIcon.ShowBalloonTip(2000);
                 // MessageBox.Show("File is not choosed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -275,7 +278,7 @@ namespace MediaPlayer
                 listBoxMedia.SelectedIndex++;
                 PlaySound();
             }
-            else if (RepeatByCircle)
+            else if (this.checkBoxRepeatCircle.Checked)
             {
                 listBoxMedia.SelectedIndex = 0;
                 PlaySound();
@@ -356,6 +359,7 @@ namespace MediaPlayer
 
         private void LoadPreviousSettings()
         {
+            this.checkBoxRepeatCircle.Checked = Properties.Settings.Default.repeatByCircle;
             this.checkBoxSavePathToFolder.Checked = Properties.Settings.Default.savePathToFolder;
             this.SoundLevelTrackBar.Value = Properties.Settings.Default.currentVolume;
         }
@@ -448,8 +452,6 @@ namespace MediaPlayer
 
             this.listBoxMedia.BackColor = Color.GhostWhite;
         }
-
-        private void checkBoxRepeatCircle_CheckedChanged(object sender, EventArgs e) => RepeatByCircle = true;
         private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentList();
 
         private void ClearCurrentList()
@@ -603,6 +605,7 @@ namespace MediaPlayer
                     PlaySound();
                 }
             }
-        }   
+        }
+
     }
 }

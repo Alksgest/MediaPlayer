@@ -80,7 +80,7 @@
             // listBoxMedia
             // 
             this.listBoxMedia.AllowDrop = true;
-            this.listBoxMedia.Location = new System.Drawing.Point(26, 366);
+            this.listBoxMedia.Location = new System.Drawing.Point(27, 366);
             this.listBoxMedia.Name = "listBoxMedia";
             this.listBoxMedia.Size = new System.Drawing.Size(450, 199);
             this.listBoxMedia.TabIndex = 0;
@@ -118,15 +118,15 @@
             // 
             // TrackBarAudio
             // 
-            this.TrackBarAudio.Location = new System.Drawing.Point(26, 315);
+            this.TrackBarAudio.Location = new System.Drawing.Point(27, 312);
             this.TrackBarAudio.Maximum = 1000;
             this.TrackBarAudio.Name = "TrackBarAudio";
-            this.TrackBarAudio.Size = new System.Drawing.Size(451, 45);
+            this.TrackBarAudio.Size = new System.Drawing.Size(450, 45);
             this.TrackBarAudio.TabIndex = 4;
             // 
             // SoundLevelTrackBar
             // 
-            this.SoundLevelTrackBar.Location = new System.Drawing.Point(483, 24);
+            this.SoundLevelTrackBar.Location = new System.Drawing.Point(483, 27);
             this.SoundLevelTrackBar.Maximum = 100;
             this.SoundLevelTrackBar.Name = "SoundLevelTrackBar";
             this.SoundLevelTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -138,7 +138,7 @@
             // VolumeLabel
             // 
             this.VolumeLabel.AutoSize = true;
-            this.VolumeLabel.Location = new System.Drawing.Point(478, 284);
+            this.VolumeLabel.Location = new System.Drawing.Point(473, 283);
             this.VolumeLabel.Name = "VolumeLabel";
             this.VolumeLabel.Size = new System.Drawing.Size(42, 13);
             this.VolumeLabel.TabIndex = 6;
@@ -156,13 +156,12 @@
             // checkBoxRepeatCircle
             // 
             this.checkBoxRepeatCircle.AutoSize = true;
-            this.checkBoxRepeatCircle.Location = new System.Drawing.Point(399, 283);
+            this.checkBoxRepeatCircle.Location = new System.Drawing.Point(392, 283);
             this.checkBoxRepeatCircle.Name = "checkBoxRepeatCircle";
             this.checkBoxRepeatCircle.Size = new System.Drawing.Size(75, 17);
             this.checkBoxRepeatCircle.TabIndex = 8;
             this.checkBoxRepeatCircle.Text = "Repeat All";
             this.checkBoxRepeatCircle.UseVisualStyleBackColor = true;
-            this.checkBoxRepeatCircle.CheckedChanged += new System.EventHandler(this.checkBoxRepeatCircle_CheckedChanged);
             // 
             // menuStrip1
             // 
@@ -388,11 +387,12 @@
             // ButtonClose
             // 
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ButtonClose.Location = new System.Drawing.Point(491, 4);
+            this.ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ButtonClose.Image = global::MediaPlayer.Properties.Resources.cancel;
+            this.ButtonClose.Location = new System.Drawing.Point(495, 4);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(20, 20);
             this.ButtonClose.TabIndex = 13;
-            this.ButtonClose.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.ButtonClose.UseVisualStyleBackColor = false;
             this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
@@ -400,16 +400,16 @@
             // 
             this.ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ButtonRollUp.Image = global::MediaPlayer.Properties.Resources.minus;
-            this.ButtonRollUp.Location = new System.Drawing.Point(465, 4);
+            this.ButtonRollUp.Location = new System.Drawing.Point(469, 4);
             this.ButtonRollUp.Name = "ButtonRollUp";
             this.ButtonRollUp.Size = new System.Drawing.Size(20, 20);
             this.ButtonRollUp.TabIndex = 14;
-            this.ButtonRollUp.UseVisualStyleBackColor = true;
+            this.ButtonRollUp.UseVisualStyleBackColor = false;
             this.ButtonRollUp.Click += new System.EventHandler(this.ButtonRollUp_Click);
             // 
             // OpenFileButton
             // 
-            this.OpenFileButton.Location = new System.Drawing.Point(26, 571);
+            this.OpenFileButton.Location = new System.Drawing.Point(27, 571);
             this.OpenFileButton.Name = "OpenFileButton";
             this.OpenFileButton.Size = new System.Drawing.Size(75, 23);
             this.OpenFileButton.TabIndex = 15;
@@ -420,7 +420,7 @@
             // TotalDurationLabel
             // 
             this.TotalDurationLabel.AutoSize = true;
-            this.TotalDurationLabel.Location = new System.Drawing.Point(432, 347);
+            this.TotalDurationLabel.Location = new System.Drawing.Point(428, 344);
             this.TotalDurationLabel.Name = "TotalDurationLabel";
             this.TotalDurationLabel.Size = new System.Drawing.Size(49, 13);
             this.TotalDurationLabel.TabIndex = 16;
@@ -429,7 +429,7 @@
             // checkBoxSavePathToFolder
             // 
             this.checkBoxSavePathToFolder.AutoSize = true;
-            this.checkBoxSavePathToFolder.Location = new System.Drawing.Point(277, 283);
+            this.checkBoxSavePathToFolder.Location = new System.Drawing.Point(270, 283);
             this.checkBoxSavePathToFolder.Name = "checkBoxSavePathToFolder";
             this.checkBoxSavePathToFolder.Size = new System.Drawing.Size(116, 17);
             this.checkBoxSavePathToFolder.TabIndex = 17;
