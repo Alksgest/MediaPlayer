@@ -375,6 +375,16 @@ namespace MediaPlayer
                         titlePictureBox.Image = new Bitmap(images[0]);
                     }
                 }
+                else if (Directory.Exists(PathToFolder + "//Covers"))
+                {
+                    images = Directory.EnumerateFiles(PathToFolder + "//Covers", "*.*", SearchOption.TopDirectoryOnly)
+                      .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
+                    if (images.Length != 0)
+                    {
+                        titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        titlePictureBox.Image = new Bitmap(images[0]);
+                    }
+                }
             }
         }
 
@@ -427,15 +437,11 @@ namespace MediaPlayer
             this.BackColor = Color.GhostWhite;
             this.menuStrip1.BackColor = Color.GhostWhite;
             this.toolStrip1.BackColor = Color.GhostWhite;
+
+            this.listBoxMedia.BackColor = Color.GhostWhite;
         }
 
         private void checkBoxRepeatCircle_CheckedChanged(object sender, EventArgs e) => RepeatByCircle = true;
-
-        private void clearPathToFolderToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (File.Exists("currentDir.dat"))
-                File.Delete(("currentDir.dat"));
-        }
         private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentList();
 
         private void ClearCurrentList()
@@ -457,7 +463,23 @@ namespace MediaPlayer
         }
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => OpenFolder();
+        private void cHooseToolStripMenuItem_Click(object sender, EventArgs e) => ShowColoDialog();
         private void ButtonPause_Click(object sender, EventArgs e) => PauseAudio();
+
+        private void ShowColoDialog()
+        {
+            ColorDialog colorDialog = new ColorDialog();
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+
+                this.BackColor = colorDialog.Color;
+                this.menuStrip1.BackColor = colorDialog.Color;
+                this.toolStrip1.BackColor = colorDialog.Color;
+
+                this.listBoxMedia.BackColor = colorDialog.Color;
+            }
+        }
 
         private void PauseAudio()
         {
@@ -573,6 +595,6 @@ namespace MediaPlayer
                     PlaySound();
                 }
             }
-        }
+        }   
     }
 }

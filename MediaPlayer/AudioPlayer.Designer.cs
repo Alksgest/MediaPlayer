@@ -43,7 +43,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCurrentListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearPathToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChooseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dsToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PauseButton = new System.Windows.Forms.Button();
             this.titlePictureBox = new System.Windows.Forms.PictureBox();
@@ -137,7 +138,6 @@
             // VolumeLabel
             // 
             this.VolumeLabel.AutoSize = true;
-            this.VolumeLabel.Enabled = false;
             this.VolumeLabel.Location = new System.Drawing.Point(478, 284);
             this.VolumeLabel.Name = "VolumeLabel";
             this.VolumeLabel.Size = new System.Drawing.Size(42, 13);
@@ -179,7 +179,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFolderToolStripMenuItem,
             this.clearCurrentListToolStripMenuItem,
-            this.clearPathToFolderToolStripMenuItem,
+            this.ChooseToolStripMenuItem,
+            this.dsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -188,7 +189,7 @@
             // openFolderToolStripMenuItem
             // 
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.openFolderToolStripMenuItem.Text = "Open folder";
             this.openFolderToolStripMenuItem.ToolTipText = "Выбор папки с аудиофайлами";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
@@ -196,23 +197,27 @@
             // clearCurrentListToolStripMenuItem
             // 
             this.clearCurrentListToolStripMenuItem.Name = "clearCurrentListToolStripMenuItem";
-            this.clearCurrentListToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.clearCurrentListToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.clearCurrentListToolStripMenuItem.Text = "Clear current list";
             this.clearCurrentListToolStripMenuItem.ToolTipText = "Очищает текущий список воспроизведения";
             this.clearCurrentListToolStripMenuItem.Click += new System.EventHandler(this.clearCurrentListToolStripMenuItem_Click);
             // 
-            // clearPathToFolderToolStripMenuItem
+            // ChooseToolStripMenuItem
             // 
-            this.clearPathToFolderToolStripMenuItem.Name = "clearPathToFolderToolStripMenuItem";
-            this.clearPathToFolderToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.clearPathToFolderToolStripMenuItem.Text = "Clear path to folder";
-            this.clearPathToFolderToolStripMenuItem.ToolTipText = "Удаляет путь к папке, сохраненный ранее";
-            this.clearPathToFolderToolStripMenuItem.Click += new System.EventHandler(this.clearPathToFolderToolStripMenuItem_Click);
+            this.ChooseToolStripMenuItem.Name = "ChooseToolStripMenuItem";
+            this.ChooseToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.ChooseToolStripMenuItem.Text = "Choose color scheme";
+            this.ChooseToolStripMenuItem.Click += new System.EventHandler(this.cHooseToolStripMenuItem_Click);
+            // 
+            // dsToolStripMenuItem
+            // 
+            this.dsToolStripMenuItem.Name = "dsToolStripMenuItem";
+            this.dsToolStripMenuItem.Size = new System.Drawing.Size(185, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -488,7 +493,6 @@
         private System.Windows.Forms.CheckBox checkBoxRepeatCircle;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clearPathToFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCurrentListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.PictureBox titlePictureBox;
@@ -515,6 +519,8 @@
         private System.Windows.Forms.Button OpenFileButton;
         private System.Windows.Forms.Label TotalDurationLabel;
         private System.Windows.Forms.CheckBox checkBoxSavePathToFolder;
+        private System.Windows.Forms.ToolStripMenuItem ChooseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator dsToolStripMenuItem;
     }
 }
 
