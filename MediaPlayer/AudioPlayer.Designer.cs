@@ -33,7 +33,7 @@
             this.listBoxMedia = new System.Windows.Forms.ListBox();
             this.StartButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
-            this.SelectFolder = new System.Windows.Forms.Button();
+            this.SelectFolderButton = new System.Windows.Forms.Button();
             this.TrackBarAudio = new System.Windows.Forms.TrackBar();
             this.SoundLevelTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeLabel = new System.Windows.Forms.Label();
@@ -46,8 +46,8 @@
             this.savePathToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearPathToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ButtonPause = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PauseButton = new System.Windows.Forms.Button();
+            this.titlePictureBox = new System.Windows.Forms.PictureBox();
             this.toolStripButtonPLay = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPause = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
@@ -71,7 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStripNI.SuspendLayout();
             this.SuspendLayout();
@@ -105,15 +105,15 @@
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
-            // SelectFolder
+            // SelectFolderButton
             // 
-            this.SelectFolder.Location = new System.Drawing.Point(727, 337);
-            this.SelectFolder.Name = "SelectFolder";
-            this.SelectFolder.Size = new System.Drawing.Size(75, 23);
-            this.SelectFolder.TabIndex = 3;
-            this.SelectFolder.Text = "Select folder";
-            this.SelectFolder.UseVisualStyleBackColor = true;
-            this.SelectFolder.Click += new System.EventHandler(this.SelectFolder_Click);
+            this.SelectFolderButton.Location = new System.Drawing.Point(727, 337);
+            this.SelectFolderButton.Name = "SelectFolderButton";
+            this.SelectFolderButton.Size = new System.Drawing.Size(75, 23);
+            this.SelectFolderButton.TabIndex = 3;
+            this.SelectFolderButton.Text = "Select folder";
+            this.SelectFolderButton.UseVisualStyleBackColor = true;
+            this.SelectFolderButton.Click += new System.EventHandler(this.SelectFolder_Click);
             // 
             // TrackBarAudio
             // 
@@ -170,7 +170,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1200, 24);
             this.menuStrip1.TabIndex = 9;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -225,23 +225,24 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // ButtonPause
+            // PauseButton
             // 
-            this.ButtonPause.Location = new System.Drawing.Point(108, 336);
-            this.ButtonPause.Name = "ButtonPause";
-            this.ButtonPause.Size = new System.Drawing.Size(75, 23);
-            this.ButtonPause.TabIndex = 11;
-            this.ButtonPause.Text = "Pause";
-            this.ButtonPause.UseVisualStyleBackColor = true;
-            this.ButtonPause.Click += new System.EventHandler(this.ButtonPause_Click);
+            this.PauseButton.Location = new System.Drawing.Point(108, 336);
+            this.PauseButton.Name = "PauseButton";
+            this.PauseButton.Size = new System.Drawing.Size(75, 23);
+            this.PauseButton.TabIndex = 11;
+            this.PauseButton.Text = "Pause";
+            this.PauseButton.UseVisualStyleBackColor = true;
+            this.PauseButton.Click += new System.EventHandler(this.ButtonPause_Click);
             // 
-            // pictureBox1
+            // titlePictureBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(27, 27);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(525, 303);
-            this.pictureBox1.TabIndex = 10;
-            this.pictureBox1.TabStop = false;
+            this.titlePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.titlePictureBox.Location = new System.Drawing.Point(27, 27);
+            this.titlePictureBox.Name = "titlePictureBox";
+            this.titlePictureBox.Size = new System.Drawing.Size(525, 303);
+            this.titlePictureBox.TabIndex = 10;
+            this.titlePictureBox.TabStop = false;
             // 
             // toolStripButtonPLay
             // 
@@ -305,7 +306,7 @@
             this.toolStripButtonRepeat});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(24, 402);
+            this.toolStrip1.Size = new System.Drawing.Size(24, 441);
             this.toolStrip1.TabIndex = 12;
             // 
             // toolStripButtonRepeat
@@ -314,7 +315,7 @@
             this.toolStripButtonRepeat.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRepeat.Image")));
             this.toolStripButtonRepeat.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonRepeat.Name = "toolStripButtonRepeat";
-            this.toolStripButtonRepeat.Size = new System.Drawing.Size(29, 20);
+            this.toolStripButtonRepeat.Size = new System.Drawing.Size(21, 20);
             this.toolStripButtonRepeat.Text = "Repeat";
             this.toolStripButtonRepeat.Click += new System.EventHandler(this.toolStripButtonRepeat_Click);
             // 
@@ -440,18 +441,19 @@
             this.Controls.Add(this.ButtonRollUp);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.ButtonPause);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.PauseButton);
+            this.Controls.Add(this.titlePictureBox);
             this.Controls.Add(this.checkBoxRepeatCircle);
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.VolumeLabel);
             this.Controls.Add(this.SoundLevelTrackBar);
             this.Controls.Add(this.TrackBarAudio);
-            this.Controls.Add(this.SelectFolder);
+            this.Controls.Add(this.SelectFolderButton);
             this.Controls.Add(this.StopButton);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(this.listBoxMedia);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximumSize = new System.Drawing.Size(1200, 500);
             this.MinimumSize = new System.Drawing.Size(1200, 465);
@@ -462,7 +464,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.contextMenuStripNI.ResumeLayout(false);
@@ -476,7 +478,7 @@
         private System.Windows.Forms.ListBox listBoxMedia;
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.Button StopButton;
-        private System.Windows.Forms.Button SelectFolder;
+        private System.Windows.Forms.Button SelectFolderButton;
         private System.Windows.Forms.TrackBar TrackBarAudio;
         private System.Windows.Forms.TrackBar SoundLevelTrackBar;
         private System.Windows.Forms.Label VolumeLabel;
@@ -488,8 +490,8 @@
         private System.Windows.Forms.ToolStripMenuItem savePathToFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCurrentListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button ButtonPause;
+        private System.Windows.Forms.PictureBox titlePictureBox;
+        private System.Windows.Forms.Button PauseButton;
         private System.Windows.Forms.ToolStripButton toolStripButtonPLay;
         private System.Windows.Forms.ToolStripButton toolStripButtonPause;
         private System.Windows.Forms.ToolStripButton toolStripButtonStop;
