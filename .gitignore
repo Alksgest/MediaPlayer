@@ -1,3 +1,4 @@
 .vs/
 packages/
 MediaPlayer/obj
+MediaPlayer/bin/Debug/Playlists.dat

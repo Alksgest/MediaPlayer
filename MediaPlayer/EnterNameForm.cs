@@ -19,6 +19,7 @@ namespace MediaPlayer
             playlistForm = form;
             this.KeyDown += EnterNameForm_KeyDown;
             this.NameTextBox.KeyDown += NameTextBox_KeyDown;
+            this.NameTextBox.Focus();
         }
 
         private void NameTextBox_KeyDown(object sender, KeyEventArgs e)

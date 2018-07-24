@@ -80,7 +80,6 @@ namespace MediaPlayer
                 foreach (var item in (this.MainListBox.SelectedItem as PlaylistData).AudioFiles)
                 {
                     AudioPlayer.listBoxMedia.Items.Add(item);
-                    AudioPlayer.PathToImage = null;
                 }
             }
         }
@@ -116,7 +115,7 @@ namespace MediaPlayer
                 }
             }
         }
-    
+
 
         private void RenamePlaylistButton_Click(object sender, EventArgs e) => ShowRenameDialog();
 
@@ -131,7 +130,12 @@ namespace MediaPlayer
             {
                 EnterNameForm enterNameForm = new EnterNameForm(this);
                 enterNameForm.ShowDialog();
-                (this.MainListBox.SelectedItem as PlaylistData).Title = currentName;
+                if (!String.IsNullOrEmpty(currentName))
+                    (this.MainListBox.SelectedItem as PlaylistData).Title = currentName;
+                var items = this.MainListBox.Items.Cast<PlaylistData>().ToList();
+                this.MainListBox.Items.Clear();
+                foreach (var item in items)
+                    this.MainListBox.Items.Add(item);
             }
         }
     }
