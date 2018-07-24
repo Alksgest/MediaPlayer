@@ -96,6 +96,12 @@
     <Compile Include="AudioPlayer.Designer.cs">
       <DependentUpon>AudioPlayer.cs</DependentUpon>
     </Compile>
+    <Compile Include="EnterNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnterNameForm.Designer.cs">
+      <DependentUpon>EnterNameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PathHolder.cs" />
     <Compile Include="PlaylistData.cs" />
     <Compile Include="PlaylistForm.cs">
@@ -109,6 +115,9 @@
     <Compile Include="ToolStripExtraRenderer.cs" />
     <EmbeddedResource Include="AudioPlayer.resx">
       <DependentUpon>AudioPlayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterNameForm.resx">
+      <DependentUpon>EnterNameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PlaylistForm.resx">
       <DependentUpon>PlaylistForm.cs</DependentUpon>

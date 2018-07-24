@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Forms;
 
 namespace MediaPlayer
 {
     [Serializable]
     public partial class PlaylistForm : Form
     {
+        public string currentName { get; set; }
         AudioPlayer AudioPlayer;
         List<PlaylistData> PlaylistData = new List<PlaylistData>();
 
@@ -39,15 +37,16 @@ namespace MediaPlayer
 
         private void PlaylistForm_Load(object sender, EventArgs e)
         {
-            if (File.Exists("Playlists.dat")) {
+            if (File.Exists("Playlists.dat"))
+            {
                 using (FileStream fileStream = new FileStream("Playlists.dat", FileMode.Open, FileAccess.Read))
                 {
                     BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    PlaylistData = (List<PlaylistData>)binaryFormatter.Deserialize(fileStream); 
+                    PlaylistData = (List<PlaylistData>)binaryFormatter.Deserialize(fileStream);
                     fileStream.Close();
                 }
             }
-            foreach(var item in PlaylistData)
+            foreach (var item in PlaylistData)
             {
                 MainListBox.Items.Add(item);
             }
@@ -81,7 +80,7 @@ namespace MediaPlayer
                 foreach (var item in (this.MainListBox.SelectedItem as PlaylistData).AudioFiles)
                 {
                     AudioPlayer.listBoxMedia.Items.Add(item);
-                    AudioPlayer.PathToImage = null; 
+                    AudioPlayer.PathToImage = null;
                 }
             }
         }
@@ -90,21 +89,26 @@ namespace MediaPlayer
 
         private void AddPlayList()
         {
+            SetNameDialog();
+            if (String.IsNullOrEmpty(currentName))
+                currentName = "Unnamed playlist";
             var playList = AudioPlayer.listBoxMedia.Items.Cast<PathHolder>();
-            PlaylistData data = new PlaylistData("Playlist1", playList.ToList<PathHolder>());
+            PlaylistData data = new PlaylistData(currentName, playList.ToList<PathHolder>());
 
-            MainListBox.Items.Add(data);
-
-            PlaylistData.Add(data);
+            if (data.AudioFiles.Count != 0)
+            {
+                MainListBox.Items.Add(data);
+                PlaylistData.Add(data);
+            }
         }
 
         private void RemoveFilesButton_Click(object sender, EventArgs e) => DeletePlaylist();
 
         private void DeletePlaylist()
         {
-            if (MessageBox.Show("Delete this playlist?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            if (this.MainListBox.SelectedIndex != -1)
             {
-                if (this.MainListBox.SelectedIndex != -1)
+                if (MessageBox.Show("Delete this playlist?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
                     int tmpIndex = this.MainListBox.SelectedIndex;
                     this.MainListBox.Items.RemoveAt(this.MainListBox.SelectedIndex);
@@ -112,12 +116,22 @@ namespace MediaPlayer
                 }
             }
         }
+    
 
-        private void RenaymPlaylistButton_Click(object sender, EventArgs e)
+        private void RenamePlaylistButton_Click(object sender, EventArgs e) => ShowRenameDialog();
+
+        private void SetNameDialog()
+        {
+            EnterNameForm enterNameForm = new EnterNameForm(this);
+            enterNameForm.ShowDialog();
+        }
+        private void ShowRenameDialog()
         {
             if (this.MainListBox.SelectedIndex != -1)
             {
-                (this.MainListBox.SelectedItem as PlaylistData).Title = "New Title";
+                EnterNameForm enterNameForm = new EnterNameForm(this);
+                enterNameForm.ShowDialog();
+                (this.MainListBox.SelectedItem as PlaylistData).Title = currentName;
             }
         }
     }

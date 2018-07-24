@@ -63,7 +63,7 @@
             this.RenamePlaylistButton.Size = new System.Drawing.Size(30, 30);
             this.RenamePlaylistButton.TabIndex = 28;
             this.RenamePlaylistButton.UseVisualStyleBackColor = true;
-            this.RenamePlaylistButton.Click += new System.EventHandler(this.RenaymPlaylistButton_Click);
+            this.RenamePlaylistButton.Click += new System.EventHandler(this.RenamePlaylistButton_Click);
             // 
             // PlaylistLabel
             // 
@@ -127,6 +127,7 @@
             this.MaximumSize = new System.Drawing.Size(300, 580);
             this.MinimumSize = new System.Drawing.Size(300, 580);
             this.Name = "PlaylistForm";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "PlaylistForm";
             this.mainPanel.ResumeLayout(false);
