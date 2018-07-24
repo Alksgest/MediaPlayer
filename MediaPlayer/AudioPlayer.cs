@@ -118,8 +118,8 @@ namespace MediaPlayer
             this.MouseDown += AudioPlayer_MouseDown;
             this.MouseMove += AudioPlayer_MouseMove;
 
-            this.mainMenuStrip.MouseDown += MenuStrip1_MouseDown;
-            this.mainMenuStrip.MouseMove += MenuStrip1_MouseMove;
+            this.mainMenuStrip.MouseDown += MainMenuStrip_MouseDown;
+            this.mainMenuStrip.MouseMove += MainMenuStrip_MouseMove;
 
             this.FormClosing += AudioPlayer_FormClosing;
 
@@ -141,16 +141,14 @@ namespace MediaPlayer
                 Properties.Settings.Default.pathToFolder = this.PathToFolder;
                 Properties.Settings.Default.pathToImage = this.PathToImage;
             }
-            else
-                this.PathToImage = null;
 
             Properties.Settings.Default.Save();
         }
 
         private void ToolStrip1_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
         private void ToolStrip1_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
-        private void MenuStrip1_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
-        private void MenuStrip1_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
+        private void MainMenuStrip_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
+        private void MainMenuStrip_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
         private void AudioPlayer_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
         private void AudioPlayer_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
 
@@ -242,7 +240,7 @@ namespace MediaPlayer
                     this.waveOut.Play();
                 }
                 else
-                    reader.CurrentTime = TimeSpan.FromSeconds((double)this.TrackBarAudio.Value / 1000 * this.reader.TotalTime.TotalSeconds);
+                    reader.CurrentTime = TimeSpan.FromSeconds((double)this.TrackBarAudio.Value / 1000 * this.reader.TotalTime.TotalSeconds);   
             }
             catch { }
         }
@@ -322,12 +320,10 @@ namespace MediaPlayer
             PlayButton.Enabled = true;
             this.TrackBarAudio.Value = 0;
             if (listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
-            {
-                listBoxMedia.SelectedIndex++;
-                PlaySound();
-            }
+                NextAudio();           
             else if (this.checkBoxRepeatCircle.Checked)
             {
+                listBoxMedia.ClearSelected();
                 listBoxMedia.SelectedIndex = 0;
                 PlaySound();
             }
@@ -381,7 +377,14 @@ namespace MediaPlayer
             catch { }
         }
 
-        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) => CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
+        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
+            //int tmpPos = this.listBoxMedia.SelectedIndex;
+            //this.listBoxMedia.ClearSelected();
+            //CurrentPositionInListMedia = tmpPos;
+            //this.listBoxMedia.SetSelected(CurrentPositionInListMedia, true);
+        }
 
         private void AudioPlayer_Load(object sender, EventArgs e)
         {
@@ -412,7 +415,7 @@ namespace MediaPlayer
             this.checkBoxRepeatCircle.Checked = Properties.Settings.Default.repeatByCircle;
             this.checkBoxSavePathToFolder.Checked = Properties.Settings.Default.savePathToFolder;
             this.SoundLevelTrackBar.Value = Properties.Settings.Default.currentVolume;
-            this.PathToImage = Properties.Settings.Default.pathToFolder;
+            this.PathToImage = Properties.Settings.Default.pathToImage;
         }
 
         private void LoadTitleImage()
@@ -424,7 +427,7 @@ namespace MediaPlayer
                 if (images.Length != 0)
                 {
                     titlePictureBox.Image = new Bitmap(images[0]);
-                    PathToImage = images[0];
+                    this.PathToImage = images[0];
                 }
                 else if (Directory.Exists(PathToFolder + "//Cover"))
                 {
@@ -434,7 +437,7 @@ namespace MediaPlayer
                     {
 
                         titlePictureBox.Image = new Bitmap(images[0]);
-                        PathToImage = images[0];
+                        this.PathToImage = images[0];
                     }
                 }
                 else if (Directory.Exists(PathToFolder + "//Covers"))
@@ -444,7 +447,7 @@ namespace MediaPlayer
                     if (images.Length != 0)
                     {
                         titlePictureBox.Image = new Bitmap(images[0]);
-                        PathToImage = images[0];
+                        this.PathToImage = images[0];
                     }
                 }
             }
