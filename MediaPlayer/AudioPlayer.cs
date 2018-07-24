@@ -25,9 +25,10 @@ namespace MediaPlayer
         private Timer timer;
 
         private int CurrentPositionInListMedia = -1;
-        private string PathToFolder = null;
-        private string PathToImage = null;
         private bool isPaused = false;
+
+        public string PathToFolder { get; set; }
+        public string PathToImage { get; set; }
 
         ToolTip openFilesToolTip;
         ToolTip openFolderToolTip;
