@@ -206,7 +206,10 @@ namespace MediaPlayer
             foreach (var str in FileList)
             {
                 if (AcceptedFormat(str))
-                    this.listBoxMedia.Items.Add(str);
+                {
+                    PathHolder item = new PathHolder(str);
+                    listBoxMedia.Items.Add(item);
+                }
             }
         }
 
@@ -377,14 +380,7 @@ namespace MediaPlayer
             catch { }
         }
 
-        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
-            //int tmpPos = this.listBoxMedia.SelectedIndex;
-            //this.listBoxMedia.ClearSelected();
-            //CurrentPositionInListMedia = tmpPos;
-            //this.listBoxMedia.SetSelected(CurrentPositionInListMedia, true);
-        }
+        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) => CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
 
         private void AudioPlayer_Load(object sender, EventArgs e)
         {
