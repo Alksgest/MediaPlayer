@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioPlayer));
             this.listBoxMedia = new System.Windows.Forms.ListBox();
-            this.StartButton = new System.Windows.Forms.Button();
-            this.StopButton = new System.Windows.Forms.Button();
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.TrackBarAudio = new System.Windows.Forms.TrackBar();
             this.SoundLevelTrackBar = new System.Windows.Forms.TrackBar();
@@ -44,18 +41,9 @@
             this.openFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCurrentListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ChooseColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChooseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dsToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.PauseButton = new System.Windows.Forms.Button();
-            this.titlePictureBox = new System.Windows.Forms.PictureBox();
-            this.toolStripButtonPLay = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPause = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonNext = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPrevious = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonRepeat = new System.Windows.Forms.ToolStripButton();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStripNI = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,64 +53,53 @@
             this.nextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.previousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ButtonClose = new System.Windows.Forms.Button();
-            this.ButtonRollUp = new System.Windows.Forms.Button();
-            this.OpenFileButton = new System.Windows.Forms.Button();
             this.TotalDurationLabel = new System.Windows.Forms.Label();
             this.checkBoxSavePathToFolder = new System.Windows.Forms.CheckBox();
+            this.RemoveFilesButton = new System.Windows.Forms.Button();
+            this.AddFilesButton = new System.Windows.Forms.Button();
+            this.ReplayButton = new System.Windows.Forms.Button();
+            this.PreviousButton = new System.Windows.Forms.Button();
+            this.NextButton = new System.Windows.Forms.Button();
+            this.ButtonRollUp = new System.Windows.Forms.Button();
+            this.ButtonClose = new System.Windows.Forms.Button();
+            this.PauseButton = new System.Windows.Forms.Button();
+            this.titlePictureBox = new System.Windows.Forms.PictureBox();
+            this.StopButton = new System.Windows.Forms.Button();
+            this.PlayButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).BeginInit();
-            this.toolStrip1.SuspendLayout();
             this.contextMenuStripNI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // listBoxMedia
             // 
             this.listBoxMedia.AllowDrop = true;
-            this.listBoxMedia.Location = new System.Drawing.Point(27, 366);
+            this.listBoxMedia.Location = new System.Drawing.Point(12, 366);
             this.listBoxMedia.Name = "listBoxMedia";
-            this.listBoxMedia.Size = new System.Drawing.Size(450, 199);
+            this.listBoxMedia.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listBoxMedia.Size = new System.Drawing.Size(465, 199);
             this.listBoxMedia.TabIndex = 0;
             this.listBoxMedia.SelectedIndexChanged += new System.EventHandler(this.listBoxMedia_SelectedIndexChanged);
             // 
-            // StartButton
-            // 
-            this.StartButton.Location = new System.Drawing.Point(27, 283);
-            this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(75, 23);
-            this.StartButton.TabIndex = 1;
-            this.StartButton.Text = "Play";
-            this.StartButton.UseVisualStyleBackColor = true;
-            this.StartButton.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // StopButton
-            // 
-            this.StopButton.Location = new System.Drawing.Point(189, 283);
-            this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(75, 23);
-            this.StopButton.TabIndex = 2;
-            this.StopButton.Text = "Stop";
-            this.StopButton.UseVisualStyleBackColor = true;
-            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
-            // 
             // OpenFolderButton
             // 
-            this.OpenFolderButton.Location = new System.Drawing.Point(108, 571);
+            this.OpenFolderButton.BackgroundImage = global::MediaPlayer.Properties.Resources.openFolder;
+            this.OpenFolderButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.OpenFolderButton.Location = new System.Drawing.Point(483, 366);
             this.OpenFolderButton.Name = "OpenFolderButton";
-            this.OpenFolderButton.Size = new System.Drawing.Size(75, 23);
+            this.OpenFolderButton.Size = new System.Drawing.Size(30, 30);
             this.OpenFolderButton.TabIndex = 3;
-            this.OpenFolderButton.Text = "Open folder";
             this.OpenFolderButton.UseVisualStyleBackColor = true;
             this.OpenFolderButton.Click += new System.EventHandler(this.SelectFolder_Click);
             // 
             // TrackBarAudio
             // 
-            this.TrackBarAudio.Location = new System.Drawing.Point(27, 312);
+            this.TrackBarAudio.Location = new System.Drawing.Point(0, 312);
             this.TrackBarAudio.Maximum = 1000;
             this.TrackBarAudio.Name = "TrackBarAudio";
-            this.TrackBarAudio.Size = new System.Drawing.Size(450, 45);
+            this.TrackBarAudio.Size = new System.Drawing.Size(477, 45);
             this.TrackBarAudio.TabIndex = 4;
             // 
             // SoundLevelTrackBar
@@ -180,7 +157,7 @@
             this.openFilesToolStripMenuItem,
             this.openFolderToolStripMenuItem,
             this.clearCurrentListToolStripMenuItem,
-            this.ChooseColorToolStripMenuItem,
+            this.ChooseToolStripMenuItem,
             this.dsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -210,12 +187,12 @@
             this.clearCurrentListToolStripMenuItem.ToolTipText = "Очищает текущий список воспроизведения";
             this.clearCurrentListToolStripMenuItem.Click += new System.EventHandler(this.clearCurrentListToolStripMenuItem_Click);
             // 
-            // ChooseColorToolStripMenuItem
+            // ChooseToolStripMenuItem
             // 
-            this.ChooseColorToolStripMenuItem.Name = "ChooseColorToolStripMenuItem";
-            this.ChooseColorToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.ChooseColorToolStripMenuItem.Text = "Choose color scheme";
-            this.ChooseColorToolStripMenuItem.Click += new System.EventHandler(this.chooseColorToolStripMenuItem_Click);
+            this.ChooseToolStripMenuItem.Name = "ChooseToolStripMenuItem";
+            this.ChooseToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.ChooseToolStripMenuItem.Text = "Choose color scheme";
+            this.ChooseToolStripMenuItem.Click += new System.EventHandler(this.chooseColorToolStripMenuItem_Click);
             // 
             // dsToolStripMenuItem
             // 
@@ -228,100 +205,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // PauseButton
-            // 
-            this.PauseButton.Location = new System.Drawing.Point(108, 283);
-            this.PauseButton.Name = "PauseButton";
-            this.PauseButton.Size = new System.Drawing.Size(75, 23);
-            this.PauseButton.TabIndex = 11;
-            this.PauseButton.Text = "Pause";
-            this.PauseButton.UseVisualStyleBackColor = true;
-            this.PauseButton.Click += new System.EventHandler(this.ButtonPause_Click);
-            // 
-            // titlePictureBox
-            // 
-            this.titlePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.titlePictureBox.Location = new System.Drawing.Point(27, 27);
-            this.titlePictureBox.Name = "titlePictureBox";
-            this.titlePictureBox.Size = new System.Drawing.Size(450, 250);
-            this.titlePictureBox.TabIndex = 10;
-            this.titlePictureBox.TabStop = false;
-            // 
-            // toolStripButtonPLay
-            // 
-            this.toolStripButtonPLay.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPLay.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPLay.Image")));
-            this.toolStripButtonPLay.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPLay.Name = "toolStripButtonPLay";
-            this.toolStripButtonPLay.Size = new System.Drawing.Size(21, 20);
-            this.toolStripButtonPLay.Text = "Play";
-            this.toolStripButtonPLay.Click += new System.EventHandler(this.toolStripButtonPLay_Click);
-            // 
-            // toolStripButtonPause
-            // 
-            this.toolStripButtonPause.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPause.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPause.Image")));
-            this.toolStripButtonPause.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPause.Name = "toolStripButtonPause";
-            this.toolStripButtonPause.Size = new System.Drawing.Size(21, 20);
-            this.toolStripButtonPause.Text = "Pause";
-            this.toolStripButtonPause.Click += new System.EventHandler(this.toolStripButtonPause_Click);
-            // 
-            // toolStripButtonStop
-            // 
-            this.toolStripButtonStop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonStop.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonStop.Image")));
-            this.toolStripButtonStop.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonStop.Name = "toolStripButtonStop";
-            this.toolStripButtonStop.Size = new System.Drawing.Size(21, 20);
-            this.toolStripButtonStop.Text = "Stop";
-            this.toolStripButtonStop.Click += new System.EventHandler(this.toolStripButtonStop_Click);
-            // 
-            // toolStripButtonNext
-            // 
-            this.toolStripButtonNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonNext.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonNext.Image")));
-            this.toolStripButtonNext.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonNext.Name = "toolStripButtonNext";
-            this.toolStripButtonNext.Size = new System.Drawing.Size(21, 20);
-            this.toolStripButtonNext.Text = "Next";
-            this.toolStripButtonNext.Click += new System.EventHandler(this.toolStripButtonNext_Click);
-            // 
-            // toolStripButtonPrevious
-            // 
-            this.toolStripButtonPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonPrevious.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPrevious.Image")));
-            this.toolStripButtonPrevious.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPrevious.Name = "toolStripButtonPrevious";
-            this.toolStripButtonPrevious.Size = new System.Drawing.Size(21, 20);
-            this.toolStripButtonPrevious.Text = "Previous";
-            this.toolStripButtonPrevious.Click += new System.EventHandler(this.toolStripButtonPrevious_Click);
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonPLay,
-            this.toolStripButtonPause,
-            this.toolStripButtonStop,
-            this.toolStripButtonNext,
-            this.toolStripButtonPrevious,
-            this.toolStripButtonRepeat});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(24, 576);
-            this.toolStrip1.TabIndex = 12;
-            // 
-            // toolStripButtonRepeat
-            // 
-            this.toolStripButtonRepeat.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRepeat.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRepeat.Image")));
-            this.toolStripButtonRepeat.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRepeat.Name = "toolStripButtonRepeat";
-            this.toolStripButtonRepeat.Size = new System.Drawing.Size(21, 20);
-            this.toolStripButtonRepeat.Text = "Repeat";
-            this.toolStripButtonRepeat.Click += new System.EventHandler(this.toolStripButtonRepeat_Click);
             // 
             // notifyIcon
             // 
@@ -393,39 +276,6 @@
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
-            // ButtonClose
-            // 
-            this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonClose.Image = global::MediaPlayer.Properties.Resources.cancel;
-            this.ButtonClose.Location = new System.Drawing.Point(495, 4);
-            this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(20, 20);
-            this.ButtonClose.TabIndex = 13;
-            this.ButtonClose.UseVisualStyleBackColor = false;
-            this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
-            // 
-            // ButtonRollUp
-            // 
-            this.ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonRollUp.Image = global::MediaPlayer.Properties.Resources.minus;
-            this.ButtonRollUp.Location = new System.Drawing.Point(469, 4);
-            this.ButtonRollUp.Name = "ButtonRollUp";
-            this.ButtonRollUp.Size = new System.Drawing.Size(20, 20);
-            this.ButtonRollUp.TabIndex = 14;
-            this.ButtonRollUp.UseVisualStyleBackColor = false;
-            this.ButtonRollUp.Click += new System.EventHandler(this.ButtonRollUp_Click);
-            // 
-            // OpenFileButton
-            // 
-            this.OpenFileButton.Location = new System.Drawing.Point(27, 571);
-            this.OpenFileButton.Name = "OpenFileButton";
-            this.OpenFileButton.Size = new System.Drawing.Size(75, 23);
-            this.OpenFileButton.TabIndex = 15;
-            this.OpenFileButton.Text = "Open file";
-            this.OpenFileButton.UseVisualStyleBackColor = true;
-            this.OpenFileButton.Click += new System.EventHandler(this.OpenFileButton_Click);
-            // 
             // TotalDurationLabel
             // 
             this.TotalDurationLabel.AutoSize = true;
@@ -445,18 +295,142 @@
             this.checkBoxSavePathToFolder.Text = "Save path to folder";
             this.checkBoxSavePathToFolder.UseVisualStyleBackColor = true;
             // 
+            // RemoveFilesButton
+            // 
+            this.RemoveFilesButton.BackgroundImage = global::MediaPlayer.Properties.Resources.minus;
+            this.RemoveFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.RemoveFilesButton.Location = new System.Drawing.Point(483, 438);
+            this.RemoveFilesButton.Name = "RemoveFilesButton";
+            this.RemoveFilesButton.Size = new System.Drawing.Size(30, 30);
+            this.RemoveFilesButton.TabIndex = 22;
+            this.RemoveFilesButton.UseVisualStyleBackColor = true;
+            this.RemoveFilesButton.Click += new System.EventHandler(this.buttonRemoveFiles_Click);
+            // 
+            // AddFilesButton
+            // 
+            this.AddFilesButton.BackgroundImage = global::MediaPlayer.Properties.Resources.plus;
+            this.AddFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.AddFilesButton.Location = new System.Drawing.Point(483, 402);
+            this.AddFilesButton.Name = "AddFilesButton";
+            this.AddFilesButton.Size = new System.Drawing.Size(30, 30);
+            this.AddFilesButton.TabIndex = 21;
+            this.AddFilesButton.UseVisualStyleBackColor = true;
+            this.AddFilesButton.Click += new System.EventHandler(this.buttonAddFile_Click);
+            // 
+            // ReplayButton
+            // 
+            this.ReplayButton.BackgroundImage = global::MediaPlayer.Properties.Resources.replay;
+            this.ReplayButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ReplayButton.Location = new System.Drawing.Point(190, 283);
+            this.ReplayButton.Name = "ReplayButton";
+            this.ReplayButton.Size = new System.Drawing.Size(30, 30);
+            this.ReplayButton.TabIndex = 20;
+            this.ReplayButton.UseVisualStyleBackColor = true;
+            this.ReplayButton.Click += new System.EventHandler(this.buttonReplay_Click);
+            // 
+            // PreviousButton
+            // 
+            this.PreviousButton.BackgroundImage = global::MediaPlayer.Properties.Resources.back_1;
+            this.PreviousButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PreviousButton.Location = new System.Drawing.Point(118, 283);
+            this.PreviousButton.Name = "PreviousButton";
+            this.PreviousButton.Size = new System.Drawing.Size(30, 30);
+            this.PreviousButton.TabIndex = 19;
+            this.PreviousButton.UseVisualStyleBackColor = true;
+            this.PreviousButton.Click += new System.EventHandler(this.buttonPrevious_Click);
+            // 
+            // NextButton
+            // 
+            this.NextButton.BackgroundImage = global::MediaPlayer.Properties.Resources.next_1;
+            this.NextButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.NextButton.Location = new System.Drawing.Point(154, 283);
+            this.NextButton.Name = "NextButton";
+            this.NextButton.Size = new System.Drawing.Size(30, 30);
+            this.NextButton.TabIndex = 18;
+            this.NextButton.UseVisualStyleBackColor = true;
+            this.NextButton.Click += new System.EventHandler(this.buttonNext_Click);
+            // 
+            // ButtonRollUp
+            // 
+            this.ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ButtonRollUp.Image = global::MediaPlayer.Properties.Resources.minus;
+            this.ButtonRollUp.Location = new System.Drawing.Point(469, 4);
+            this.ButtonRollUp.Name = "ButtonRollUp";
+            this.ButtonRollUp.Size = new System.Drawing.Size(20, 20);
+            this.ButtonRollUp.TabIndex = 14;
+            this.ButtonRollUp.UseVisualStyleBackColor = false;
+            this.ButtonRollUp.Click += new System.EventHandler(this.ButtonRollUp_Click);
+            // 
+            // ButtonClose
+            // 
+            this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ButtonClose.Image = global::MediaPlayer.Properties.Resources.cancel;
+            this.ButtonClose.Location = new System.Drawing.Point(495, 4);
+            this.ButtonClose.Name = "ButtonClose";
+            this.ButtonClose.Size = new System.Drawing.Size(20, 20);
+            this.ButtonClose.TabIndex = 13;
+            this.ButtonClose.UseVisualStyleBackColor = false;
+            this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
+            // 
+            // PauseButton
+            // 
+            this.PauseButton.BackgroundImage = global::MediaPlayer.Properties.Resources.pause;
+            this.PauseButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PauseButton.Location = new System.Drawing.Point(46, 283);
+            this.PauseButton.Name = "PauseButton";
+            this.PauseButton.Size = new System.Drawing.Size(30, 30);
+            this.PauseButton.TabIndex = 11;
+            this.PauseButton.UseVisualStyleBackColor = true;
+            this.PauseButton.Click += new System.EventHandler(this.ButtonPause_Click);
+            // 
+            // titlePictureBox
+            // 
+            this.titlePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.titlePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.titlePictureBox.Location = new System.Drawing.Point(12, 27);
+            this.titlePictureBox.Name = "titlePictureBox";
+            this.titlePictureBox.Size = new System.Drawing.Size(465, 250);
+            this.titlePictureBox.TabIndex = 10;
+            this.titlePictureBox.TabStop = false;
+            // 
+            // StopButton
+            // 
+            this.StopButton.BackgroundImage = global::MediaPlayer.Properties.Resources.stop;
+            this.StopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.StopButton.Location = new System.Drawing.Point(82, 283);
+            this.StopButton.Name = "StopButton";
+            this.StopButton.Size = new System.Drawing.Size(30, 30);
+            this.StopButton.TabIndex = 2;
+            this.StopButton.UseVisualStyleBackColor = true;
+            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
+            // 
+            // PlayButton
+            // 
+            this.PlayButton.BackgroundImage = global::MediaPlayer.Properties.Resources.play_button;
+            this.PlayButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PlayButton.Location = new System.Drawing.Point(10, 283);
+            this.PlayButton.Name = "PlayButton";
+            this.PlayButton.Size = new System.Drawing.Size(30, 30);
+            this.PlayButton.TabIndex = 1;
+            this.PlayButton.UseVisualStyleBackColor = true;
+            this.PlayButton.Click += new System.EventHandler(this.button1_Click);
+            // 
             // AudioPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(520, 600);
+            this.ClientSize = new System.Drawing.Size(520, 580);
+            this.Controls.Add(this.RemoveFilesButton);
+            this.Controls.Add(this.AddFilesButton);
+            this.Controls.Add(this.ReplayButton);
+            this.Controls.Add(this.PreviousButton);
+            this.Controls.Add(this.NextButton);
             this.Controls.Add(this.checkBoxSavePathToFolder);
             this.Controls.Add(this.TotalDurationLabel);
-            this.Controls.Add(this.OpenFileButton);
             this.Controls.Add(this.ButtonRollUp);
             this.Controls.Add(this.ButtonClose);
-            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.PauseButton);
             this.Controls.Add(this.titlePictureBox);
             this.Controls.Add(this.checkBoxRepeatCircle);
@@ -466,24 +440,23 @@
             this.Controls.Add(this.TrackBarAudio);
             this.Controls.Add(this.OpenFolderButton);
             this.Controls.Add(this.StopButton);
-            this.Controls.Add(this.StartButton);
+            this.Controls.Add(this.PlayButton);
             this.Controls.Add(this.listBoxMedia);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(520, 600);
-            this.MinimumSize = new System.Drawing.Size(520, 600);
+            this.MaximumSize = new System.Drawing.Size(520, 680);
+            this.MinimumSize = new System.Drawing.Size(520, 580);
             this.Name = "AudioPlayer";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AudioPlayer";
             this.Load += new System.EventHandler(this.AudioPlayer_Load);
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).EndInit();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.contextMenuStripNI.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -492,7 +465,7 @@
         #endregion
 
         private System.Windows.Forms.ListBox listBoxMedia;
-        private System.Windows.Forms.Button StartButton;
+        private System.Windows.Forms.Button PlayButton;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button OpenFolderButton;
         private System.Windows.Forms.TrackBar TrackBarAudio;
@@ -506,13 +479,6 @@
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
         private System.Windows.Forms.PictureBox titlePictureBox;
         private System.Windows.Forms.Button PauseButton;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPLay;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPause;
-        private System.Windows.Forms.ToolStripButton toolStripButtonStop;
-        private System.Windows.Forms.ToolStripButton toolStripButtonNext;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPrevious;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonRepeat;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button ButtonClose;
         private System.Windows.Forms.Button ButtonRollUp;
@@ -525,12 +491,16 @@
         private System.Windows.Forms.ToolStripMenuItem previousToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.Button OpenFileButton;
         private System.Windows.Forms.Label TotalDurationLabel;
         private System.Windows.Forms.CheckBox checkBoxSavePathToFolder;
-        private System.Windows.Forms.ToolStripMenuItem ChooseColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ChooseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator dsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFilesToolStripMenuItem;
+        private System.Windows.Forms.Button NextButton;
+        private System.Windows.Forms.Button PreviousButton;
+        private System.Windows.Forms.Button ReplayButton;
+        private System.Windows.Forms.Button AddFilesButton;
+        private System.Windows.Forms.Button RemoveFilesButton;
     }
 }
 

@@ -26,6 +26,17 @@ namespace MediaPlayer
         private string PathToFolder = null;
         private bool isPaused = false;
 
+        ToolTip openFilesToolTip;
+        ToolTip openFolderToolTip;
+        ToolTip removeFilesToolTip;
+        ToolTip playAudioToolTip;
+        ToolTip pauseAudioToolTip;
+        ToolTip stopAudioToolTip;
+        ToolTip nextAudioToolTip;
+        ToolTip previousAudioToolTip;
+        ToolTip replayAudioToolTip;
+
+
         private List<string> CurrentPlaylist = new List<string>();
 
         public AudioPlayer(string[] args)
@@ -39,6 +50,7 @@ namespace MediaPlayer
 
             this.timer.Interval = 1000;
 
+            InitializeToolTips();
             InitializeCustomGraphic();
             RegisterOnEvents();
 
@@ -56,6 +68,36 @@ namespace MediaPlayer
                 }
                 PlaySound();
             }
+        }
+
+        private void InitializeToolTips()
+        {
+            openFilesToolTip = new ToolTip();
+            openFilesToolTip.SetToolTip(AddFilesButton, "Add audios");
+
+            openFolderToolTip = new ToolTip();
+            openFolderToolTip.SetToolTip(OpenFolderButton, "Open folder");
+
+            removeFilesToolTip = new ToolTip();
+            removeFilesToolTip.SetToolTip(RemoveFilesButton, "Remove audios");
+
+            playAudioToolTip = new ToolTip();
+            playAudioToolTip.SetToolTip(PlayButton, "Play");
+
+            pauseAudioToolTip = new ToolTip();
+            pauseAudioToolTip.SetToolTip(PauseButton, "Pause");
+
+            stopAudioToolTip = new ToolTip();
+            stopAudioToolTip.SetToolTip(StopButton, "Stop");
+
+            nextAudioToolTip = new ToolTip();
+            nextAudioToolTip.SetToolTip(NextButton, "Next");
+
+            previousAudioToolTip = new ToolTip();
+            previousAudioToolTip.SetToolTip(PreviousButton, "Previous");
+
+            replayAudioToolTip = new ToolTip();
+            replayAudioToolTip.SetToolTip(ReplayButton, "Replay");
         }
 
         private void RegisterOnEvents()
@@ -78,16 +120,11 @@ namespace MediaPlayer
             this.menuStrip1.MouseDown += MenuStrip1_MouseDown;
             this.menuStrip1.MouseMove += MenuStrip1_MouseMove;
 
-            this.toolStrip1.MouseDown += ToolStrip1_MouseDown;
-            this.toolStrip1.MouseMove += ToolStrip1_MouseMove;
-
             this.FormClosing += AudioPlayer_FormClosing;
 
         }
-
         private void InitializeCustomGraphic()
         {
-            this.toolStrip1.Renderer = new ToolStripExtraRenderer();
             this.contextMenuStripNI.Renderer = new ContextMenuStripExtraRenderer();
         }
 
@@ -143,9 +180,8 @@ namespace MediaPlayer
             if (e.KeyData == Keys.Enter)
                 PlaySound();
             else if (e.KeyData == Keys.Delete && listBoxMedia.SelectedIndex != -1)
-                listBoxMedia.Items.RemoveAt(listBoxMedia.SelectedIndex);
+                RemoveFiles();
         }
-
         private void ListBoxMedia_DragEnter(object sender, DragEventArgs e)
         {
             string[] FileList = (string[])e.Data.GetData(DataFormats.FileDrop, false);
@@ -276,7 +312,7 @@ namespace MediaPlayer
                 reader.Dispose();
                 reader = null;
             }
-            StartButton.Enabled = true;
+            PlayButton.Enabled = true;
             this.TrackBarAudio.Value = 0;
             if (listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
             {
@@ -292,6 +328,9 @@ namespace MediaPlayer
 
         private void StopButton_Click(object sender, EventArgs e) => StopPlaying();
         private void SelectFolder_Click(object sender, EventArgs e) => OpenFolder();
+        private void buttonNext_Click(object sender, EventArgs e) => NextAudio();
+        private void buttonPrevious_Click(object sender, EventArgs e) => PreviousAudio();
+        private void buttonReplay_Click(object sender, EventArgs e) => Replay();
 
         private void OpenFolder()
         {
@@ -439,19 +478,12 @@ namespace MediaPlayer
             this.ButtonRollUp.BackgroundImage = Properties.Resources.minus;
             this.ButtonRollUp.BackgroundImageLayout = ImageLayout.Stretch;
 
-            this.toolStripButtonPLay.Image = new Bitmap(Properties.Resources.play_button);
-            this.toolStripButtonPause.Image = new Bitmap(Properties.Resources.pause);
-            this.toolStripButtonStop.Image = new Bitmap(Properties.Resources.stop);
-            this.toolStripButtonNext.Image = new Bitmap(Properties.Resources.next_1);
-            this.toolStripButtonPrevious.Image = new Bitmap(Properties.Resources.back_1);
-            this.toolStripButtonRepeat.Image = new Bitmap(Properties.Resources.replay);
             this.Icon = Icon.FromHandle(Properties.Resources.music_player.GetHicon());
 
             this.PauseButton.Image = new Bitmap(Properties.Resources.stop);
 
             this.BackColor = Color.GhostWhite;
             this.menuStrip1.BackColor = Color.GhostWhite;
-            this.toolStrip1.BackColor = Color.GhostWhite;
 
             this.listBoxMedia.BackColor = Color.GhostWhite;
         }
@@ -489,7 +521,6 @@ namespace MediaPlayer
 
                 this.BackColor = colorDialog.Color;
                 this.menuStrip1.BackColor = colorDialog.Color;
-                this.toolStrip1.BackColor = colorDialog.Color;
 
                 this.listBoxMedia.BackColor = colorDialog.Color;
             }
@@ -521,7 +552,7 @@ namespace MediaPlayer
                 reader.Dispose();
                 reader = null;
             }
-            StartButton.Enabled = true;
+            PlayButton.Enabled = true;
             this.TrackBarAudio.Value = 0;
             isPaused = false;
             timer.Stop();
@@ -529,6 +560,7 @@ namespace MediaPlayer
         }
 
         private void toolStripButtonNext_Click(object sender, EventArgs e) => NextAudio();
+        private void toolStripButtonPrevious_Click(object sender, EventArgs e) => PreviousAudio();
 
         private void NextAudio()
         {
@@ -536,31 +568,40 @@ namespace MediaPlayer
                 return;
             else
             {
-                if (this.listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
-                    this.listBoxMedia.SelectedIndex++;
+                int tmpPos = CurrentPositionInListMedia;
+                if (this.listBoxMedia.SelectedIndex == listBoxMedia.Items.Count - 1 || this.listBoxMedia.SelectedIndex == -1)
+                    tmpPos = 0;
                 else
-                    this.listBoxMedia.SelectedIndex = 0;
+                    tmpPos = ++CurrentPositionInListMedia;
+
+                this.listBoxMedia.ClearSelected();
+                this.listBoxMedia.SetSelected(tmpPos, true);
                 PlaySound();
             }
         }
-
-        private void toolStripButtonPrevious_Click(object sender, EventArgs e) => PreviousAudio();
 
         private void PreviousAudio()
         {
             if (listBoxMedia.Items.Count == 0)
                 return;
             else
-            {
-                if (this.listBoxMedia.SelectedIndex == 0 || this.listBoxMedia.SelectedIndex == -1)
-                    this.listBoxMedia.SelectedIndex = listBoxMedia.Items.Count - 1;
+            {              
+                int tmpPos = CurrentPositionInListMedia;
+
+                if (CurrentPositionInListMedia == 0 || CurrentPositionInListMedia == -1)
+                    tmpPos = listBoxMedia.Items.Count - 1;
                 else
-                    this.listBoxMedia.SelectedIndex--;
+                    tmpPos = --CurrentPositionInListMedia;
+                
+                this.listBoxMedia.ClearSelected();
+                this.listBoxMedia.SetSelected(tmpPos, true);
                 PlaySound();
             }
         }
 
-        private void toolStripButtonRepeat_Click(object sender, EventArgs e)
+        private void toolStripButtonRepeat_Click(object sender, EventArgs e) => Replay();
+
+        private void Replay()
         {
             if (waveOut != null)
                 PlaySound();
@@ -608,6 +649,19 @@ namespace MediaPlayer
                     if (fileDialog.FileNames.Length == 1)
                         PlaySound();
                 }
+            }
+        }
+
+        private void buttonAddFile_Click(object sender, EventArgs e) => OpenFiles();
+        private void buttonRemoveFiles_Click(object sender, EventArgs e) => RemoveFiles();
+
+        private void RemoveFiles()
+        {
+            if(listBoxMedia.SelectedItems != null)
+            {
+                var selectedItems = listBoxMedia.SelectedItems;
+                for (int i = selectedItems.Count - 1; i >= 0; --i)
+                    this.listBoxMedia.Items.Remove(selectedItems[i]);
             }
         }
     }
