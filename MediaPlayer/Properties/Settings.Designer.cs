@@ -70,5 +70,17 @@ namespace MediaPlayer.Properties {
                 this["repeatByCircle"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string pathToImage {
+            get {
+                return ((string)(this["pathToImage"]));
+            }
+            set {
+                this["pathToImage"] = value;
+            }
+        }
     }
 }

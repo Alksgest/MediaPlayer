@@ -24,6 +24,7 @@ namespace MediaPlayer
 
         private int CurrentPositionInListMedia = -1;
         private string PathToFolder = null;
+        private string PathToImage = null;
         private bool isPaused = false;
 
         ToolTip openFilesToolTip;
@@ -117,8 +118,8 @@ namespace MediaPlayer
             this.MouseDown += AudioPlayer_MouseDown;
             this.MouseMove += AudioPlayer_MouseMove;
 
-            this.menuStrip1.MouseDown += MenuStrip1_MouseDown;
-            this.menuStrip1.MouseMove += MenuStrip1_MouseMove;
+            this.mainMenuStrip.MouseDown += MenuStrip1_MouseDown;
+            this.mainMenuStrip.MouseMove += MenuStrip1_MouseMove;
 
             this.FormClosing += AudioPlayer_FormClosing;
 
@@ -136,7 +137,13 @@ namespace MediaPlayer
             Properties.Settings.Default.savePathToFolder = this.checkBoxSavePathToFolder.Checked;
             Properties.Settings.Default.currentVolume = this.SoundLevelTrackBar.Value;
             if (Properties.Settings.Default.savePathToFolder)
-                Properties.Settings.Default.pathToFolder = PathToFolder;
+            {
+                Properties.Settings.Default.pathToFolder = this.PathToFolder;
+                Properties.Settings.Default.pathToImage = this.PathToImage;
+            }
+            else
+                this.PathToImage = null;
+
             Properties.Settings.Default.Save();
         }
 
@@ -336,10 +343,9 @@ namespace MediaPlayer
         {
             using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
-                dialog.ShowDialog();
-
-                try
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
+
                     var files = Directory.EnumerateFiles(dialog.SelectedPath, "*.*", SearchOption.TopDirectoryOnly)
                                .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg"));
                     PathToFolder = dialog.SelectedPath;
@@ -350,10 +356,12 @@ namespace MediaPlayer
                         PathHolder item = new PathHolder(str);
                         listBoxMedia.Items.Add(item);
                     }
-
-                    LoadTitlePicture();
+                    if (listBoxMedia.Items.Count != 0)
+                        LoadTitleImage();
+                    else
+                        LoadDefaultImage();
                 }
-                catch
+                else
                 {
                     NotifyIcon notifyIcon = new NotifyIcon
                     {
@@ -382,10 +390,10 @@ namespace MediaPlayer
             LoadImages();
 
             if (Properties.Settings.Default.savePathToFolder)
-            {
                 LoadPreviousAudioList();
-                LoadTitlePicture();
-            }
+
+            if (File.Exists(Properties.Settings.Default.pathToImage))
+                titlePictureBox.Image = new Bitmap(Properties.Settings.Default.pathToImage);
             else
                 LoadDefaultImage();
         }
@@ -404,9 +412,10 @@ namespace MediaPlayer
             this.checkBoxRepeatCircle.Checked = Properties.Settings.Default.repeatByCircle;
             this.checkBoxSavePathToFolder.Checked = Properties.Settings.Default.savePathToFolder;
             this.SoundLevelTrackBar.Value = Properties.Settings.Default.currentVolume;
+            this.PathToImage = Properties.Settings.Default.pathToFolder;
         }
 
-        private void LoadTitlePicture()
+        private void LoadTitleImage()
         {
             if (!String.IsNullOrEmpty(PathToFolder))
             {
@@ -414,8 +423,8 @@ namespace MediaPlayer
                       .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
                 if (images.Length != 0)
                 {
-                    titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     titlePictureBox.Image = new Bitmap(images[0]);
+                    PathToImage = images[0];
                 }
                 else if (Directory.Exists(PathToFolder + "//Cover"))
                 {
@@ -423,8 +432,9 @@ namespace MediaPlayer
                       .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
                     if (images.Length != 0)
                     {
-                        titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
                         titlePictureBox.Image = new Bitmap(images[0]);
+                        PathToImage = images[0];
                     }
                 }
                 else if (Directory.Exists(PathToFolder + "//Covers"))
@@ -433,11 +443,12 @@ namespace MediaPlayer
                       .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
                     if (images.Length != 0)
                     {
-                        titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                         titlePictureBox.Image = new Bitmap(images[0]);
+                        PathToImage = images[0];
                     }
                 }
             }
+            
             else
                 LoadDefaultImage(); 
         }
@@ -483,7 +494,7 @@ namespace MediaPlayer
             this.PauseButton.Image = new Bitmap(Properties.Resources.stop);
 
             this.BackColor = Color.GhostWhite;
-            this.menuStrip1.BackColor = Color.GhostWhite;
+            this.mainMenuStrip.BackColor = Color.GhostWhite;
 
             this.listBoxMedia.BackColor = Color.GhostWhite;
         }
@@ -504,7 +515,9 @@ namespace MediaPlayer
                 reader.Dispose();
                 reader = null;
             }
-            this.titlePictureBox.Image = null;
+            LoadDefaultImage();
+            PathToFolder = null;
+            PathToImage = null;
         }
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => OpenFolder();
@@ -514,15 +527,17 @@ namespace MediaPlayer
 
         private void ShowColoDialog()
         {
-            ColorDialog colorDialog = new ColorDialog();
-
-            if (colorDialog.ShowDialog() == DialogResult.OK)
+            using (ColorDialog colorDialog = new ColorDialog())
             {
 
-                this.BackColor = colorDialog.Color;
-                this.menuStrip1.BackColor = colorDialog.Color;
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
 
-                this.listBoxMedia.BackColor = colorDialog.Color;
+                    this.BackColor = colorDialog.Color;
+                    this.mainMenuStrip.BackColor = colorDialog.Color;
+
+                    this.listBoxMedia.BackColor = colorDialog.Color;
+                }
             }
         }
 
@@ -556,7 +571,7 @@ namespace MediaPlayer
             this.TrackBarAudio.Value = 0;
             isPaused = false;
             timer.Stop();
-            this.TimeLabel.Text = "0.0";
+            this.TimeLabel.Text = "00.00.00";
         }
 
         private void toolStripButtonNext_Click(object sender, EventArgs e) => NextAudio();
