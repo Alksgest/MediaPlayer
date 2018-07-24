@@ -16,6 +16,8 @@ namespace MediaPlayer
 {
     public partial class AudioPlayer : Form
     {
+        private PlaylistForm playlistForm;
+
         private WaveOut waveOut;
         private AudioFileReader reader;
 
@@ -122,8 +124,16 @@ namespace MediaPlayer
             this.mainMenuStrip.MouseMove += MainMenuStrip_MouseMove;
 
             this.FormClosing += AudioPlayer_FormClosing;
+            this.LocationChanged += AudioPlayer_LocationChanged;
 
         }
+
+        private void AudioPlayer_LocationChanged(object sender, EventArgs e)
+        {
+            if (playlistForm != null)
+                this.playlistForm.Location = new Point(this.Location.X + 10 + this.Width, this.Location.Y);
+        }
+
         private void InitializeCustomGraphic()
         {
             this.contextMenuStripNI.Renderer = new ContextMenuStripExtraRenderer();
@@ -169,14 +179,20 @@ namespace MediaPlayer
 
         private void NotifyIcon_DoubleClick(object sender, EventArgs e)
         {
-            Show();
+            this.Show();
             this.WindowState = FormWindowState.Normal;
+            if (playlistForm != null)
+                playlistForm.Show();
         }
 
         private void AudioPlayer_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized)
-                Hide();
+            {
+                this.Hide();
+                if (playlistForm != null)
+                    playlistForm.Hide();
+            }
 
         }
 
@@ -482,20 +498,12 @@ namespace MediaPlayer
         {
             this.notifyIcon.Icon = Icon.FromHandle(Properties.Resources.music_player.GetHicon());
 
-            this.ButtonClose.BackgroundImage = Properties.Resources.cancel;
-            this.ButtonClose.BackgroundImageLayout = ImageLayout.Stretch;
-
-            this.ButtonRollUp.BackgroundImage = Properties.Resources.minus;
-            this.ButtonRollUp.BackgroundImageLayout = ImageLayout.Stretch;
-
             this.Icon = Icon.FromHandle(Properties.Resources.music_player.GetHicon());
-
-            this.PauseButton.Image = new Bitmap(Properties.Resources.stop);
 
             this.BackColor = Color.GhostWhite;
             this.mainMenuStrip.BackColor = Color.GhostWhite;
 
-            this.listBoxMedia.BackColor = Color.GhostWhite;
+           // this.listBoxMedia.BackColor = Color.GhostWhite;
         }
         private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentList();
 
@@ -535,7 +543,10 @@ namespace MediaPlayer
                     this.BackColor = colorDialog.Color;
                     this.mainMenuStrip.BackColor = colorDialog.Color;
 
-                    this.listBoxMedia.BackColor = colorDialog.Color;
+                    //this.listBoxMedia.BackColor = colorDialog.Color;
+
+                    if(playlistForm != null)
+                        playlistForm.BackColor = colorDialog.Color; ;
                 }
             }
         }
@@ -676,6 +687,17 @@ namespace MediaPlayer
                 var selectedItems = listBoxMedia.SelectedItems;
                 for (int i = selectedItems.Count - 1; i >= 0; --i)
                     this.listBoxMedia.Items.Remove(selectedItems[i]);
+            }
+        }
+
+        private void PlaylistFormButton_Click(object sender, EventArgs e)
+        {
+            if (playlistForm == null)
+            {
+                int x = this.Location.X + this.Width;
+                int y = this.Location.Y;
+                playlistForm = new PlaylistForm(this);
+                playlistForm.Show();
             }
         }
     }

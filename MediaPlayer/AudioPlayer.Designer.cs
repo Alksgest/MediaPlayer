@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.listBoxMedia = new System.Windows.Forms.ListBox();
-            this.OpenFolderButton = new System.Windows.Forms.Button();
             this.TrackBarAudio = new System.Windows.Forms.TrackBar();
             this.SoundLevelTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeLabel = new System.Windows.Forms.Label();
@@ -55,6 +54,7 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TotalDurationLabel = new System.Windows.Forms.Label();
             this.checkBoxSavePathToFolder = new System.Windows.Forms.CheckBox();
+            this.PlaylistFormButton = new System.Windows.Forms.Button();
             this.RemoveFilesButton = new System.Windows.Forms.Button();
             this.AddFilesButton = new System.Windows.Forms.Button();
             this.ReplayButton = new System.Windows.Forms.Button();
@@ -64,6 +64,7 @@
             this.ButtonClose = new System.Windows.Forms.Button();
             this.PauseButton = new System.Windows.Forms.Button();
             this.titlePictureBox = new System.Windows.Forms.PictureBox();
+            this.OpenFolderButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
@@ -82,17 +83,6 @@
             this.listBoxMedia.Size = new System.Drawing.Size(465, 199);
             this.listBoxMedia.TabIndex = 0;
             this.listBoxMedia.SelectedIndexChanged += new System.EventHandler(this.listBoxMedia_SelectedIndexChanged);
-            // 
-            // OpenFolderButton
-            // 
-            this.OpenFolderButton.BackgroundImage = global::MediaPlayer.Properties.Resources.openFolder;
-            this.OpenFolderButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.OpenFolderButton.Location = new System.Drawing.Point(483, 366);
-            this.OpenFolderButton.Name = "OpenFolderButton";
-            this.OpenFolderButton.Size = new System.Drawing.Size(30, 30);
-            this.OpenFolderButton.TabIndex = 3;
-            this.OpenFolderButton.UseVisualStyleBackColor = true;
-            this.OpenFolderButton.Click += new System.EventHandler(this.SelectFolder_Click);
             // 
             // TrackBarAudio
             // 
@@ -147,7 +137,7 @@
             this.fileToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(520, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(504, 24);
             this.mainMenuStrip.TabIndex = 9;
             this.mainMenuStrip.Text = "Main menu";
             // 
@@ -295,6 +285,17 @@
             this.checkBoxSavePathToFolder.Text = "Save path to folder";
             this.checkBoxSavePathToFolder.UseVisualStyleBackColor = true;
             // 
+            // PlaylistFormButton
+            // 
+            this.PlaylistFormButton.BackgroundImage = global::MediaPlayer.Properties.Resources.list;
+            this.PlaylistFormButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.PlaylistFormButton.Location = new System.Drawing.Point(483, 312);
+            this.PlaylistFormButton.Name = "PlaylistFormButton";
+            this.PlaylistFormButton.Size = new System.Drawing.Size(30, 30);
+            this.PlaylistFormButton.TabIndex = 23;
+            this.PlaylistFormButton.UseVisualStyleBackColor = true;
+            this.PlaylistFormButton.Click += new System.EventHandler(this.PlaylistFormButton_Click);
+            // 
             // RemoveFilesButton
             // 
             this.RemoveFilesButton.BackgroundImage = global::MediaPlayer.Properties.Resources.minus;
@@ -352,8 +353,8 @@
             // 
             // ButtonRollUp
             // 
+            this.ButtonRollUp.BackgroundImage = global::MediaPlayer.Properties.Resources.minus;
             this.ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonRollUp.Image = global::MediaPlayer.Properties.Resources.minus;
             this.ButtonRollUp.Location = new System.Drawing.Point(469, 4);
             this.ButtonRollUp.Name = "ButtonRollUp";
             this.ButtonRollUp.Size = new System.Drawing.Size(20, 20);
@@ -364,8 +365,8 @@
             // ButtonClose
             // 
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ButtonClose.BackgroundImage = global::MediaPlayer.Properties.Resources.cancel;
             this.ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonClose.Image = global::MediaPlayer.Properties.Resources.cancel;
             this.ButtonClose.Location = new System.Drawing.Point(495, 4);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(20, 20);
@@ -396,6 +397,17 @@
             this.titlePictureBox.TabIndex = 10;
             this.titlePictureBox.TabStop = false;
             // 
+            // OpenFolderButton
+            // 
+            this.OpenFolderButton.BackgroundImage = global::MediaPlayer.Properties.Resources.openFolder;
+            this.OpenFolderButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.OpenFolderButton.Location = new System.Drawing.Point(483, 366);
+            this.OpenFolderButton.Name = "OpenFolderButton";
+            this.OpenFolderButton.Size = new System.Drawing.Size(30, 30);
+            this.OpenFolderButton.TabIndex = 3;
+            this.OpenFolderButton.UseVisualStyleBackColor = true;
+            this.OpenFolderButton.Click += new System.EventHandler(this.SelectFolder_Click);
+            // 
             // StopButton
             // 
             this.StopButton.BackgroundImage = global::MediaPlayer.Properties.Resources.stop;
@@ -424,6 +436,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(520, 580);
+            this.Controls.Add(this.PlaylistFormButton);
             this.Controls.Add(this.RemoveFilesButton);
             this.Controls.Add(this.AddFilesButton);
             this.Controls.Add(this.ReplayButton);
@@ -447,7 +460,7 @@
             this.Controls.Add(this.mainMenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.mainMenuStrip;
-            this.MaximumSize = new System.Drawing.Size(520, 680);
+            this.MaximumSize = new System.Drawing.Size(520, 580);
             this.MinimumSize = new System.Drawing.Size(520, 580);
             this.Name = "AudioPlayer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -503,6 +516,7 @@
         private System.Windows.Forms.Button ReplayButton;
         private System.Windows.Forms.Button AddFilesButton;
         private System.Windows.Forms.Button RemoveFilesButton;
+        private System.Windows.Forms.Button PlaylistFormButton;
     }
 }
 
