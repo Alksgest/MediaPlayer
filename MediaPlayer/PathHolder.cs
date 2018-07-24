@@ -1,9 +1,12 @@
-﻿namespace MediaPlayer
+﻿using System;
+
+namespace MediaPlayer
 {
+    [Serializable]
     public class PathHolder
     {
-        public string Title;
-        public string FullPath;
+        public string Title { get; }
+        public string FullPath { get; }
 
         public PathHolder(string fullPath)
         {

@@ -690,10 +690,22 @@ namespace MediaPlayer
             }
         }
 
-        private void PlaylistFormButton_Click(object sender, EventArgs e)
+        private void PlaylistFormButton_Click(object sender, EventArgs e) => CreatePlaylistForm();
+
+        private void CreatePlaylistForm()
         {
             if (playlistForm == null)
             {
+                int x = this.Location.X + this.Width;
+                int y = this.Location.Y;
+                playlistForm = new PlaylistForm(this);
+                playlistForm.Show();
+            }
+            else
+            {
+                playlistForm.Close();
+                playlistForm.Dispose();
+                playlistForm = null;
                 int x = this.Location.X + this.Width;
                 int y = this.Location.Y;
                 playlistForm = new PlaylistForm(this);

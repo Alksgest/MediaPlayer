@@ -97,6 +97,7 @@
       <DependentUpon>AudioPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="PathHolder.cs" />
+    <Compile Include="PlaylistData.cs" />
     <Compile Include="PlaylistForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,6 +225,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\openFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rename_719022.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

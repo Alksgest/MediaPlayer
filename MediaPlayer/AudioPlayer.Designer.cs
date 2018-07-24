@@ -137,7 +137,7 @@
             this.fileToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(504, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(520, 24);
             this.mainMenuStrip.TabIndex = 9;
             this.mainMenuStrip.Text = "Main menu";
             // 
@@ -478,8 +478,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox listBoxMedia;
         private System.Windows.Forms.Button PlayButton;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.Button OpenFolderButton;
@@ -517,6 +515,7 @@
         private System.Windows.Forms.Button AddFilesButton;
         private System.Windows.Forms.Button RemoveFilesButton;
         private System.Windows.Forms.Button PlaylistFormButton;
+        public System.Windows.Forms.ListBox listBoxMedia;
     }
 }
 
