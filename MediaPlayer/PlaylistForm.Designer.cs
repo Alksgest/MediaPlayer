@@ -31,7 +31,6 @@
             this.mainPanel = new System.Windows.Forms.Panel();
             this.RenamePlaylistButton = new System.Windows.Forms.Button();
             this.PlaylistLabel = new System.Windows.Forms.Label();
-            this.ButtonClose = new System.Windows.Forms.Button();
             this.RemoveFilesButton = new System.Windows.Forms.Button();
             this.AddFilesButton = new System.Windows.Forms.Button();
             this.MainListBox = new System.Windows.Forms.ListBox();
@@ -42,7 +41,6 @@
             // 
             this.mainPanel.Controls.Add(this.RenamePlaylistButton);
             this.mainPanel.Controls.Add(this.PlaylistLabel);
-            this.mainPanel.Controls.Add(this.ButtonClose);
             this.mainPanel.Controls.Add(this.RemoveFilesButton);
             this.mainPanel.Controls.Add(this.AddFilesButton);
             this.mainPanel.Controls.Add(this.MainListBox);
@@ -73,18 +71,6 @@
             this.PlaylistLabel.Size = new System.Drawing.Size(44, 13);
             this.PlaylistLabel.TabIndex = 27;
             this.PlaylistLabel.Text = "Playlists";
-            // 
-            // ButtonClose
-            // 
-            this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ButtonClose.BackgroundImage = global::MediaPlayer.Properties.Resources.cancel;
-            this.ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonClose.Location = new System.Drawing.Point(268, 6);
-            this.ButtonClose.Name = "ButtonClose";
-            this.ButtonClose.Size = new System.Drawing.Size(20, 20);
-            this.ButtonClose.TabIndex = 25;
-            this.ButtonClose.UseVisualStyleBackColor = false;
-            this.ButtonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
             // RemoveFilesButton
             // 
@@ -142,7 +128,6 @@
         private System.Windows.Forms.ListBox MainListBox;
         private System.Windows.Forms.Button RemoveFilesButton;
         private System.Windows.Forms.Button AddFilesButton;
-        private System.Windows.Forms.Button ButtonClose;
         private System.Windows.Forms.Label PlaylistLabel;
         private System.Windows.Forms.Button RenamePlaylistButton;
     }

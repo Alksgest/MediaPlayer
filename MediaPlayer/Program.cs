@@ -7,8 +7,9 @@ using System.Windows.Forms;
 
 namespace MediaPlayer
 {
-    static class Program
+    static class Program 
     {
+        private static List<string> list = new List<string>();
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>

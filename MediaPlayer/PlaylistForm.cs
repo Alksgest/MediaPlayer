@@ -53,7 +53,7 @@ namespace MediaPlayer
         }
 
         private void PlaylistForm_FormClosing(object sender, FormClosingEventArgs e) => SerializeData();
-        private void ButtonClose_Click(object sender, EventArgs e) => this.Close();
+        //private void ButtonClose_Click(object sender, EventArgs e) => this.Close();
         private void SerializeData()
         {
             if (MainListBox.Items.Count == 0)

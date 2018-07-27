@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using NAudio;
 using NAudio.Wave;
 using System.Text.RegularExpressions;
 
@@ -39,6 +35,7 @@ namespace MediaPlayer
         ToolTip nextAudioToolTip;
         ToolTip previousAudioToolTip;
         ToolTip replayAudioToolTip;
+        ToolTip playlistFormButtonToolTip;
 
 
         private List<string> CurrentPlaylist = new List<string>();
@@ -102,6 +99,9 @@ namespace MediaPlayer
 
             replayAudioToolTip = new ToolTip();
             replayAudioToolTip.SetToolTip(ReplayButton, "Replay");
+
+            playlistFormButtonToolTip = new ToolTip();
+            playlistFormButtonToolTip.SetToolTip(PlaylistFormButton, "Playlists");
         }
 
         private void RegisterOnEvents()
@@ -151,6 +151,11 @@ namespace MediaPlayer
             {
                 Properties.Settings.Default.pathToFolder = this.PathToFolder;
                 Properties.Settings.Default.pathToImage = this.PathToImage;
+            }
+            else
+            {
+                Properties.Settings.Default.pathToFolder = null;
+                Properties.Settings.Default.pathToImage = null;
             }
 
             Properties.Settings.Default.Save();
@@ -260,7 +265,7 @@ namespace MediaPlayer
                     this.waveOut.Play();
                 }
                 else
-                    reader.CurrentTime = TimeSpan.FromSeconds((double)this.TrackBarAudio.Value / 1000 * this.reader.TotalTime.TotalSeconds);   
+                    reader.CurrentTime = TimeSpan.FromSeconds((double)this.TrackBarAudio.Value / 1000 * this.reader.TotalTime.TotalSeconds);
             }
             catch { }
         }
@@ -340,7 +345,7 @@ namespace MediaPlayer
             PlayButton.Enabled = true;
             this.TrackBarAudio.Value = 0;
             if (listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
-                NextAudio();           
+                NextAudio();
             else if (this.checkBoxRepeatCircle.Checked)
             {
                 listBoxMedia.ClearSelected();
@@ -464,9 +469,9 @@ namespace MediaPlayer
                     }
                 }
             }
-            
+
             else
-                LoadDefaultImage(); 
+                LoadDefaultImage();
         }
 
         private void LoadPreviousAudioList()
@@ -488,13 +493,13 @@ namespace MediaPlayer
                             listBoxMedia.Items.Add(item);
                         }
                     }
-                    if (!pathToFolderNotEmpty) 
-                        PathToFolder = null;                  
+                    if (!pathToFolderNotEmpty)
+                        PathToFolder = null;
                 }
                 catch { }
             }
         }
-    
+
         private void LoadImages()
         {
             this.notifyIcon.Icon = Icon.FromHandle(Properties.Resources.music_player.GetHicon());
@@ -504,7 +509,7 @@ namespace MediaPlayer
             this.BackColor = Color.GhostWhite;
             this.mainMenuStrip.BackColor = Color.GhostWhite;
 
-           // this.listBoxMedia.BackColor = Color.GhostWhite;
+            // this.listBoxMedia.BackColor = Color.GhostWhite;
         }
         private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentList();
 
@@ -546,7 +551,7 @@ namespace MediaPlayer
 
                     //this.listBoxMedia.BackColor = colorDialog.Color;
 
-                    if(playlistForm != null)
+                    if (playlistForm != null)
                         playlistForm.BackColor = colorDialog.Color; ;
                 }
             }
@@ -611,14 +616,14 @@ namespace MediaPlayer
             if (listBoxMedia.Items.Count == 0)
                 return;
             else
-            {              
+            {
                 int tmpPos = CurrentPositionInListMedia;
 
                 if (CurrentPositionInListMedia == 0 || CurrentPositionInListMedia == -1)
                     tmpPos = listBoxMedia.Items.Count - 1;
                 else
                     tmpPos = --CurrentPositionInListMedia;
-                
+
                 this.listBoxMedia.ClearSelected();
                 this.listBoxMedia.SetSelected(tmpPos, true);
                 PlaySound();
@@ -647,7 +652,7 @@ namespace MediaPlayer
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e) => this.Close();
-        private void playToolStripMenuItem_Click(object sender, EventArgs e) =>  PlaySound();
+        private void playToolStripMenuItem_Click(object sender, EventArgs e) => PlaySound();
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e) => PauseAudio();
         private void stopToolStripMenuItem_Click(object sender, EventArgs e) => StopPlaying();
         private void nextToolStripMenuItem_Click(object sender, EventArgs e) => NextAudio();
@@ -683,7 +688,7 @@ namespace MediaPlayer
 
         private void RemoveFiles()
         {
-            if(listBoxMedia.SelectedItems != null)
+            if (listBoxMedia.SelectedItems != null)
             {
                 var selectedItems = listBoxMedia.SelectedItems;
                 for (int i = selectedItems.Count - 1; i >= 0; --i)
@@ -697,20 +702,14 @@ namespace MediaPlayer
         {
             if (playlistForm == null)
             {
-                int x = this.Location.X + this.Width;
-                int y = this.Location.Y;
                 playlistForm = new PlaylistForm(this);
                 playlistForm.Show();
             }
-            else
+            else 
             {
                 playlistForm.Close();
                 playlistForm.Dispose();
                 playlistForm = null;
-                int x = this.Location.X + this.Width;
-                int y = this.Location.Y;
-                playlistForm = new PlaylistForm(this);
-                playlistForm.Show();
             }
         }
     }
