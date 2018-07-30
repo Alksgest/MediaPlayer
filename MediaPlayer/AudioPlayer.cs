@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.IO;
 using NAudio.Wave;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Diagnostics;
 
 namespace MediaPlayer
 {
@@ -18,13 +20,14 @@ namespace MediaPlayer
         private AudioFileReader reader;
 
         private Point moveStart;
-        private Timer timer;
+        private System.Windows.Forms.Timer timer;
 
         private int CurrentPositionInListMedia = -1;
         private bool isPaused = false;
 
         public string PathToFolder { get; set; }
         public string PathToImage { get; set; }
+        private string currentAudio = null;
 
         ToolTip openFilesToolTip;
         ToolTip openFolderToolTip;
@@ -45,7 +48,9 @@ namespace MediaPlayer
         {
             InitializeComponent();
 
-            this.timer = new Timer
+            this.CurrentAudioLabel.Text = "";
+
+            this.timer = new System.Windows.Forms.Timer()
             {
                 Enabled = true
             };
@@ -56,6 +61,11 @@ namespace MediaPlayer
             InitializeCustomGraphic();
             RegisterOnEvents();
 
+            OpenWithCommandLine(args);
+        }
+
+        private void OpenWithCommandLine(string[] args)
+        {
             if (args != null)
             {
                 this.listBoxMedia.Items.Clear();
@@ -253,7 +263,7 @@ namespace MediaPlayer
             {
                 if (this.TrackBarAudio.Value < this.TrackBarAudio.Maximum)
                     ++this.TrackBarAudio.Value;
-                this.TimeLabel.Text = this.reader.CurrentTime.ToString().Substring(0, 8);
+                this.CurrentTimeLabel.Text = this.reader.CurrentTime.ToString().Substring(0, 8);
             }
         }
     
@@ -300,6 +310,10 @@ namespace MediaPlayer
                     this.TrackBarAudio.Maximum = (int)this.reader.TotalTime.TotalSeconds;
 
                     this.timer.Start();
+
+                    this.CurrentAudioLabel.Text = (this.listBoxMedia.SelectedItem as PathHolder).Title;
+
+                    this.currentAudio = (this.listBoxMedia.SelectedItem as PathHolder).Title;
                 }
                 else
                 {
@@ -397,7 +411,7 @@ namespace MediaPlayer
             catch { }
         }
 
-        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) => CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
+        private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) => this.CurrentPositionInListMedia = this.listBoxMedia.SelectedIndex;
 
         private void AudioPlayer_Load(object sender, EventArgs e)
         {
@@ -503,8 +517,7 @@ namespace MediaPlayer
 
             this.BackColor = Color.GhostWhite;
             this.mainMenuStrip.BackColor = Color.GhostWhite;
-
-            // this.listBoxMedia.BackColor = Color.GhostWhite;
+            
         }
         private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentPlaylist();
 
@@ -561,7 +574,7 @@ namespace MediaPlayer
             this.TrackBarAudio.Value = 0;
             isPaused = false;
             timer.Stop();
-            this.TimeLabel.Text = "00.00.00";
+            this.CurrentTimeLabel.Text = "00.00.00";
         }
 
         private void toolStripButtonNext_Click(object sender, EventArgs e) => NextAudio();
@@ -573,11 +586,13 @@ namespace MediaPlayer
                 return;
             else
             {
-                int tmpPos = CurrentPositionInListMedia;
-                if (this.listBoxMedia.SelectedIndex == listBoxMedia.Items.Count - 1 || this.listBoxMedia.SelectedIndex == -1)
+                int currentPosition = this.listBoxMedia.FindString(currentAudio);
+                int tmpPos = currentPosition;
+
+                if (currentPosition == listBoxMedia.Items.Count - 1 || currentPosition == -1)
                     tmpPos = 0;
                 else
-                    tmpPos = ++CurrentPositionInListMedia;
+                    tmpPos = ++currentPosition;
 
                 this.listBoxMedia.ClearSelected();
                 this.listBoxMedia.SetSelected(tmpPos, true);
@@ -591,12 +606,13 @@ namespace MediaPlayer
                 return;
             else
             {
-                int tmpPos = CurrentPositionInListMedia;
+                int currentPosition = this.listBoxMedia.FindString(currentAudio);
+                int tmpPos = currentPosition;
 
-                if (CurrentPositionInListMedia == 0 || CurrentPositionInListMedia == -1)
+                if (currentPosition == 0 || currentPosition == -1)
                     tmpPos = listBoxMedia.Items.Count - 1;
                 else
-                    tmpPos = --CurrentPositionInListMedia;
+                    tmpPos = --currentPosition;
 
                 this.listBoxMedia.ClearSelected();
                 this.listBoxMedia.SetSelected(tmpPos, true);
@@ -697,6 +713,20 @@ namespace MediaPlayer
             this.PathToImage = null;
             this.checkBoxSavePathToFolder.Checked = false;
             this.listBoxMedia.Items.Clear();
+        }
+
+        private void titlePictureBox_Click(object sender, EventArgs e) => OpenImage();
+
+        private void OpenImage()
+        {
+            if (File.Exists(PathToImage))
+            {
+                Process.Start(PathToImage);
+            }
+            else if (File.Exists("defaultPicture.jpg"))
+            {
+                Process.Start("defaultPicture.jpg");
+            }
         }
     }
 }

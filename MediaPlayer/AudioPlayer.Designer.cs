@@ -33,7 +33,7 @@
             this.TrackBarAudio = new System.Windows.Forms.TrackBar();
             this.SoundLevelTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeLabel = new System.Windows.Forms.Label();
-            this.TimeLabel = new System.Windows.Forms.Label();
+            this.CurrentTimeLabel = new System.Windows.Forms.Label();
             this.checkBoxRepeatCircle = new System.Windows.Forms.CheckBox();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +68,7 @@
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
+            this.CurrentAudioLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
@@ -113,14 +114,14 @@
             this.VolumeLabel.TabIndex = 6;
             this.VolumeLabel.Text = "Volume";
             // 
-            // TimeLabel
+            // CurrentTimeLabel
             // 
-            this.TimeLabel.AutoSize = true;
-            this.TimeLabel.Location = new System.Drawing.Point(9, 344);
-            this.TimeLabel.Name = "TimeLabel";
-            this.TimeLabel.Size = new System.Drawing.Size(49, 13);
-            this.TimeLabel.TabIndex = 7;
-            this.TimeLabel.Text = "00:00:00";
+            this.CurrentTimeLabel.AutoSize = true;
+            this.CurrentTimeLabel.Location = new System.Drawing.Point(9, 344);
+            this.CurrentTimeLabel.Name = "CurrentTimeLabel";
+            this.CurrentTimeLabel.Size = new System.Drawing.Size(49, 13);
+            this.CurrentTimeLabel.TabIndex = 7;
+            this.CurrentTimeLabel.Text = "00:00:00";
             // 
             // checkBoxRepeatCircle
             // 
@@ -406,6 +407,7 @@
             this.titlePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.titlePictureBox.TabIndex = 10;
             this.titlePictureBox.TabStop = false;
+            this.titlePictureBox.Click += new System.EventHandler(this.titlePictureBox_Click);
             // 
             // OpenFolderButton
             // 
@@ -440,12 +442,22 @@
             this.PlayButton.UseVisualStyleBackColor = true;
             this.PlayButton.Click += new System.EventHandler(this.button1_Click);
             // 
+            // CurrentAudioLabel
+            // 
+            this.CurrentAudioLabel.AutoSize = true;
+            this.CurrentAudioLabel.Location = new System.Drawing.Point(55, 4);
+            this.CurrentAudioLabel.Name = "CurrentAudioLabel";
+            this.CurrentAudioLabel.Size = new System.Drawing.Size(67, 13);
+            this.CurrentAudioLabel.TabIndex = 25;
+            this.CurrentAudioLabel.Text = "Title of Song";
+            // 
             // AudioPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(455, 575);
+            this.Controls.Add(this.CurrentAudioLabel);
             this.Controls.Add(this.ClearCurrentPlaylistButton);
             this.Controls.Add(this.PlaylistFormButton);
             this.Controls.Add(this.RemoveFilesButton);
@@ -460,7 +472,7 @@
             this.Controls.Add(this.PauseButton);
             this.Controls.Add(this.titlePictureBox);
             this.Controls.Add(this.checkBoxRepeatCircle);
-            this.Controls.Add(this.TimeLabel);
+            this.Controls.Add(this.CurrentTimeLabel);
             this.Controls.Add(this.VolumeLabel);
             this.Controls.Add(this.SoundLevelTrackBar);
             this.Controls.Add(this.TrackBarAudio);
@@ -495,7 +507,7 @@
         private System.Windows.Forms.TrackBar TrackBarAudio;
         private System.Windows.Forms.TrackBar SoundLevelTrackBar;
         private System.Windows.Forms.Label VolumeLabel;
-        private System.Windows.Forms.Label TimeLabel;
+        private System.Windows.Forms.Label CurrentTimeLabel;
         private System.Windows.Forms.CheckBox checkBoxRepeatCircle;
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -528,6 +540,7 @@
         private System.Windows.Forms.Button PlaylistFormButton;
         public System.Windows.Forms.ListBox listBoxMedia;
         private System.Windows.Forms.Button ClearCurrentPlaylistButton;
+        private System.Windows.Forms.Label CurrentAudioLabel;
     }
 }
 

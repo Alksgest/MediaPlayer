@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MediaPlayer
 {
@@ -15,5 +16,17 @@ namespace MediaPlayer
             this.FullPath = fullPath;
         }
         public override string ToString() => Title;
+
+        public override bool Equals(object obj) => (obj as PathHolder).Title == this.Title && (obj as PathHolder).FullPath == this.FullPath;
+        public static bool operator ==(PathHolder left, PathHolder right) => left.Equals(right);
+        public static bool operator !=(PathHolder left, PathHolder right) => !left.Equals(right);
+
+        public override int GetHashCode()
+        {
+            var hashCode = 463277484;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FullPath);
+            return hashCode;
+        }
     }
 }
