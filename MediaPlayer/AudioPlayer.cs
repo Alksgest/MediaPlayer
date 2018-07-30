@@ -141,6 +141,8 @@ namespace MediaPlayer
             this.FormClosing += AudioPlayer_FormClosing;
             this.LocationChanged += AudioPlayer_LocationChanged;
 
+            this.CurrentAudioLabel.MouseDown += CurrentAudioLabel_MouseDown;
+            this.CurrentAudioLabel.MouseMove += CurrentAudioLabel_MouseMove;
         }
 
         private void AudioPlayer_LocationChanged(object sender, EventArgs e)
@@ -152,6 +154,7 @@ namespace MediaPlayer
         private void InitializeCustomGraphic()
         {
             this.contextMenuStripNI.Renderer = new ContextMenuStripExtraRenderer();
+            this.contextMenuStripForListBoxItem.Renderer = new ContextMenuStripExtraRenderer();
         }
 
         private void AudioPlayer_FormClosing(object sender, FormClosingEventArgs e) => SaveSettings();
@@ -181,6 +184,8 @@ namespace MediaPlayer
         private void MainMenuStrip_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
         private void AudioPlayer_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
         private void AudioPlayer_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
+        private void CurrentAudioLabel_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
+        private void CurrentAudioLabel_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
 
         private void MouseDownHandler(MouseEventArgs e)
         {
@@ -632,7 +637,7 @@ namespace MediaPlayer
         private void ButtonRollUp_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
-            this.notifyIcon.ShowBalloonTip(5000);
+            //this.notifyIcon.ShowBalloonTip(5000);
         }
 
         private void expandToolStripMenuItem_Click(object sender, EventArgs e)
@@ -743,5 +748,10 @@ namespace MediaPlayer
         }
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e) => RemoveFiles();
+
+        private void CredentialButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
