@@ -249,29 +249,20 @@ namespace MediaPlayer
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            //TrackBarAudio.Value += (int)reader.TotalTime.TotalSeconds;
-            if (reader != null && !isPaused)
+            if (this.reader != null && !isPaused)
             {
-                try { this.TrackBarAudio.Value += (int)Math.Round(1000 / (reader.TotalTime.TotalSeconds)); }
-                catch { }
-
+                if (this.TrackBarAudio.Value < this.TrackBarAudio.Maximum)
+                    ++this.TrackBarAudio.Value;
                 this.TimeLabel.Text = this.reader.CurrentTime.ToString().Substring(0, 8);
             }
         }
+    
         private void TrackBarAudio_Scroll(object sender, EventArgs e)
         {
-            try
+            if (this.waveOut != null && this.reader != null && !isPaused)
             {
-                if (waveOut != null && reader != null && !isPaused)
-                {
-                    this.waveOut.Stop();
-                    this.reader.CurrentTime = TimeSpan.FromSeconds((double)this.TrackBarAudio.Value / 1000 * this.reader.TotalTime.TotalSeconds);
-                    this.waveOut.Play();
-                }
-                else
-                    reader.CurrentTime = TimeSpan.FromSeconds((double)this.TrackBarAudio.Value / 1000 * this.reader.TotalTime.TotalSeconds);
+                this.reader.CurrentTime = TimeSpan.FromSeconds(this.TrackBarAudio.Value);
             }
-            catch { }
         }
 
         private void button1_Click(object sender, EventArgs e) => PlaySound();
@@ -306,6 +297,7 @@ namespace MediaPlayer
                     this.waveOut.Volume = (float)this.SoundLevelTrackBar.Value / 100;
 
                     this.TotalDurationLabel.Text = this.reader.TotalTime.ToString().Substring(0, 8);
+                    this.TrackBarAudio.Maximum = (int)this.reader.TotalTime.TotalSeconds;
 
                     this.timer.Start();
                 }

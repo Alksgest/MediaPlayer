@@ -88,7 +88,7 @@
             // TrackBarAudio
             // 
             this.TrackBarAudio.Location = new System.Drawing.Point(0, 312);
-            this.TrackBarAudio.Maximum = 1000;
+            this.TrackBarAudio.Maximum = 0;
             this.TrackBarAudio.Name = "TrackBarAudio";
             this.TrackBarAudio.Size = new System.Drawing.Size(412, 45);
             this.TrackBarAudio.TabIndex = 4;
