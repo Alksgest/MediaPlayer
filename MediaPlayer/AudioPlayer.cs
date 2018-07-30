@@ -36,6 +36,7 @@ namespace MediaPlayer
         ToolTip previousAudioToolTip;
         ToolTip replayAudioToolTip;
         ToolTip playlistFormButtonToolTip;
+        ToolTip clearCurrentPlaylistToolTip;
 
 
         private List<string> CurrentPlaylist = new List<string>();
@@ -102,6 +103,9 @@ namespace MediaPlayer
 
             playlistFormButtonToolTip = new ToolTip();
             playlistFormButtonToolTip.SetToolTip(PlaylistFormButton, "Playlists");
+
+            clearCurrentPlaylistToolTip = new ToolTip();
+            clearCurrentPlaylistToolTip.SetToolTip(ClearCurrentPlaylistButton, "Clear current playlist");
         }
 
         private void RegisterOnEvents()
@@ -342,7 +346,6 @@ namespace MediaPlayer
                 reader.Dispose();
                 reader = null;
             }
-            PlayButton.Enabled = true;
             this.TrackBarAudio.Value = 0;
             if (listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
                 NextAudio();
@@ -511,27 +514,7 @@ namespace MediaPlayer
 
             // this.listBoxMedia.BackColor = Color.GhostWhite;
         }
-        private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentList();
-
-        private void ClearCurrentList()
-        {
-            TrackBarAudio.Value = 0;
-            listBoxMedia.Items.Clear();
-            if (waveOut != null)
-            {
-                waveOut.Stop();
-                waveOut.Dispose();
-                waveOut = null;
-            }
-            if (reader != null)
-            {
-                reader.Dispose();
-                reader = null;
-            }
-            LoadDefaultImage();
-            PathToFolder = null;
-            PathToImage = null;
-        }
+        private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentPlaylist();
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => OpenFolder();
         private void chooseColorToolStripMenuItem_Click(object sender, EventArgs e) => ShowColoDialog();
@@ -583,7 +566,6 @@ namespace MediaPlayer
                 reader.Dispose();
                 reader = null;
             }
-            PlayButton.Enabled = true;
             this.TrackBarAudio.Value = 0;
             isPaused = false;
             timer.Stop();
@@ -659,6 +641,7 @@ namespace MediaPlayer
         private void previousToolStripMenuItem_Click(object sender, EventArgs e) => PreviousAudio();
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) => this.Close();
         private void OpenFileButton_Click(object sender, EventArgs e) => OpenFiles();
+        private void ClearCurrentPlaylistButton_Click(object sender, EventArgs e) => ClearCurrentPlaylist();
 
         private void OpenFiles()
         {
@@ -670,7 +653,7 @@ namespace MediaPlayer
                 {
                     if (fileDialog.FileNames.Length != 0)
                     {
-                        listBoxMedia.Items.Clear();
+                        //listBoxMedia.Items.Clear();
                         foreach (var str in fileDialog.FileNames)
                         {
                             PathHolder item = new PathHolder(str);
@@ -711,6 +694,17 @@ namespace MediaPlayer
                 playlistForm.Dispose();
                 playlistForm = null;
             }
+        }
+
+       
+        private void ClearCurrentPlaylist()
+        {
+            StopPlaying();
+            LoadDefaultImage();
+            this.PathToFolder = null;
+            this.PathToImage = null;
+            this.checkBoxSavePathToFolder.Checked = false;
+            this.listBoxMedia.Items.Clear();
         }
     }
 }

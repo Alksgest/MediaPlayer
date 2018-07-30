@@ -54,6 +54,7 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TotalDurationLabel = new System.Windows.Forms.Label();
             this.checkBoxSavePathToFolder = new System.Windows.Forms.CheckBox();
+            this.ClearCurrentPlaylistButton = new System.Windows.Forms.Button();
             this.PlaylistFormButton = new System.Windows.Forms.Button();
             this.RemoveFilesButton = new System.Windows.Forms.Button();
             this.AddFilesButton = new System.Windows.Forms.Button();
@@ -80,7 +81,7 @@
             this.listBoxMedia.Location = new System.Drawing.Point(12, 366);
             this.listBoxMedia.Name = "listBoxMedia";
             this.listBoxMedia.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listBoxMedia.Size = new System.Drawing.Size(465, 199);
+            this.listBoxMedia.Size = new System.Drawing.Size(400, 199);
             this.listBoxMedia.TabIndex = 0;
             this.listBoxMedia.SelectedIndexChanged += new System.EventHandler(this.listBoxMedia_SelectedIndexChanged);
             // 
@@ -89,12 +90,12 @@
             this.TrackBarAudio.Location = new System.Drawing.Point(0, 312);
             this.TrackBarAudio.Maximum = 1000;
             this.TrackBarAudio.Name = "TrackBarAudio";
-            this.TrackBarAudio.Size = new System.Drawing.Size(477, 45);
+            this.TrackBarAudio.Size = new System.Drawing.Size(412, 45);
             this.TrackBarAudio.TabIndex = 4;
             // 
             // SoundLevelTrackBar
             // 
-            this.SoundLevelTrackBar.Location = new System.Drawing.Point(483, 27);
+            this.SoundLevelTrackBar.Location = new System.Drawing.Point(418, 27);
             this.SoundLevelTrackBar.Maximum = 100;
             this.SoundLevelTrackBar.Name = "SoundLevelTrackBar";
             this.SoundLevelTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -106,7 +107,7 @@
             // VolumeLabel
             // 
             this.VolumeLabel.AutoSize = true;
-            this.VolumeLabel.Location = new System.Drawing.Point(473, 283);
+            this.VolumeLabel.Location = new System.Drawing.Point(410, 284);
             this.VolumeLabel.Name = "VolumeLabel";
             this.VolumeLabel.Size = new System.Drawing.Size(42, 13);
             this.VolumeLabel.TabIndex = 6;
@@ -115,7 +116,7 @@
             // TimeLabel
             // 
             this.TimeLabel.AutoSize = true;
-            this.TimeLabel.Location = new System.Drawing.Point(27, 347);
+            this.TimeLabel.Location = new System.Drawing.Point(9, 344);
             this.TimeLabel.Name = "TimeLabel";
             this.TimeLabel.Size = new System.Drawing.Size(49, 13);
             this.TimeLabel.TabIndex = 7;
@@ -124,11 +125,11 @@
             // checkBoxRepeatCircle
             // 
             this.checkBoxRepeatCircle.AutoSize = true;
-            this.checkBoxRepeatCircle.Location = new System.Drawing.Point(392, 283);
+            this.checkBoxRepeatCircle.Location = new System.Drawing.Point(310, 283);
             this.checkBoxRepeatCircle.Name = "checkBoxRepeatCircle";
-            this.checkBoxRepeatCircle.Size = new System.Drawing.Size(75, 17);
+            this.checkBoxRepeatCircle.Size = new System.Drawing.Size(61, 17);
             this.checkBoxRepeatCircle.TabIndex = 8;
-            this.checkBoxRepeatCircle.Text = "Repeat All";
+            this.checkBoxRepeatCircle.Text = "Repeat";
             this.checkBoxRepeatCircle.UseVisualStyleBackColor = true;
             // 
             // mainMenuStrip
@@ -137,7 +138,7 @@
             this.fileToolStripMenuItem});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(520, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(455, 24);
             this.mainMenuStrip.TabIndex = 9;
             this.mainMenuStrip.Text = "Main menu";
             // 
@@ -166,7 +167,6 @@
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
             this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.openFolderToolStripMenuItem.Text = "Open folder";
-            this.openFolderToolStripMenuItem.ToolTipText = "Выбор папки с аудиофайлами";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // clearCurrentListToolStripMenuItem
@@ -174,7 +174,6 @@
             this.clearCurrentListToolStripMenuItem.Name = "clearCurrentListToolStripMenuItem";
             this.clearCurrentListToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.clearCurrentListToolStripMenuItem.Text = "Clear current list";
-            this.clearCurrentListToolStripMenuItem.ToolTipText = "Очищает текущий список воспроизведения";
             this.clearCurrentListToolStripMenuItem.Click += new System.EventHandler(this.clearCurrentListToolStripMenuItem_Click);
             // 
             // ChooseToolStripMenuItem
@@ -269,7 +268,7 @@
             // TotalDurationLabel
             // 
             this.TotalDurationLabel.AutoSize = true;
-            this.TotalDurationLabel.Location = new System.Drawing.Point(428, 344);
+            this.TotalDurationLabel.Location = new System.Drawing.Point(363, 344);
             this.TotalDurationLabel.Name = "TotalDurationLabel";
             this.TotalDurationLabel.Size = new System.Drawing.Size(49, 13);
             this.TotalDurationLabel.TabIndex = 16;
@@ -278,18 +277,29 @@
             // checkBoxSavePathToFolder
             // 
             this.checkBoxSavePathToFolder.AutoSize = true;
-            this.checkBoxSavePathToFolder.Location = new System.Drawing.Point(270, 283);
+            this.checkBoxSavePathToFolder.Location = new System.Drawing.Point(226, 283);
             this.checkBoxSavePathToFolder.Name = "checkBoxSavePathToFolder";
-            this.checkBoxSavePathToFolder.Size = new System.Drawing.Size(116, 17);
+            this.checkBoxSavePathToFolder.Size = new System.Drawing.Size(78, 17);
             this.checkBoxSavePathToFolder.TabIndex = 17;
-            this.checkBoxSavePathToFolder.Text = "Save path to folder";
+            this.checkBoxSavePathToFolder.Text = "Save path ";
             this.checkBoxSavePathToFolder.UseVisualStyleBackColor = true;
+            // 
+            // ClearCurrentPlaylistButton
+            // 
+            this.ClearCurrentPlaylistButton.BackgroundImage = global::MediaPlayer.Properties.Resources.clear;
+            this.ClearCurrentPlaylistButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClearCurrentPlaylistButton.Location = new System.Drawing.Point(418, 535);
+            this.ClearCurrentPlaylistButton.Name = "ClearCurrentPlaylistButton";
+            this.ClearCurrentPlaylistButton.Size = new System.Drawing.Size(30, 30);
+            this.ClearCurrentPlaylistButton.TabIndex = 24;
+            this.ClearCurrentPlaylistButton.UseVisualStyleBackColor = true;
+            this.ClearCurrentPlaylistButton.Click += new System.EventHandler(this.ClearCurrentPlaylistButton_Click);
             // 
             // PlaylistFormButton
             // 
             this.PlaylistFormButton.BackgroundImage = global::MediaPlayer.Properties.Resources.list;
             this.PlaylistFormButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PlaylistFormButton.Location = new System.Drawing.Point(483, 312);
+            this.PlaylistFormButton.Location = new System.Drawing.Point(418, 312);
             this.PlaylistFormButton.Name = "PlaylistFormButton";
             this.PlaylistFormButton.Size = new System.Drawing.Size(30, 30);
             this.PlaylistFormButton.TabIndex = 23;
@@ -300,7 +310,7 @@
             // 
             this.RemoveFilesButton.BackgroundImage = global::MediaPlayer.Properties.Resources.minus;
             this.RemoveFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RemoveFilesButton.Location = new System.Drawing.Point(483, 438);
+            this.RemoveFilesButton.Location = new System.Drawing.Point(418, 438);
             this.RemoveFilesButton.Name = "RemoveFilesButton";
             this.RemoveFilesButton.Size = new System.Drawing.Size(30, 30);
             this.RemoveFilesButton.TabIndex = 22;
@@ -311,7 +321,7 @@
             // 
             this.AddFilesButton.BackgroundImage = global::MediaPlayer.Properties.Resources.plus;
             this.AddFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.AddFilesButton.Location = new System.Drawing.Point(483, 402);
+            this.AddFilesButton.Location = new System.Drawing.Point(418, 402);
             this.AddFilesButton.Name = "AddFilesButton";
             this.AddFilesButton.Size = new System.Drawing.Size(30, 30);
             this.AddFilesButton.TabIndex = 21;
@@ -355,7 +365,7 @@
             // 
             this.ButtonRollUp.BackgroundImage = global::MediaPlayer.Properties.Resources.minus;
             this.ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonRollUp.Location = new System.Drawing.Point(469, 4);
+            this.ButtonRollUp.Location = new System.Drawing.Point(406, 4);
             this.ButtonRollUp.Name = "ButtonRollUp";
             this.ButtonRollUp.Size = new System.Drawing.Size(20, 20);
             this.ButtonRollUp.TabIndex = 14;
@@ -367,7 +377,7 @@
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ButtonClose.BackgroundImage = global::MediaPlayer.Properties.Resources.cancel;
             this.ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonClose.Location = new System.Drawing.Point(495, 4);
+            this.ButtonClose.Location = new System.Drawing.Point(432, 4);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(20, 20);
             this.ButtonClose.TabIndex = 13;
@@ -392,7 +402,7 @@
             this.titlePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.titlePictureBox.Location = new System.Drawing.Point(12, 27);
             this.titlePictureBox.Name = "titlePictureBox";
-            this.titlePictureBox.Size = new System.Drawing.Size(465, 250);
+            this.titlePictureBox.Size = new System.Drawing.Size(400, 250);
             this.titlePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.titlePictureBox.TabIndex = 10;
             this.titlePictureBox.TabStop = false;
@@ -401,7 +411,7 @@
             // 
             this.OpenFolderButton.BackgroundImage = global::MediaPlayer.Properties.Resources.openFolder;
             this.OpenFolderButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.OpenFolderButton.Location = new System.Drawing.Point(483, 366);
+            this.OpenFolderButton.Location = new System.Drawing.Point(418, 366);
             this.OpenFolderButton.Name = "OpenFolderButton";
             this.OpenFolderButton.Size = new System.Drawing.Size(30, 30);
             this.OpenFolderButton.TabIndex = 3;
@@ -435,7 +445,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(520, 580);
+            this.ClientSize = new System.Drawing.Size(455, 575);
+            this.Controls.Add(this.ClearCurrentPlaylistButton);
             this.Controls.Add(this.PlaylistFormButton);
             this.Controls.Add(this.RemoveFilesButton);
             this.Controls.Add(this.AddFilesButton);
@@ -460,8 +471,8 @@
             this.Controls.Add(this.mainMenuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MainMenuStrip = this.mainMenuStrip;
-            this.MaximumSize = new System.Drawing.Size(520, 580);
-            this.MinimumSize = new System.Drawing.Size(520, 580);
+            this.MaximumSize = new System.Drawing.Size(455, 575);
+            this.MinimumSize = new System.Drawing.Size(455, 575);
             this.Name = "AudioPlayer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AudioPlayer";
@@ -516,6 +527,7 @@
         private System.Windows.Forms.Button RemoveFilesButton;
         private System.Windows.Forms.Button PlaylistFormButton;
         public System.Windows.Forms.ListBox listBoxMedia;
+        private System.Windows.Forms.Button ClearCurrentPlaylistButton;
     }
 }
 
