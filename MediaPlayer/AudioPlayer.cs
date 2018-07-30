@@ -257,7 +257,7 @@ namespace MediaPlayer
         private bool AcceptedFormat(string str)
         {
             return new Regex(@"(\.mp3)").IsMatch(str) || new Regex(@"(\.wav)").IsMatch(str) ||
-                    new Regex(@"(\.wma)").IsMatch(str) || new Regex(@"(\.flac)").IsMatch(str) || new Regex(@"(\.ogg)").IsMatch(str);
+                    new Regex(@"(\.wma)").IsMatch(str) || new Regex(@"(\.flac)").IsMatch(str) || new Regex(@"(\.ogg)").IsMatch(str) || new Regex(@"(\.m4a)").IsMatch(str);
         }
 
         private void ListBoxMedia_DoubleClick(object sender, EventArgs e) => PlaySound();
@@ -380,9 +380,8 @@ namespace MediaPlayer
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-
                     var files = Directory.EnumerateFiles(dialog.SelectedPath, "*.*", SearchOption.TopDirectoryOnly)
-                               .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg"));
+                               .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg") || s.EndsWith(".m4a"));
                     PathToFolder = dialog.SelectedPath;
                     listBoxMedia.Items.Clear();
 
@@ -661,7 +660,7 @@ namespace MediaPlayer
             using (OpenFileDialog fileDialog = new OpenFileDialog())
             {
                 fileDialog.Multiselect = true;
-                fileDialog.Filter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg) |*.mp3;*.wav;*.wma;*.flac;*.ogg";
+                fileDialog.Filter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg; *.m4a) |*.mp3;*.wav;*.wma;*.flac;*.ogg;*.m4a";
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     if (fileDialog.FileNames.Length != 0)
