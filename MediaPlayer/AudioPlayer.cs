@@ -123,8 +123,8 @@ namespace MediaPlayer
             this.timer.Tick += Timer_Tick;
 
             this.TrackBarAudio.Scroll += TrackBarAudio_Scroll;
-            this.listBoxMedia.DoubleClick += ListBoxMedia_DoubleClick;
 
+            this.listBoxMedia.DoubleClick += ListBoxMedia_DoubleClick;
             this.listBoxMedia.DragDrop += ListBoxMedia_DragDrop;
             this.listBoxMedia.DragEnter += ListBoxMedia_DragEnter;
             this.listBoxMedia.KeyDown += ListBoxMedia_KeyDown;
@@ -728,5 +728,20 @@ namespace MediaPlayer
                 Process.Start("defaultPicture.jpg");
             }
         }
+
+        private void openFileDestinationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var curAudio = (listBoxMedia.SelectedItem as PathHolder);
+            if (File.Exists(curAudio.FullPath))
+            {
+                var splitedPath = curAudio.FullPath.Split('\\').ToList();
+                splitedPath.RemoveAt(splitedPath.Count - 1);
+                string path = string.Join("\\", splitedPath.ToArray());
+
+                Process.Start(path);
+            }
+        }
+
+        private void removeToolStripMenuItem_Click(object sender, EventArgs e) => RemoveFiles();
     }
 }

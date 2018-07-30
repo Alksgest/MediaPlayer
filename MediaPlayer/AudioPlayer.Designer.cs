@@ -69,16 +69,21 @@
             this.StopButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
             this.CurrentAudioLabel = new System.Windows.Forms.Label();
+            this.contextMenuStripForListBoxItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openFileDestinationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.contextMenuStripNI.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).BeginInit();
+            this.contextMenuStripForListBoxItem.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBoxMedia
             // 
             this.listBoxMedia.AllowDrop = true;
+            this.listBoxMedia.ContextMenuStrip = this.contextMenuStripForListBoxItem;
             this.listBoxMedia.Location = new System.Drawing.Point(12, 366);
             this.listBoxMedia.Name = "listBoxMedia";
             this.listBoxMedia.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
@@ -451,6 +456,28 @@
             this.CurrentAudioLabel.TabIndex = 25;
             this.CurrentAudioLabel.Text = "Title of Song";
             // 
+            // contextMenuStripForListBoxItem
+            // 
+            this.contextMenuStripForListBoxItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileDestinationToolStripMenuItem,
+            this.removeToolStripMenuItem});
+            this.contextMenuStripForListBoxItem.Name = "contextMenuStripForListBoxItem";
+            this.contextMenuStripForListBoxItem.Size = new System.Drawing.Size(185, 70);
+            // 
+            // openFileDestinationToolStripMenuItem
+            // 
+            this.openFileDestinationToolStripMenuItem.Name = "openFileDestinationToolStripMenuItem";
+            this.openFileDestinationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.openFileDestinationToolStripMenuItem.Text = "Open file destination";
+            this.openFileDestinationToolStripMenuItem.Click += new System.EventHandler(this.openFileDestinationToolStripMenuItem_Click);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            // 
             // AudioPlayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -495,6 +522,7 @@
             this.mainMenuStrip.PerformLayout();
             this.contextMenuStripNI.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).EndInit();
+            this.contextMenuStripForListBoxItem.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -541,6 +569,9 @@
         public System.Windows.Forms.ListBox listBoxMedia;
         private System.Windows.Forms.Button ClearCurrentPlaylistButton;
         private System.Windows.Forms.Label CurrentAudioLabel;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripForListBoxItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileDestinationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
     }
 }
 
