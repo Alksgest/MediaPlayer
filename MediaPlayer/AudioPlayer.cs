@@ -152,7 +152,11 @@ namespace MediaPlayer
 
             this.CurrentAudioLabel.MouseDown += CurrentAudioLabel_MouseDown;
             this.CurrentAudioLabel.MouseMove += CurrentAudioLabel_MouseMove;
+
+            this.Activated += AudioPlayer_Activated;
         }
+
+        private void AudioPlayer_Activated(object sender, EventArgs e) => ResizeUp();
 
         private void AudioPlayer_LocationChanged(object sender, EventArgs e)
         {
@@ -215,23 +219,32 @@ namespace MediaPlayer
             }
         }
 
-        private void NotifyIcon_DoubleClick(object sender, EventArgs e)
+        private void NotifyIcon_DoubleClick(object sender, EventArgs e) => ResizeUp();
+
+        private void ResizeUp()
         {
             this.Show();
             this.WindowState = FormWindowState.Normal;
-            if (playlistForm != null)
-                playlistForm.Show();
+
+            if (this.playlistForm != null)
+                this.playlistForm.Show();
+            if (this.settingsForm != null)
+                this.settingsForm.Show();
         }
 
-        private void AudioPlayer_Resize(object sender, EventArgs e)
+        private void AudioPlayer_Resize(object sender, EventArgs e) => ResizeDown();
+
+        private void ResizeDown()
         {
             if (WindowState == FormWindowState.Minimized)
             {
-                this.Hide();
-                if (playlistForm != null)
-                    playlistForm.Hide();
+                if (RollUp)
+                    this.Hide();
+                if (this.playlistForm != null)
+                    this.playlistForm.Hide();
+                if (this.settingsForm != null)
+                    this.settingsForm.Hide();
             }
-
         }
 
         private void ListBoxMedia_KeyDown(object sender, KeyEventArgs e)
@@ -545,6 +558,7 @@ namespace MediaPlayer
 
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => OpenFolder();
         private void chooseColorToolStripMenuItem_Click(object sender, EventArgs e) => ShowColoDialog();
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e) => OpenSettingsForm();
         private void openFilesToolStripMenuItem_Click(object sender, EventArgs e) => OpenFiles();
         private void ButtonPause_Click(object sender, EventArgs e) => PauseAudio();
 
@@ -653,7 +667,7 @@ namespace MediaPlayer
         private void ButtonClose_Click(object sender, EventArgs e) => this.Close();
         private void ButtonRollUp_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+                this.WindowState = FormWindowState.Minimized;
             //this.notifyIcon.ShowBalloonTip(5000);
         }
 
@@ -771,7 +785,9 @@ namespace MediaPlayer
 
         }
 
-        private void SettingsButton_Click(object sender, EventArgs e)
+        private void SettingsButton_Click(object sender, EventArgs e) => OpenSettingsForm();
+
+        private void OpenSettingsForm()
         {
             if (settingsForm == null)
             {
@@ -785,5 +801,7 @@ namespace MediaPlayer
                 this.settingsForm = null;
             }
         }
+
+        
     }
 }
