@@ -12,17 +12,23 @@ namespace MediaPlayer
     [Serializable]
     public partial class PlaylistForm : Form
     {
-        public string currentName { get; set; }
+        public string CurrentName { get; set; }
         AudioPlayer AudioPlayer;
         List<PlaylistData> PlaylistData = new List<PlaylistData>();
 
         public PlaylistForm(AudioPlayer audioPlayer)
         {
-            this.AudioPlayer = audioPlayer;
             InitializeComponent();
+
+            this.AudioPlayer = audioPlayer;
             this.Location = new Point(AudioPlayer.Location.X + 10 + AudioPlayer.Width, AudioPlayer.Location.Y);
-            this.StartPosition = FormStartPosition.Manual;
             this.BackColor = audioPlayer.BackColor;
+
+            RegisterOnEvents();
+        }
+
+        private void RegisterOnEvents()
+        {
             this.MainListBox.DoubleClick += MainListBox_DoubleClick;
             this.FormClosing += PlaylistForm_FormClosing;
             this.Load += PlaylistForm_Load;
@@ -36,6 +42,11 @@ namespace MediaPlayer
         }
 
         private void PlaylistForm_Load(object sender, EventArgs e)
+        {
+            LoadPlaylists();
+        }
+
+        private void LoadPlaylists()
         {
             if (File.Exists("Playlists.dat"))
             {
@@ -89,10 +100,10 @@ namespace MediaPlayer
         private void AddPlayList()
         {
             SetNameDialog();
-            if (String.IsNullOrEmpty(currentName))
-                currentName = "Unnamed playlist";
+            if (String.IsNullOrEmpty(CurrentName))
+                CurrentName = "Unnamed playlist";
             var playList = AudioPlayer.listBoxMedia.Items.Cast<PathHolder>();
-            PlaylistData data = new PlaylistData(currentName, playList.ToList<PathHolder>());
+            PlaylistData data = new PlaylistData(CurrentName, playList.ToList<PathHolder>());
 
             if (data.AudioFiles.Count != 0)
             {
@@ -130,8 +141,8 @@ namespace MediaPlayer
             {
                 EnterNameForm enterNameForm = new EnterNameForm(this);
                 enterNameForm.ShowDialog();
-                if (!String.IsNullOrEmpty(currentName))
-                    (this.MainListBox.SelectedItem as PlaylistData).Title = currentName;
+                if (!String.IsNullOrEmpty(CurrentName))
+                    (this.MainListBox.SelectedItem as PlaylistData).Title = CurrentName;
                 var items = this.MainListBox.Items.Cast<PlaylistData>().ToList();
                 this.MainListBox.Items.Clear();
                 foreach (var item in items)

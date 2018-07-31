@@ -15,9 +15,12 @@ namespace MediaPlayer
         private AudioPlayer audioPlayer;
         public SettingsForm(AudioPlayer audioPlayer)
         {
-            this.audioPlayer = audioPlayer;
-            this.BackColor = audioPlayer.BackColor;
             InitializeComponent();
+
+            this.StartPosition = FormStartPosition.Manual;
+            this.audioPlayer = audioPlayer;
+            this.Location = new Point(audioPlayer.Location.X - 10 - this.Width, audioPlayer.Location.Y);
+            this.BackColor = audioPlayer.BackColor;
         }
 
         private void checkBoxSavePathToFolder_CheckedChanged(object sender, EventArgs e)
@@ -36,9 +39,7 @@ namespace MediaPlayer
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
-        {
-            this.Location = new Point(audioPlayer.Location.X -10 - this.Width, audioPlayer.Location.Y);
-
+        {          
             checkBoxSavePathToFolder.Checked = audioPlayer.SavePathToFolder;
             checkBoxRepeatCircle.Checked = audioPlayer.RepeatByCircle;
             checkBoxRollUpTray.Checked = audioPlayer.RollUp;

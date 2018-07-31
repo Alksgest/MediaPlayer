@@ -322,57 +322,45 @@ namespace MediaPlayer
 
         private void PlaySound()
         {
-            try
+            if (this.listBoxMedia.SelectedIndex == -1)
+                listBoxMedia.SelectedIndex = 0;
+            if (!isPaused)
             {
-                if (this.listBoxMedia.SelectedIndex == -1)
-                    listBoxMedia.SelectedIndex = 0;
-                if (!isPaused)
+                if (waveOut != null)
                 {
-                    TrackBarAudio.Value = 0;
-                    if (waveOut != null)
-                    {
-                        waveOut.Stop();
-                        waveOut.Dispose();
-                        waveOut = null;
-                    }
-                    if (reader != null)
-                    {
-                        reader.Dispose();
-                        reader = null;
-                    }
-                    string fullPath = (this.listBoxMedia.SelectedItem as PathHolder).FullPath;
-                    this.waveOut = new WaveOut();
-                    this.reader = new AudioFileReader(fullPath);
-                    this.reader.Position = this.TrackBarAudio.Value * (int)Math.Round(reader.TotalTime.TotalSeconds);
-                    this.waveOut.Init(reader);
-                    this.waveOut.Play();
-                    this.waveOut.PlaybackStopped += OnPlaybackStopped;
-                    this.waveOut.Volume = (float)this.SoundLevelTrackBar.Value / 100;
-
-                    this.TotalDurationLabel.Text = this.reader.TotalTime.ToString().Substring(0, 8);
-                    this.TrackBarAudio.Maximum = (int)this.reader.TotalTime.TotalSeconds;
-
-                    this.timer.Start();
-
-                    this.CurrentAudioLabel.Text = (this.listBoxMedia.SelectedItem as PathHolder).Title;
-
-                    this.currentAudio = (this.listBoxMedia.SelectedItem as PathHolder).Title;
+                    waveOut.Stop();
+                    waveOut.Dispose();
+                    waveOut = null;
                 }
-                else
+                if (reader != null)
                 {
-                    this.waveOut.Resume();
-                    this.isPaused = false;
-                    this.timer.Start();
+                    reader.Dispose();
+                    reader = null;
                 }
+                string fullPath = (this.listBoxMedia.SelectedItem as PathHolder).FullPath;
+                this.waveOut = new WaveOut();
+                this.reader = new AudioFileReader(fullPath);
+                this.reader.Position = this.TrackBarAudio.Value * (int)Math.Round(reader.TotalTime.TotalSeconds);
+                this.waveOut.Init(reader);
+                this.waveOut.PlaybackStopped += OnPlaybackStopped;
+                this.waveOut.Volume = (float)this.SoundLevelTrackBar.Value / 100;
+                this.waveOut.Play();
+
+                this.TrackBarAudio.Value = 0;
+                this.TotalDurationLabel.Text = this.reader.TotalTime.ToString().Substring(0, 8);
+                this.TrackBarAudio.Maximum = (int)this.reader.TotalTime.TotalSeconds;
+
+                this.timer.Start();
+
+                this.CurrentAudioLabel.Text = (this.listBoxMedia.SelectedItem as PathHolder).Title;
+
+                this.currentAudio = (this.listBoxMedia.SelectedItem as PathHolder).Title;
             }
-            catch
+            else
             {
-                NotifyIcon notifyIcon = new NotifyIcon
-                {
-                    BalloonTipText = "Directory was not choosed."
-                };
-                notifyIcon.ShowBalloonTip(2000);
-                // MessageBox.Show("File is not choosed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.waveOut.Play();
+                this.isPaused = false;
+                this.timer.Start();
             }
         }
 
@@ -431,15 +419,7 @@ namespace MediaPlayer
                     if (listBoxMedia.Items.Count != 0)
                         LoadTitleImage();
                     else
-                        LoadDefaultImage();
-                }
-                else
-                {
-                    NotifyIcon notifyIcon = new NotifyIcon
-                    {
-                        BalloonTipText = "Directory was not choosed.",
-                    };
-                    notifyIcon.ShowBalloonTip(2000);
+                        LoadDefaultImage();                
                 }
             }
         }
@@ -535,24 +515,20 @@ namespace MediaPlayer
                 bool pathToFolderNotEmpty = !String.IsNullOrEmpty(Properties.Settings.Default.pathToFolder);
                 if (pathToFolderNotEmpty)
                 {
-                    try
+                    PathToFolder = Properties.Settings.Default.pathToFolder;
+                    if (Directory.Exists(PathToFolder))
                     {
-                        PathToFolder = Properties.Settings.Default.pathToFolder;
-                        if (Directory.Exists(PathToFolder))
+                        pathToFolderNotEmpty = true;
+                        var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
+                                 .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg") || s.EndsWith(".m4a"));
+                        foreach (var str in files)
                         {
-                            pathToFolderNotEmpty = true;
-                            var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-                                     .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg") || s.EndsWith(".m4a"));
-                            foreach (var str in files)
-                            {
-                                PathHolder item = new PathHolder(str);
-                                listBoxMedia.Items.Add(item);
-                            }
+                            PathHolder item = new PathHolder(str);
+                            listBoxMedia.Items.Add(item);
                         }
-                        if (!pathToFolderNotEmpty)
-                            PathToFolder = null;
                     }
-                    catch { }
+                    if (!pathToFolderNotEmpty)
+                        PathToFolder = null;
                 }
             }
         }
@@ -579,14 +555,11 @@ namespace MediaPlayer
         {
             using (ColorDialog colorDialog = new ColorDialog())
             {
-
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {
 
                     this.BackColor = colorDialog.Color;
                     this.mainMenuStrip.BackColor = colorDialog.Color;
-
-                    //this.listBoxMedia.BackColor = colorDialog.Color;
 
                     if (playlistForm != null)
                         playlistForm.BackColor = colorDialog.Color; ;
@@ -760,7 +733,9 @@ namespace MediaPlayer
             LoadDefaultImage();
             this.PathToFolder = null;
             this.PathToImage = null;
-            //SavePathToFolder = false;
+
+            this.CurrentAudioLabel.Text = null;
+
             this.listBoxMedia.Items.Clear();
         }
 
@@ -793,7 +768,7 @@ namespace MediaPlayer
 
         private void removeToolStripMenuItem_Click(object sender, EventArgs e) => RemoveFiles();
 
-        private void CredentialButton_Click(object sender, EventArgs e)
+        private void CredentialButton_Click(object sender, EventArgs e) 
         {
 
         }

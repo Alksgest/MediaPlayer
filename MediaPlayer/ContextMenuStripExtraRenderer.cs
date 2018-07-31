@@ -23,19 +23,17 @@ namespace MediaPlayer
             {
                 e.Graphics.DrawEllipse(p, e.ToolStrip.ClientRectangle);
             }
-            Brush backgroundBrush = null;
-            if (backgroundBrush == null)
+            using (Brush backgroundBrush = new LinearGradientBrush(
+                       e.ToolStrip.ClientRectangle,
+                       SystemColors.ControlLightLight,
+                       SystemColors.ControlDark,
+                       90,
+                       true))
             {
-                backgroundBrush = new LinearGradientBrush(
-                   e.ToolStrip.ClientRectangle,
-                   SystemColors.ControlLightLight,
-                   SystemColors.ControlDark,
-                   90,
-                   true);
+                e.Graphics.FillRectangle(backgroundBrush, e.AffectedBounds);
             }
-            e.Graphics.FillRectangle(  backgroundBrush,  e.AffectedBounds);
-            backgroundBrush.Dispose();
         }
+
         //protected override void OnRenderToolStripContentPanelBackground(ToolStripContentPanelRenderEventArgs e)
         //{
         //    //base.OnRenderToolStripContentPanelBackground(e);

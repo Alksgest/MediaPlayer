@@ -22,24 +22,23 @@ namespace MediaPlayer
             this.NameTextBox.Focus();
         }
 
-        private void NameTextBox_KeyDown(object sender, KeyEventArgs e)
+        private void NameTextBox_KeyDown(object sender, KeyEventArgs e) => EnterPressedOnForm(e);
+        private void EnterNameForm_KeyDown(object sender, KeyEventArgs e) => EnterPressedOnForm(e);
+
+        private void EnterPressedOnForm(KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 AcceptName();
         }
 
-        private void EnterNameForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                AcceptName();
-        }
+
 
         private void OKButton_Click(object sender, EventArgs e) => AcceptName();
 
         private void AcceptName()
         {
             if (!String.IsNullOrEmpty(this.NameTextBox.Text))
-                playlistForm.currentName = this.NameTextBox.Text;
+                playlistForm.CurrentName = this.NameTextBox.Text;
             this.Close();
         }
 
