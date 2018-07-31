@@ -30,11 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.listBoxMedia = new System.Windows.Forms.ListBox();
+            this.contextMenuStripForListBoxItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openFileDestinationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrackBarAudio = new System.Windows.Forms.TrackBar();
             this.SoundLevelTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeLabel = new System.Windows.Forms.Label();
             this.CurrentTimeLabel = new System.Windows.Forms.Label();
-            this.checkBoxRepeatCircle = new System.Windows.Forms.CheckBox();
             this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,11 +55,8 @@
             this.previousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TotalDurationLabel = new System.Windows.Forms.Label();
-            this.checkBoxSavePathToFolder = new System.Windows.Forms.CheckBox();
             this.CurrentAudioLabel = new System.Windows.Forms.Label();
-            this.contextMenuStripForListBoxItem = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openFileDestinationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingsButton = new System.Windows.Forms.Button();
             this.CredentialButton = new System.Windows.Forms.Button();
             this.ClearCurrentPlaylistButton = new System.Windows.Forms.Button();
             this.PlaylistFormButton = new System.Windows.Forms.Button();
@@ -73,11 +72,11 @@
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
+            this.contextMenuStripForListBoxItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).BeginInit();
             this.mainMenuStrip.SuspendLayout();
             this.contextMenuStripNI.SuspendLayout();
-            this.contextMenuStripForListBoxItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -91,6 +90,28 @@
             this.listBoxMedia.Size = new System.Drawing.Size(400, 199);
             this.listBoxMedia.TabIndex = 0;
             this.listBoxMedia.SelectedIndexChanged += new System.EventHandler(this.listBoxMedia_SelectedIndexChanged);
+            // 
+            // contextMenuStripForListBoxItem
+            // 
+            this.contextMenuStripForListBoxItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openFileDestinationToolStripMenuItem,
+            this.removeToolStripMenuItem});
+            this.contextMenuStripForListBoxItem.Name = "contextMenuStripForListBoxItem";
+            this.contextMenuStripForListBoxItem.Size = new System.Drawing.Size(185, 48);
+            // 
+            // openFileDestinationToolStripMenuItem
+            // 
+            this.openFileDestinationToolStripMenuItem.Name = "openFileDestinationToolStripMenuItem";
+            this.openFileDestinationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.openFileDestinationToolStripMenuItem.Text = "Open file destination";
+            this.openFileDestinationToolStripMenuItem.Click += new System.EventHandler(this.openFileDestinationToolStripMenuItem_Click);
+            // 
+            // removeToolStripMenuItem
+            // 
+            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+            this.removeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.removeToolStripMenuItem.Text = "Remove";
+            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
             // 
             // TrackBarAudio
             // 
@@ -128,16 +149,6 @@
             this.CurrentTimeLabel.Size = new System.Drawing.Size(49, 13);
             this.CurrentTimeLabel.TabIndex = 7;
             this.CurrentTimeLabel.Text = "00:00:00";
-            // 
-            // checkBoxRepeatCircle
-            // 
-            this.checkBoxRepeatCircle.AutoSize = true;
-            this.checkBoxRepeatCircle.Location = new System.Drawing.Point(310, 283);
-            this.checkBoxRepeatCircle.Name = "checkBoxRepeatCircle";
-            this.checkBoxRepeatCircle.Size = new System.Drawing.Size(61, 17);
-            this.checkBoxRepeatCircle.TabIndex = 8;
-            this.checkBoxRepeatCircle.Text = "Repeat";
-            this.checkBoxRepeatCircle.UseVisualStyleBackColor = true;
             // 
             // mainMenuStrip
             // 
@@ -281,16 +292,6 @@
             this.TotalDurationLabel.TabIndex = 16;
             this.TotalDurationLabel.Text = "00:00:00";
             // 
-            // checkBoxSavePathToFolder
-            // 
-            this.checkBoxSavePathToFolder.AutoSize = true;
-            this.checkBoxSavePathToFolder.Location = new System.Drawing.Point(226, 283);
-            this.checkBoxSavePathToFolder.Name = "checkBoxSavePathToFolder";
-            this.checkBoxSavePathToFolder.Size = new System.Drawing.Size(78, 17);
-            this.checkBoxSavePathToFolder.TabIndex = 17;
-            this.checkBoxSavePathToFolder.Text = "Save path ";
-            this.checkBoxSavePathToFolder.UseVisualStyleBackColor = true;
-            // 
             // CurrentAudioLabel
             // 
             this.CurrentAudioLabel.AutoSize = true;
@@ -300,27 +301,16 @@
             this.CurrentAudioLabel.TabIndex = 25;
             this.CurrentAudioLabel.Text = "Title of Song";
             // 
-            // contextMenuStripForListBoxItem
+            // SettingsButton
             // 
-            this.contextMenuStripForListBoxItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openFileDestinationToolStripMenuItem,
-            this.removeToolStripMenuItem});
-            this.contextMenuStripForListBoxItem.Name = "contextMenuStripForListBoxItem";
-            this.contextMenuStripForListBoxItem.Size = new System.Drawing.Size(185, 48);
-            // 
-            // openFileDestinationToolStripMenuItem
-            // 
-            this.openFileDestinationToolStripMenuItem.Name = "openFileDestinationToolStripMenuItem";
-            this.openFileDestinationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.openFileDestinationToolStripMenuItem.Text = "Open file destination";
-            this.openFileDestinationToolStripMenuItem.Click += new System.EventHandler(this.openFileDestinationToolStripMenuItem_Click);
-            // 
-            // removeToolStripMenuItem
-            // 
-            this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-            this.removeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.removeToolStripMenuItem.Text = "Remove";
-            this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+            this.SettingsButton.BackgroundImage = global::MediaPlayer.Properties.Resources.settings;
+            this.SettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.SettingsButton.Location = new System.Drawing.Point(366, 283);
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(30, 30);
+            this.SettingsButton.TabIndex = 28;
+            this.SettingsButton.UseVisualStyleBackColor = true;
+            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
             // CredentialButton
             // 
@@ -496,6 +486,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(455, 575);
+            this.Controls.Add(this.SettingsButton);
             this.Controls.Add(this.CredentialButton);
             this.Controls.Add(this.CurrentAudioLabel);
             this.Controls.Add(this.ClearCurrentPlaylistButton);
@@ -505,13 +496,11 @@
             this.Controls.Add(this.ReplayButton);
             this.Controls.Add(this.PreviousButton);
             this.Controls.Add(this.NextButton);
-            this.Controls.Add(this.checkBoxSavePathToFolder);
             this.Controls.Add(this.TotalDurationLabel);
             this.Controls.Add(this.ButtonRollUp);
             this.Controls.Add(this.ButtonClose);
             this.Controls.Add(this.PauseButton);
             this.Controls.Add(this.titlePictureBox);
-            this.Controls.Add(this.checkBoxRepeatCircle);
             this.Controls.Add(this.CurrentTimeLabel);
             this.Controls.Add(this.VolumeLabel);
             this.Controls.Add(this.SoundLevelTrackBar);
@@ -529,12 +518,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AudioPlayer";
             this.Load += new System.EventHandler(this.AudioPlayer_Load);
+            this.contextMenuStripForListBoxItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).EndInit();
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             this.contextMenuStripNI.ResumeLayout(false);
-            this.contextMenuStripForListBoxItem.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.titlePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -549,7 +538,6 @@
         private System.Windows.Forms.TrackBar SoundLevelTrackBar;
         private System.Windows.Forms.Label VolumeLabel;
         private System.Windows.Forms.Label CurrentTimeLabel;
-        private System.Windows.Forms.CheckBox checkBoxRepeatCircle;
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCurrentListToolStripMenuItem;
@@ -569,7 +557,6 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.Label TotalDurationLabel;
-        private System.Windows.Forms.CheckBox checkBoxSavePathToFolder;
         private System.Windows.Forms.ToolStripMenuItem ChooseToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator dsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFilesToolStripMenuItem;
@@ -586,6 +573,7 @@
         private System.Windows.Forms.ToolStripMenuItem openFileDestinationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
         private System.Windows.Forms.Button CredentialButton;
+        private System.Windows.Forms.Button SettingsButton;
     }
 }
 

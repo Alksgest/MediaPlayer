@@ -8,79 +8,113 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MediaPlayer.Properties {
-    
-    
+namespace MediaPlayer.Properties
+{
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
+
+        public static Settings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string pathToFolder {
-            get {
+        public string pathToFolder
+        {
+            get
+            {
                 return ((string)(this["pathToFolder"]));
             }
-            set {
+            set
+            {
                 this["pathToFolder"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool savePathToFolder {
-            get {
+        public bool savePathToFolder
+        {
+            get
+            {
                 return ((bool)(this["savePathToFolder"]));
             }
-            set {
+            set
+            {
                 this["savePathToFolder"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int currentVolume {
-            get {
+        public int currentVolume
+        {
+            get
+            {
                 return ((int)(this["currentVolume"]));
             }
-            set {
+            set
+            {
                 this["currentVolume"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool repeatByCircle {
-            get {
+        public bool repeatByCircle
+        {
+            get
+            {
                 return ((bool)(this["repeatByCircle"]));
             }
-            set {
+            set
+            {
                 this["repeatByCircle"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string pathToImage {
-            get {
+        public string pathToImage
+        {
+            get
+            {
                 return ((string)(this["pathToImage"]));
             }
-            set {
+            set
+            {
                 this["pathToImage"] = value;
             }
+        }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool rollUpTray
+        {
+            get
+            {
+                return ((bool)(this["rollUpTray"]));
+            }
+            set
+            {
+                this["rollUpTray"] = value;
+            }
+
         }
     }
 }

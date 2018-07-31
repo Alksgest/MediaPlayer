@@ -15,6 +15,7 @@ namespace MediaPlayer
     public partial class AudioPlayer : Form
     {
         private PlaylistForm playlistForm;
+        private SettingsForm settingsForm;
 
         private WaveOut waveOut;
         private AudioFileReader reader;
@@ -28,6 +29,10 @@ namespace MediaPlayer
         public string PathToFolder { get; set; }
         public string PathToImage { get; set; }
         private string currentAudio = null;
+
+        public bool RollUp { get; set; }
+        public bool SavePathToFolder { get; set; }
+        public bool RepeatByCircle { get; set; }
 
         ToolTip openFilesToolTip;
         ToolTip openFolderToolTip;
@@ -69,7 +74,11 @@ namespace MediaPlayer
             if (args != null)
             {
                 this.listBoxMedia.Items.Clear();
-                this.checkBoxSavePathToFolder.Checked = false;
+                SavePathToFolder = false;
+
+                PathToFolder = null;
+                PathToImage = null;
+
                 foreach (var str in args)
                 {
                     if (AcceptedFormat(str))
@@ -149,6 +158,8 @@ namespace MediaPlayer
         {
             if (playlistForm != null)
                 this.playlistForm.Location = new Point(this.Location.X + 10 + this.Width, this.Location.Y);
+            if (this.settingsForm != null)
+                this.settingsForm.Location = new Point(this.Location.X - 10 - this.settingsForm.Width, this.Location.Y);
         }
 
         private void InitializeCustomGraphic()
@@ -161,9 +172,11 @@ namespace MediaPlayer
 
         private void SaveSettings()
         {
-            Properties.Settings.Default.repeatByCircle = this.checkBoxRepeatCircle.Checked;
-            Properties.Settings.Default.savePathToFolder = this.checkBoxSavePathToFolder.Checked;
+            Properties.Settings.Default.repeatByCircle = this.RepeatByCircle;
+            Properties.Settings.Default.savePathToFolder = this.SavePathToFolder;
+            Properties.Settings.Default.rollUpTray = this.RollUp;
             Properties.Settings.Default.currentVolume = this.SoundLevelTrackBar.Value;
+
             if (Properties.Settings.Default.savePathToFolder)
             {
                 Properties.Settings.Default.pathToFolder = this.PathToFolder;
@@ -360,7 +373,7 @@ namespace MediaPlayer
             this.TrackBarAudio.Value = 0;
             if (listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
                 NextAudio();
-            else if (this.checkBoxRepeatCircle.Checked)
+            else if (this.RepeatByCircle)
             {
                 listBoxMedia.ClearSelected();
                 listBoxMedia.SelectedIndex = 0;
@@ -423,8 +436,7 @@ namespace MediaPlayer
 
             LoadImages();
 
-            if (Properties.Settings.Default.savePathToFolder)
-                LoadPreviousAudioList();
+            LoadPreviousAudioList();
 
             if (File.Exists(Properties.Settings.Default.pathToImage))
                 titlePictureBox.Image = new Bitmap(Properties.Settings.Default.pathToImage);
@@ -443,8 +455,11 @@ namespace MediaPlayer
 
         private void LoadPreviousSettings()
         {
-            this.checkBoxRepeatCircle.Checked = Properties.Settings.Default.repeatByCircle;
-            this.checkBoxSavePathToFolder.Checked = Properties.Settings.Default.savePathToFolder;
+
+            this.RepeatByCircle = Properties.Settings.Default.repeatByCircle;
+            this.SavePathToFolder = Properties.Settings.Default.savePathToFolder;
+            this.RollUp = Properties.Settings.Default.rollUpTray;
+
             this.SoundLevelTrackBar.Value = Properties.Settings.Default.currentVolume;
             this.PathToImage = Properties.Settings.Default.pathToImage;
         }
@@ -489,27 +504,30 @@ namespace MediaPlayer
 
         private void LoadPreviousAudioList()
         {
-            bool pathToFolderNotEmpty = !String.IsNullOrEmpty(Properties.Settings.Default.pathToFolder);
-            if (pathToFolderNotEmpty)
+            if (SavePathToFolder)
             {
-                try
+                bool pathToFolderNotEmpty = !String.IsNullOrEmpty(Properties.Settings.Default.pathToFolder);
+                if (pathToFolderNotEmpty)
                 {
-                    PathToFolder = Properties.Settings.Default.pathToFolder;
-                    if (Directory.Exists(PathToFolder))
+                    try
                     {
-                        pathToFolderNotEmpty = true;
-                        var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-                                 .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg"));
-                        foreach (var str in files)
+                        PathToFolder = Properties.Settings.Default.pathToFolder;
+                        if (Directory.Exists(PathToFolder))
                         {
-                            PathHolder item = new PathHolder(str);
-                            listBoxMedia.Items.Add(item);
+                            pathToFolderNotEmpty = true;
+                            var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
+                                     .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg"));
+                            foreach (var str in files)
+                            {
+                                PathHolder item = new PathHolder(str);
+                                listBoxMedia.Items.Add(item);
+                            }
                         }
+                        if (!pathToFolderNotEmpty)
+                            PathToFolder = null;
                     }
-                    if (!pathToFolderNotEmpty)
-                        PathToFolder = null;
+                    catch { }
                 }
-                catch { }
             }
         }
 
@@ -715,7 +733,7 @@ namespace MediaPlayer
             LoadDefaultImage();
             this.PathToFolder = null;
             this.PathToImage = null;
-            this.checkBoxSavePathToFolder.Checked = false;
+            //SavePathToFolder = false;
             this.listBoxMedia.Items.Clear();
         }
 
@@ -751,6 +769,21 @@ namespace MediaPlayer
         private void CredentialButton_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            if (settingsForm == null)
+            {
+                this.settingsForm = new SettingsForm(this);
+                this.settingsForm.Show();
+            }
+            else
+            {
+                this.settingsForm.Close();
+                this.settingsForm.Dispose();
+                this.settingsForm = null;
+            }
         }
     }
 }
