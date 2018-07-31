@@ -329,7 +329,7 @@
             // 
             this.CredentialButton.BackgroundImage = global::MediaPlayer.Properties.Resources.credentials;
             this.CredentialButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.CredentialButton.Location = new System.Drawing.Point(310, 4);
+            this.CredentialButton.Location = new System.Drawing.Point(310, 6);
             this.CredentialButton.Name = "CredentialButton";
             this.CredentialButton.Size = new System.Drawing.Size(20, 20);
             this.CredentialButton.TabIndex = 27;
@@ -340,7 +340,7 @@
             // 
             this.ClearCurrentPlaylistButton.BackgroundImage = global::MediaPlayer.Properties.Resources.clear;
             this.ClearCurrentPlaylistButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClearCurrentPlaylistButton.Location = new System.Drawing.Point(418, 535);
+            this.ClearCurrentPlaylistButton.Location = new System.Drawing.Point(417, 535);
             this.ClearCurrentPlaylistButton.Name = "ClearCurrentPlaylistButton";
             this.ClearCurrentPlaylistButton.Size = new System.Drawing.Size(30, 30);
             this.ClearCurrentPlaylistButton.TabIndex = 24;
@@ -351,7 +351,7 @@
             // 
             this.PlaylistFormButton.BackgroundImage = global::MediaPlayer.Properties.Resources.list;
             this.PlaylistFormButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.PlaylistFormButton.Location = new System.Drawing.Point(418, 312);
+            this.PlaylistFormButton.Location = new System.Drawing.Point(417, 312);
             this.PlaylistFormButton.Name = "PlaylistFormButton";
             this.PlaylistFormButton.Size = new System.Drawing.Size(30, 30);
             this.PlaylistFormButton.TabIndex = 23;
@@ -362,7 +362,7 @@
             // 
             this.RemoveFilesButton.BackgroundImage = global::MediaPlayer.Properties.Resources.minus;
             this.RemoveFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.RemoveFilesButton.Location = new System.Drawing.Point(418, 438);
+            this.RemoveFilesButton.Location = new System.Drawing.Point(417, 438);
             this.RemoveFilesButton.Name = "RemoveFilesButton";
             this.RemoveFilesButton.Size = new System.Drawing.Size(30, 30);
             this.RemoveFilesButton.TabIndex = 22;
@@ -373,7 +373,7 @@
             // 
             this.AddFilesButton.BackgroundImage = global::MediaPlayer.Properties.Resources.plus;
             this.AddFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.AddFilesButton.Location = new System.Drawing.Point(418, 402);
+            this.AddFilesButton.Location = new System.Drawing.Point(417, 402);
             this.AddFilesButton.Name = "AddFilesButton";
             this.AddFilesButton.Size = new System.Drawing.Size(30, 30);
             this.AddFilesButton.TabIndex = 21;
@@ -417,7 +417,7 @@
             // 
             this.ButtonRollUp.BackgroundImage = global::MediaPlayer.Properties.Resources.minus;
             this.ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonRollUp.Location = new System.Drawing.Point(392, 4);
+            this.ButtonRollUp.Location = new System.Drawing.Point(401, 6);
             this.ButtonRollUp.Name = "ButtonRollUp";
             this.ButtonRollUp.Size = new System.Drawing.Size(20, 20);
             this.ButtonRollUp.TabIndex = 14;
@@ -429,7 +429,7 @@
             this.ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ButtonClose.BackgroundImage = global::MediaPlayer.Properties.Resources.cancel;
             this.ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ButtonClose.Location = new System.Drawing.Point(423, 4);
+            this.ButtonClose.Location = new System.Drawing.Point(427, 6);
             this.ButtonClose.Name = "ButtonClose";
             this.ButtonClose.Size = new System.Drawing.Size(20, 20);
             this.ButtonClose.TabIndex = 13;
@@ -464,7 +464,7 @@
             // 
             this.OpenFolderButton.BackgroundImage = global::MediaPlayer.Properties.Resources.openFolder;
             this.OpenFolderButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.OpenFolderButton.Location = new System.Drawing.Point(418, 366);
+            this.OpenFolderButton.Location = new System.Drawing.Point(417, 366);
             this.OpenFolderButton.Name = "OpenFolderButton";
             this.OpenFolderButton.Size = new System.Drawing.Size(30, 30);
             this.OpenFolderButton.TabIndex = 3;
@@ -496,9 +496,9 @@
             // BlackLabel
             // 
             this.BlackLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BlackLabel.Location = new System.Drawing.Point(0, 570);
+            this.BlackLabel.Location = new System.Drawing.Point(0, 572);
             this.BlackLabel.Name = "BlackLabel";
-            this.BlackLabel.Size = new System.Drawing.Size(455, 5);
+            this.BlackLabel.Size = new System.Drawing.Size(455, 3);
             this.BlackLabel.TabIndex = 31;
             // 
             // label1
@@ -506,7 +506,7 @@
             this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(452, 5);
+            this.label1.Size = new System.Drawing.Size(452, 3);
             this.label1.TabIndex = 32;
             // 
             // label2
@@ -514,15 +514,15 @@
             this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(5, 580);
+            this.label2.Size = new System.Drawing.Size(3, 580);
             this.label2.TabIndex = 33;
             // 
             // label3
             // 
             this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(450, 0);
+            this.label3.Location = new System.Drawing.Point(452, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(5, 580);
+            this.label3.Size = new System.Drawing.Size(3, 580);
             this.label3.TabIndex = 34;
             // 
             // AudioPlayer

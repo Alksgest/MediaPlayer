@@ -32,10 +32,10 @@
             this.checkBoxRepeatCircle = new System.Windows.Forms.CheckBox();
             this.checkBoxRollUpTray = new System.Windows.Forms.CheckBox();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.BlackLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.BlackLabel = new System.Windows.Forms.Label();
             this.MainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,37 +87,37 @@
             this.MainPanel.Size = new System.Drawing.Size(234, 411);
             this.MainPanel.TabIndex = 0;
             // 
-            // BlackLabel
+            // label3
             // 
-            this.BlackLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.BlackLabel.Location = new System.Drawing.Point(0, 406);
-            this.BlackLabel.Name = "BlackLabel";
-            this.BlackLabel.Size = new System.Drawing.Size(231, 5);
-            this.BlackLabel.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label1.Location = new System.Drawing.Point(230, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(5, 411);
-            this.label1.TabIndex = 4;
+            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(231, 3);
+            this.label3.TabIndex = 6;
             // 
             // label2
             // 
             this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(5, 411);
+            this.label2.Size = new System.Drawing.Size(3, 411);
             this.label2.TabIndex = 5;
             // 
-            // label3
+            // label1
             // 
-            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(0, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(231, 5);
-            this.label3.TabIndex = 6;
+            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(231, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(3, 411);
+            this.label1.TabIndex = 4;
+            // 
+            // BlackLabel
+            // 
+            this.BlackLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BlackLabel.Location = new System.Drawing.Point(0, 408);
+            this.BlackLabel.Name = "BlackLabel";
+            this.BlackLabel.Size = new System.Drawing.Size(231, 3);
+            this.BlackLabel.TabIndex = 3;
             // 
             // SettingsForm
             // 
