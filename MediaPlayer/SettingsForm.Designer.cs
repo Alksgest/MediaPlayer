@@ -32,6 +32,10 @@
             this.checkBoxRepeatCircle = new System.Windows.Forms.CheckBox();
             this.checkBoxRollUpTray = new System.Windows.Forms.CheckBox();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.BlackLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.MainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,6 +74,10 @@
             // 
             // MainPanel
             // 
+            this.MainPanel.Controls.Add(this.label3);
+            this.MainPanel.Controls.Add(this.label2);
+            this.MainPanel.Controls.Add(this.label1);
+            this.MainPanel.Controls.Add(this.BlackLabel);
             this.MainPanel.Controls.Add(this.checkBoxRollUpTray);
             this.MainPanel.Controls.Add(this.checkBoxRepeatCircle);
             this.MainPanel.Controls.Add(this.checkBoxSavePathToFolder);
@@ -78,6 +86,38 @@
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(234, 411);
             this.MainPanel.TabIndex = 0;
+            // 
+            // BlackLabel
+            // 
+            this.BlackLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BlackLabel.Location = new System.Drawing.Point(0, 406);
+            this.BlackLabel.Name = "BlackLabel";
+            this.BlackLabel.Size = new System.Drawing.Size(231, 5);
+            this.BlackLabel.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(230, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(5, 411);
+            this.label1.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(5, 411);
+            this.label2.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(231, 5);
+            this.label3.TabIndex = 6;
             // 
             // SettingsForm
             // 
@@ -102,5 +142,9 @@
         private System.Windows.Forms.CheckBox checkBoxRepeatCircle;
         private System.Windows.Forms.CheckBox checkBoxRollUpTray;
         private System.Windows.Forms.Panel MainPanel;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label BlackLabel;
     }
 }

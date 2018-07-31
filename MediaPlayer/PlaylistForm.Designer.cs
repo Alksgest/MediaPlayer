@@ -34,12 +34,20 @@
             this.RemoveFilesButton = new System.Windows.Forms.Button();
             this.AddFilesButton = new System.Windows.Forms.Button();
             this.MainListBox = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.BlackLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainPanel
             // 
+            this.mainPanel.Controls.Add(this.label3);
+            this.mainPanel.Controls.Add(this.label2);
+            this.mainPanel.Controls.Add(this.label1);
             this.mainPanel.Controls.Add(this.RenamePlaylistButton);
+            this.mainPanel.Controls.Add(this.BlackLabel);
             this.mainPanel.Controls.Add(this.PlaylistLabel);
             this.mainPanel.Controls.Add(this.RemoveFilesButton);
             this.mainPanel.Controls.Add(this.AddFilesButton);
@@ -102,6 +110,38 @@
             this.MainListBox.Size = new System.Drawing.Size(276, 498);
             this.MainListBox.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(295, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(5, 580);
+            this.label1.TabIndex = 6;
+            // 
+            // BlackLabel
+            // 
+            this.BlackLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BlackLabel.Location = new System.Drawing.Point(0, 575);
+            this.BlackLabel.Name = "BlackLabel";
+            this.BlackLabel.Size = new System.Drawing.Size(300, 5);
+            this.BlackLabel.TabIndex = 5;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(5, 580);
+            this.label2.TabIndex = 29;
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(300, 5);
+            this.label3.TabIndex = 30;
+            // 
             // PlaylistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -130,5 +170,9 @@
         private System.Windows.Forms.Button AddFilesButton;
         private System.Windows.Forms.Label PlaylistLabel;
         private System.Windows.Forms.Button RenamePlaylistButton;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label BlackLabel;
     }
 }

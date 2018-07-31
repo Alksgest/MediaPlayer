@@ -42,6 +42,7 @@
             this.openFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearCurrentListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChooseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dsToolStripMenuItem = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +73,10 @@
             this.OpenFolderButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.PlayButton = new System.Windows.Forms.Button();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BlackLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.contextMenuStripForListBoxItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TrackBarAudio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SoundLevelTrackBar)).BeginInit();
@@ -196,6 +200,13 @@
             this.clearCurrentListToolStripMenuItem.Text = "Clear current list";
             this.clearCurrentListToolStripMenuItem.Click += new System.EventHandler(this.clearCurrentListToolStripMenuItem_Click);
             // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // ChooseToolStripMenuItem
             // 
             this.ChooseToolStripMenuItem.Name = "ChooseToolStripMenuItem";
@@ -297,7 +308,7 @@
             // CurrentAudioLabel
             // 
             this.CurrentAudioLabel.AutoSize = true;
-            this.CurrentAudioLabel.Location = new System.Drawing.Point(55, 4);
+            this.CurrentAudioLabel.Location = new System.Drawing.Point(43, 5);
             this.CurrentAudioLabel.Name = "CurrentAudioLabel";
             this.CurrentAudioLabel.Size = new System.Drawing.Size(67, 13);
             this.CurrentAudioLabel.TabIndex = 25;
@@ -482,12 +493,37 @@
             this.PlayButton.UseVisualStyleBackColor = true;
             this.PlayButton.Click += new System.EventHandler(this.button1_Click);
             // 
-            // settingsToolStripMenuItem
+            // BlackLabel
             // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.BlackLabel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BlackLabel.Location = new System.Drawing.Point(0, 570);
+            this.BlackLabel.Name = "BlackLabel";
+            this.BlackLabel.Size = new System.Drawing.Size(455, 5);
+            this.BlackLabel.TabIndex = 31;
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(452, 5);
+            this.label1.TabIndex = 32;
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(5, 580);
+            this.label2.TabIndex = 33;
+            // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label3.Location = new System.Drawing.Point(450, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(5, 580);
+            this.label3.TabIndex = 34;
             // 
             // AudioPlayer
             // 
@@ -495,6 +531,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(455, 575);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.BlackLabel);
             this.Controls.Add(this.SettingsButton);
             this.Controls.Add(this.CredentialButton);
             this.Controls.Add(this.CurrentAudioLabel);
@@ -584,6 +624,10 @@
         private System.Windows.Forms.Button CredentialButton;
         private System.Windows.Forms.Button SettingsButton;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.Label BlackLabel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

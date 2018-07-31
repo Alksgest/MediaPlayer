@@ -14,6 +14,7 @@ namespace MediaPlayer
 {
     public partial class AudioPlayer : Form
     {
+        private const string FormatFilter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg; *.m4a) |*.mp3;*.wav;*.wma;*.flac;*.ogg;*.m4a";
         private PlaylistForm playlistForm;
         private SettingsForm settingsForm;
 
@@ -45,6 +46,7 @@ namespace MediaPlayer
         ToolTip replayAudioToolTip;
         ToolTip playlistFormButtonToolTip;
         ToolTip clearCurrentPlaylistToolTip;
+        ToolTip settingsToolTip;
 
 
         private List<string> CurrentPlaylist = new List<string>();
@@ -125,6 +127,9 @@ namespace MediaPlayer
 
             clearCurrentPlaylistToolTip = new ToolTip();
             clearCurrentPlaylistToolTip.SetToolTip(ClearCurrentPlaylistButton, "Clear current playlist");
+
+            settingsToolTip = new ToolTip();
+            settingsToolTip.SetToolTip(SettingsButton, "Settings");
         }
 
         private void RegisterOnEvents()
@@ -286,7 +291,14 @@ namespace MediaPlayer
                     new Regex(@"(\.wma)").IsMatch(str) || new Regex(@"(\.flac)").IsMatch(str) || new Regex(@"(\.ogg)").IsMatch(str) || new Regex(@"(\.m4a)").IsMatch(str);
         }
 
-        private void ListBoxMedia_DoubleClick(object sender, EventArgs e) => PlaySound();
+        private void ListBoxMedia_DoubleClick(object sender, EventArgs e)
+        {
+            int tmpPos = CurrentPositionInListMedia;
+            listBoxMedia.ClearSelected();
+            listBoxMedia.SetSelected(tmpPos, true);
+            StopPlaying();
+            PlaySound();
+        }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -475,6 +487,7 @@ namespace MediaPlayer
 
             this.SoundLevelTrackBar.Value = Properties.Settings.Default.currentVolume;
             this.PathToImage = Properties.Settings.Default.pathToImage;
+            this.PathToFolder = Properties.Settings.Default.pathToFolder;
         }
 
         private void LoadTitleImage()
@@ -529,7 +542,7 @@ namespace MediaPlayer
                         {
                             pathToFolderNotEmpty = true;
                             var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-                                     .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg"));
+                                     .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg") || s.EndsWith(".m4a"));
                             foreach (var str in files)
                             {
                                 PathHolder item = new PathHolder(str);
@@ -692,7 +705,7 @@ namespace MediaPlayer
             using (OpenFileDialog fileDialog = new OpenFileDialog())
             {
                 fileDialog.Multiselect = true;
-                fileDialog.Filter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg; *.m4a) |*.mp3;*.wav;*.wma;*.flac;*.ogg;*.m4a";
+                fileDialog.Filter = FormatFilter;
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     if (fileDialog.FileNames.Length != 0)

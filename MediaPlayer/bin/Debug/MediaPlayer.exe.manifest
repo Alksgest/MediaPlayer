@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MediaPlayer.exe" size="512568">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MediaPlayer.exe" size="514616">
       <assemblyIdentity name="MediaPlayer" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Sd/0c4ZV4bQmMIOImEwmD47ZfyWKqDOQMlZYFRjOdcs=</dsig:DigestValue>
+        <dsig:DigestValue>p66PY+UmM2LSUAHQkWXaoCB8+y1/WU5n/Fo1KHKjOnY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
