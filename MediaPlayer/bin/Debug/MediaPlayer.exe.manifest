@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MediaPlayer.exe" size="514616">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MediaPlayer.exe" size="516152">
       <assemblyIdentity name="MediaPlayer" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>y4yuK08L0iY75r9QebXhGBKCa84XDh+VWy6BE0pn2NU=</dsig:DigestValue>
+        <dsig:DigestValue>EkOMVR/PjmBRHAtGwhWmYtaGOfMdhiV7s+ItpmXkmho=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -65,13 +65,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="MediaPlayer.exe.config" size="1542">
+  <file name="MediaPlayer.exe.config" size="1663">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>B65AUsDahVuCJTzquJTXVWqaj4LUzOiC7Y/ypyenyEU=</dsig:DigestValue>
+      <dsig:DigestValue>TwkZp12UzGy66A89inIc1AauhWDrdQzJzGTOUjd6c4s=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

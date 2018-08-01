@@ -36,6 +36,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.BlackLabel = new System.Windows.Forms.Label();
+            this.PathLabel = new System.Windows.Forms.Label();
+            this.PathTextBox = new System.Windows.Forms.TextBox();
+            this.OpenFileButton = new System.Windows.Forms.Button();
             this.MainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,6 +77,9 @@
             // 
             // MainPanel
             // 
+            this.MainPanel.Controls.Add(this.OpenFileButton);
+            this.MainPanel.Controls.Add(this.PathTextBox);
+            this.MainPanel.Controls.Add(this.PathLabel);
             this.MainPanel.Controls.Add(this.label3);
             this.MainPanel.Controls.Add(this.label2);
             this.MainPanel.Controls.Add(this.label1);
@@ -119,6 +125,33 @@
             this.BlackLabel.Size = new System.Drawing.Size(231, 3);
             this.BlackLabel.TabIndex = 3;
             // 
+            // PathLabel
+            // 
+            this.PathLabel.AutoSize = true;
+            this.PathLabel.Location = new System.Drawing.Point(12, 115);
+            this.PathLabel.Name = "PathLabel";
+            this.PathLabel.Size = new System.Drawing.Size(107, 13);
+            this.PathLabel.TabIndex = 7;
+            this.PathLabel.Text = "Path to default image";
+            // 
+            // PathTextBox
+            // 
+            this.PathTextBox.Enabled = false;
+            this.PathTextBox.Location = new System.Drawing.Point(9, 131);
+            this.PathTextBox.Name = "PathTextBox";
+            this.PathTextBox.Size = new System.Drawing.Size(216, 20);
+            this.PathTextBox.TabIndex = 8;
+            // 
+            // OpenFileButton
+            // 
+            this.OpenFileButton.Location = new System.Drawing.Point(9, 157);
+            this.OpenFileButton.Name = "OpenFileButton";
+            this.OpenFileButton.Size = new System.Drawing.Size(75, 23);
+            this.OpenFileButton.TabIndex = 9;
+            this.OpenFileButton.Text = "Open file";
+            this.OpenFileButton.UseVisualStyleBackColor = true;
+            this.OpenFileButton.Click += new System.EventHandler(this.OpenFileButton_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,5 +179,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label BlackLabel;
+        private System.Windows.Forms.Button OpenFileButton;
+        private System.Windows.Forms.TextBox PathTextBox;
+        private System.Windows.Forms.Label PathLabel;
     }
 }

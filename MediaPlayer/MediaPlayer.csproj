@@ -116,7 +116,7 @@
     <Compile Include="PlaylistForm.Designer.cs">
       <DependentUpon>PlaylistForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolStripExtraRenderer.cs" />
     <EmbeddedResource Include="AudioPlayer.resx">

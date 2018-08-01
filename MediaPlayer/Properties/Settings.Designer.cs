@@ -114,7 +114,20 @@ namespace MediaPlayer.Properties
             {
                 this["rollUpTray"] = value;
             }
-
+        }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string pathToDefaultImage
+        {
+            get
+            {
+                return ((string)(this["pathToDefaultImage"]));
+            }
+            set
+            {
+                this["pathToDefaultImage"] = value;
+            }
         }
     }
 }

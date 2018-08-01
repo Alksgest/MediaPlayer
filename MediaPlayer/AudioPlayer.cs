@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using System.IO;
 using NAudio.Wave;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Diagnostics;
 
 namespace MediaPlayer
@@ -15,6 +14,7 @@ namespace MediaPlayer
     public partial class AudioPlayer : Form
     {
         private const string FormatFilter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg; *.m4a) |*.mp3;*.wav;*.wma;*.flac;*.ogg;*.m4a";
+
         private PlaylistForm playlistForm;
         private SettingsForm settingsForm;
 
@@ -29,6 +29,8 @@ namespace MediaPlayer
 
         public string PathToFolder { get; set; }
         public string PathToImage { get; set; }
+        public string pathToDefaultImage { get; set; }
+
         private string currentAudio = null;
 
         public bool RollUp { get; set; }
@@ -185,6 +187,7 @@ namespace MediaPlayer
             Properties.Settings.Default.savePathToFolder = this.SavePathToFolder;
             Properties.Settings.Default.rollUpTray = this.RollUp;
             Properties.Settings.Default.currentVolume = this.SoundLevelTrackBar.Value;
+            Properties.Settings.Default.pathToDefaultImage = this.pathToDefaultImage;
 
             if (Properties.Settings.Default.savePathToFolder)
             {
@@ -451,16 +454,14 @@ namespace MediaPlayer
 
         private void LoadDefaultImage()
         {
-            if (File.Exists(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg"))
-            {
-                titlePictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            if (pathToDefaultImage != null && File.Exists(pathToDefaultImage))
+                titlePictureBox.Image = new Bitmap(pathToDefaultImage);
+            else if (File.Exists(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg"))
                 titlePictureBox.Image = new Bitmap(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg");
-            }
         }
 
         private void LoadPreviousSettings()
         {
-
             this.RepeatByCircle = Properties.Settings.Default.repeatByCircle;
             this.SavePathToFolder = Properties.Settings.Default.savePathToFolder;
             this.RollUp = Properties.Settings.Default.rollUpTray;
@@ -468,6 +469,7 @@ namespace MediaPlayer
             this.SoundLevelTrackBar.Value = Properties.Settings.Default.currentVolume;
             this.PathToImage = Properties.Settings.Default.pathToImage;
             this.PathToFolder = Properties.Settings.Default.pathToFolder;
+            this.pathToDefaultImage = Properties.Settings.Default.pathToDefaultImage;
         }
 
         private void LoadTitleImage()
@@ -683,7 +685,6 @@ namespace MediaPlayer
                 {
                     if (fileDialog.FileNames.Length != 0)
                     {
-                        //listBoxMedia.Items.Clear();
                         foreach (var str in fileDialog.FileNames)
                         {
                             PathHolder item = new PathHolder(str);
@@ -744,13 +745,11 @@ namespace MediaPlayer
         private void OpenImage()
         {
             if (File.Exists(PathToImage))
-            {
                 Process.Start(PathToImage);
-            }
+            else if (File.Exists(pathToDefaultImage))
+                Process.Start(PathToImage);
             else if (File.Exists("defaultPicture.jpg"))
-            {
                 Process.Start("defaultPicture.jpg");
-            }
         }
 
         private void openFileDestinationToolStripMenuItem_Click(object sender, EventArgs e)
