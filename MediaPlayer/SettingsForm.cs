@@ -24,6 +24,8 @@ namespace MediaPlayer
             this.BackColor = audioPlayer.BackColor;
 
             this.PathTextBox.Text = audioPlayer.pathToDefaultImage;
+
+            Console.WriteLine("test");
         }
 
         private void checkBoxSavePathToFolder_CheckedChanged(object sender, EventArgs e)
