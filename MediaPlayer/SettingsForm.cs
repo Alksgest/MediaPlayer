@@ -13,8 +13,8 @@ namespace MediaPlayer
     public partial class SettingsForm : Form
     {
         private const string FormatFilter = "Image Files (*.jpg; *.png; *.bmp) |*.jpg;*.png;*.bmp";
-        private AudioPlayer audioPlayer;
-        public SettingsForm(AudioPlayer audioPlayer)
+        private MainForm audioPlayer;
+        public SettingsForm(MainForm audioPlayer)
         {
             InitializeComponent();
 

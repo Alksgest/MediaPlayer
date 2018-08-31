@@ -13,10 +13,10 @@ namespace MediaPlayer
     public partial class PlaylistForm : Form
     {
         public string CurrentName { get; set; }
-        AudioPlayer AudioPlayer;
+        MainForm AudioPlayer;
         List<PlaylistData> PlaylistData = new List<PlaylistData>();
 
-        public PlaylistForm(AudioPlayer audioPlayer)
+        public PlaylistForm(MainForm audioPlayer)
         {
             InitializeComponent();
 

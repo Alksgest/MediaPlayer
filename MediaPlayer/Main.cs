@@ -22,7 +22,7 @@ namespace MediaPlayer
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new AudioPlayer(args.Length == 0 ? null : args));
+                    Application.Run(new MainForm(args.Length == 0 ? null : args));
                     mutex.ReleaseMutex();
                 }
                 else if (args.Length != 0)
