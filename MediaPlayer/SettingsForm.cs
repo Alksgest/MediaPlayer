@@ -23,7 +23,7 @@ namespace MediaPlayer
             this.Location = new Point(audioPlayer.Location.X - 10 - this.Width, audioPlayer.Location.Y);
             this.BackColor = audioPlayer.BackColor;
 
-            this.PathTextBox.Text = audioPlayer.pathToDefaultImage;
+            this.PathTextBox.Text = audioPlayer.PathToDefaultImage;
         }
 
         private void checkBoxSavePathToFolder_CheckedChanged(object sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace MediaPlayer
             if(openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 this.PathTextBox.Text = openFileDialog.FileName;
-                audioPlayer.pathToDefaultImage = openFileDialog.FileName;
+                audioPlayer.PathToDefaultImage = openFileDialog.FileName;
             }
         }
     }
