@@ -41,8 +41,5 @@
     <Compile Update="Forms\EnterNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\MainFormAudio.cs">
-      <SubType>Form</SubType>
-    </Compile>
   </ItemGroup>
 </Project>

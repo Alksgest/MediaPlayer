@@ -17,7 +17,7 @@ public partial class PlaylistForm : Form
     public string CurrentName { get; set; }
         
     private MainForm _audioPlayer;
-    private List<PlaylistData> _playlistData = new List<PlaylistData>();
+    private List<PlaylistData> _playlistData = [];
 
     public PlaylistForm(MainForm audioPlayer)
     {
@@ -53,14 +53,12 @@ public partial class PlaylistForm : Form
     {
         if (File.Exists("Playlists.dat"))
         {
-            using (var fileStream = new FileStream("Playlists.dat", FileMode.Open, FileAccess.Read))
-            {
+            using var fileStream = new FileStream("Playlists.dat", FileMode.Open, FileAccess.Read);
 #pragma warning disable SYSLIB0011
-                var binaryFormatter = new BinaryFormatter();
+            var binaryFormatter = new BinaryFormatter();
 #pragma warning restore SYSLIB0011
-                _playlistData = (List<PlaylistData>)binaryFormatter.Deserialize(fileStream);
-                fileStream.Close();
-            }
+            _playlistData = (List<PlaylistData>)binaryFormatter.Deserialize(fileStream);
+            fileStream.Close();
         }
         foreach (var item in _playlistData)
         {
@@ -79,14 +77,12 @@ public partial class PlaylistForm : Form
         }
         else
         {
-            using (var fileStream = new FileStream("Playlists.dat", FileMode.Create, FileAccess.Write))
-            {
+            using var fileStream = new FileStream("Playlists.dat", FileMode.Create, FileAccess.Write);
 #pragma warning disable SYSLIB0011
-                var binaryFormatter = new BinaryFormatter();
+            var binaryFormatter = new BinaryFormatter();
 #pragma warning restore SYSLIB0011
-                binaryFormatter.Serialize(fileStream, _playlistData);
-                fileStream.Close();
-            }
+            binaryFormatter.Serialize(fileStream, _playlistData);
+            fileStream.Close();
         }
     }
 
@@ -110,7 +106,7 @@ public partial class PlaylistForm : Form
         if (string.IsNullOrEmpty(CurrentName))
             CurrentName = "Unnamed playlist";
         var playList = _audioPlayer.listBoxMedia.Items.Cast<PathHolder>();
-        var data = new PlaylistData(CurrentName, playList.ToList<PathHolder>());
+        var data = new PlaylistData(CurrentName, playList.ToList());
 
         if (data.AudioFiles.Count != 0)
         {

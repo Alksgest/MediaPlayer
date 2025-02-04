@@ -59,10 +59,8 @@ internal class ContextMenuStripExtraRenderer : ToolStripProfessionalRenderer
     {
         if (e.Item.Selected)
         {
-            using (Brush b = new SolidBrush(ProfessionalColors.GripDark))
-            {
-                e.Graphics.FillRectangle(b, 2, 0, 22, 20);
-            }
+            using Brush b = new SolidBrush(ProfessionalColors.GripDark);
+            e.Graphics.FillRectangle(b, 2, 0, 22, 20);
         }
         //else
         //{

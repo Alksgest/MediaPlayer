@@ -8,39 +8,37 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MediaPlayer.Models;
+using MediaPlayer.Presenters;
 using MediaPlayer.Renderers;
-using NAudio.Wave;
 
 namespace MediaPlayer.Forms;
 
 public partial class MainForm : Form
 {
-    private const string FormatFilter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg; *.m4a) " +
-                                        "|*.mp3;*.wav;*.wma;*.flac;*.ogg;*.m4a";
+    private readonly AudioPresenter _audioPresenter;
 
     private PlaylistForm _playlistForm;
     private SettingsForm _settingsForm;
-
-    private event Action PlaySoundEvent;
-    private event Action StopSoundEvent;
 
     private Point _moveStart;
     private readonly Timer _timer;
 
     private int _currentPositionInListMedia = -1;
-    private bool _isPaused;
 
     private string PathToFolder { get; set; }
     private string PathToImage { get; set; }
+
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string PathToDefaultImage { get; set; }
+
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool RollUp { get; set; }
+
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool SavePathToFolder { get; set; }
+
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool RepeatByCircle { get; set; }
-    private string _currentAudio;
 
     private ToolTip _openFilesToolTip;
     private ToolTip _openFolderToolTip;
@@ -55,15 +53,15 @@ public partial class MainForm : Form
     private ToolTip _clearCurrentPlaylistToolTip;
     private ToolTip _settingsToolTip;
 
-    private List<string> _currentPlaylist = new List<string>();
-
-    public MainForm(string[] args)
+    public MainForm(string[] args, AudioPresenter audioPresenter)
     {
+        _audioPresenter = audioPresenter;
+
         InitializeComponent();
 
         CurrentAudioLabel.Text = "";
 
-        _timer = new Timer()
+        _timer = new Timer
         {
             Enabled = true
         };
@@ -89,13 +87,14 @@ public partial class MainForm : Form
 
             foreach (var str in args)
             {
-                if (AcceptedFormat(str))
+                if (CheckAcceptedFormat(str))
                 {
                     var item = new PathHolder(str);
                     listBoxMedia.Items.Add(item);
                 }
             }
-            PlaySound();
+
+            StartAudio();
         }
     }
 
@@ -140,11 +139,7 @@ public partial class MainForm : Form
 
     private void RegisterOnEvents()
     {
-
-        PlaySoundEvent += PlaySound;
-        StopSoundEvent += StopAudio;
         _timer.Tick += Timer_Tick;
-
 
         TrackBarAudio.Scroll += TrackBarAudio_Scroll;
 
@@ -169,7 +164,79 @@ public partial class MainForm : Form
         CurrentAudioLabel.MouseMove += CurrentAudioLabel_MouseMove;
 
         Activated += AudioPlayer_Activated;
+
+        _audioPresenter.AudioStarted += AudioPresenterOnAudioStarted;
+        _audioPresenter.AudioStopped += AudioPresenterOnAudioStopped;
+        _audioPresenter.AudioPaused += AudioPresenterOnAudioPaused;
+        _audioPresenter.AudioUnPaused += AudioPresenterOnAudioUnPaused;
+        _audioPresenter.WaveOutClosed += AudioPresenterOnWaveOutClosed;
     }
+
+    private void AudioPresenterOnWaveOutClosed()
+    {
+        TrackBarAudio.Value = 0;
+        
+        if (listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
+        {
+            NextAudio();
+        }
+        else if (RepeatByCircle)
+        {
+            listBoxMedia.ClearSelected();
+            listBoxMedia.SelectedIndex = 0;
+            StartAudio();
+        }
+    }
+
+    private void AudioPresenterOnAudioUnPaused()
+    {
+        _timer.Start();
+    }
+
+    private void AudioPresenterOnAudioPaused()
+    {
+        _timer.Stop();
+    }
+
+    private void AudioPresenterOnAudioStopped()
+    {
+        TrackBarAudio.Value = 0;
+        _timer.Stop();
+        CurrentTimeLabel.Text = "00.00.00";
+    }
+
+    private void AudioPresenterOnAudioStarted(string fileName)
+    {
+        SetupTrackBarAudio();
+        _timer.Start();
+        CurrentAudioLabel.Text = fileName;
+    }
+
+    private void StartAudio()
+    {
+        if (listBoxMedia.Items.Count == 0)
+        {
+            return;
+        }
+
+        if (listBoxMedia.SelectedIndex == -1)
+        {
+            listBoxMedia.SelectedIndex = 0;
+        }
+
+        var pathHolder = listBoxMedia.SelectedItem as PathHolder;
+        var soundLevel = (float)SoundLevelTrackBar.Value / 100;
+
+        _audioPresenter.StartAudio(pathHolder, soundLevel, TrackBarAudio.Value);
+    }
+
+    private void MainMenuStrip_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
+    private void MainMenuStrip_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
+    private void AudioPlayer_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
+    private void AudioPlayer_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
+    private void CurrentAudioLabel_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
+    private void CurrentAudioLabel_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
+
 
     private void AudioPlayer_Activated(object sender, EventArgs e) => ResizeUp();
 
@@ -211,20 +278,12 @@ public partial class MainForm : Form
         Properties.Settings.Default.Save();
     }
 
-    private void ToolStrip1_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
-    private void ToolStrip1_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
-    private void MainMenuStrip_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
-    private void MainMenuStrip_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
-    private void AudioPlayer_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
-    private void AudioPlayer_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
-    private void CurrentAudioLabel_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
-    private void CurrentAudioLabel_MouseDown(object sender, MouseEventArgs e) => MouseDownHandler(e);
-
     private void MouseDownHandler(MouseEventArgs e)
     {
         if (e.Button == MouseButtons.Left)
             _moveStart = new Point(e.X, e.Y);
     }
+
     private void MouseMoveHandler(MouseEventArgs e)
     {
         if ((e.Button & MouseButtons.Left) != 0)
@@ -252,31 +311,40 @@ public partial class MainForm : Form
 
     private void ResizeDown()
     {
-        if (WindowState == FormWindowState.Minimized)
+        if (WindowState != FormWindowState.Minimized)
         {
-            if (RollUp)
-                Hide();
-            if (_playlistForm != null)
-                _playlistForm.Hide();
-            if (_settingsForm != null)
-                _settingsForm.Hide();
+            return;
         }
+
+        if (RollUp)
+        {
+            Hide();
+        }
+
+        _playlistForm?.Hide();
+        _settingsForm?.Hide();
     }
 
     private void ListBoxMedia_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.KeyData == Keys.Enter)
-            PlaySoundEvent();
-        else if (e.KeyData == Keys.Delete && listBoxMedia.SelectedIndex != -1)
-            RemoveFiles();
+        switch (e.KeyData)
+        {
+            case Keys.Enter:
+                StartAudio();
+                break;
+            case Keys.Delete when listBoxMedia.SelectedIndex != -1:
+                RemoveFiles();
+                break;
+        }
     }
+
     private void ListBoxMedia_DragEnter(object sender, DragEventArgs e)
     {
         var fileList = e.Data?.GetData(DataFormats.FileDrop, false) as string[];
-            
+
         foreach (var str in fileList ?? [])
         {
-            e.Effect = AcceptedFormat(str) ? DragDropEffects.Copy : DragDropEffects.None;
+            e.Effect = CheckAcceptedFormat(str) ? DragDropEffects.Copy : DragDropEffects.None;
         }
     }
 
@@ -286,20 +354,20 @@ public partial class MainForm : Form
 
         foreach (var str in fileList ?? [])
         {
-            if (!AcceptedFormat(str))
+            if (!CheckAcceptedFormat(str))
             {
                 continue;
             }
-                
+
             var item = new PathHolder(str);
             listBoxMedia.Items.Add(item);
         }
     }
 
-    private bool AcceptedFormat(string str)
+    private static bool CheckAcceptedFormat(string str)
     {
         return new Regex(@"(\.mp3)").IsMatch(str) || new Regex(@"(\.wav)").IsMatch(str) ||
-               new Regex(@"(\.wma)").IsMatch(str) || new Regex(@"(\.flac)").IsMatch(str) || 
+               new Regex(@"(\.wma)").IsMatch(str) || new Regex(@"(\.flac)").IsMatch(str) ||
                new Regex(@"(\.ogg)").IsMatch(str) || new Regex(@"(\.m4a)").IsMatch(str);
     }
 
@@ -308,87 +376,84 @@ public partial class MainForm : Form
         var tmpPos = _currentPositionInListMedia;
         listBoxMedia.ClearSelected();
         listBoxMedia.SetSelected(tmpPos, true);
-            
-        StopSoundEvent();
-        PlaySoundEvent();
+
+        _audioPresenter.StopAudio();
+        StartAudio();
+    }
+
+    private void SetupTrackBarAudio()
+    {
+        TrackBarAudio.Value = 0;
+        TotalDurationLabel.Text = _audioPresenter.TotalTime.ToString()[..8];
+        TrackBarAudio.Maximum = _audioPresenter.TotalSeconds.HasValue ? (int)_audioPresenter.TotalSeconds.Value : 0;
     }
 
     private void Timer_Tick(object sender, EventArgs e)
     {
-        if (_reader == null || _isPaused)
+        if (_audioPresenter.IsPaused)
         {
             return;
         }
-            
+
         if (TrackBarAudio.Value < TrackBarAudio.Maximum)
         {
             ++TrackBarAudio.Value;
         }
 
-        CurrentTimeLabel.Text = _reader.CurrentTime.ToString().Substring(0, 8);
+        CurrentTimeLabel.Text = _audioPresenter.CurrentTime;
     }
-    
+
     private void TrackBarAudio_Scroll(object sender, EventArgs e)
     {
-        if (_waveOut != null )
-        {
-            _reader.CurrentTime = TimeSpan.FromSeconds(TrackBarAudio.Value);
-        }
+        _audioPresenter.ChangeCurrentTime(TrackBarAudio.Value);
     }
 
-    private void ButtonPlay_Click(object sender, EventArgs e) => PlaySoundEvent();
-
-
-    private void SetupTrackBarAudio()
-    {
-        TrackBarAudio.Value = 0;
-        TotalDurationLabel.Text = _reader.TotalTime.ToString().Substring(0, 8);
-        TrackBarAudio.Maximum = (int)_reader.TotalTime.TotalSeconds;
-    }
-
-    private void OnPlaybackStopped(object sender, StoppedEventArgs e)
-    {
-        if (!_isPaused)
-            CloseWaveOut();
-    }
-
-    private void StopButton_Click(object sender, EventArgs e) => StopSoundEvent();
+    private void ButtonPlay_Click(object sender, EventArgs e) => StartAudio();
+    private void StopButton_Click(object sender, EventArgs e) => _audioPresenter.StopAudio();
     private void SelectFolder_Click(object sender, EventArgs e) => OpenFolder();
     private void buttonNext_Click(object sender, EventArgs e) => NextAudio();
     private void buttonPrevious_Click(object sender, EventArgs e) => PreviousAudio();
-    private void buttonReplay_Click(object sender, EventArgs e) => Replay();
+    private void buttonReplay_Click(object sender, EventArgs e) => _audioPresenter.Replay();
 
     private void OpenFolder()
     {
-        using (var dialog = new FolderBrowserDialog())
-        {
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                var files = Directory.EnumerateFiles(dialog.SelectedPath, "*.*", SearchOption.TopDirectoryOnly)
-                    .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg") || s.EndsWith(".m4a"));
-                PathToFolder = dialog.SelectedPath;
-                listBoxMedia.Items.Clear();
+        using var dialog = new FolderBrowserDialog();
 
-                foreach (var str in files)
-                {
-                    var item = new PathHolder(str);
-                    listBoxMedia.Items.Add(item);
-                }
-                if (listBoxMedia.Items.Count != 0)
-                    LoadTitleImage();
-                else
-                    LoadDefaultImage();                
-            }
+        if (dialog.ShowDialog() != DialogResult.OK)
+        {
+            return;
+        }
+        
+        var files = Directory.EnumerateFiles(dialog.SelectedPath, "*.*", SearchOption.TopDirectoryOnly)
+            .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") ||
+                        s.EndsWith(".ogg") || s.EndsWith(".m4a"));
+        
+        PathToFolder = dialog.SelectedPath;
+        listBoxMedia.Items.Clear();
+
+        foreach (var str in files)
+        {
+            var item = new PathHolder(str);
+            listBoxMedia.Items.Add(item);
+        }
+
+        if (listBoxMedia.Items.Count != 0)
+        {
+            LoadTitleImage();
+        }
+        else
+        {
+            LoadDefaultImage();
         }
     }
 
     private void SoundLevelTrackBar_Scroll(object sender, EventArgs e)
     {
-        if (_waveOut != null)
-            _waveOut.Volume = (float)SoundLevelTrackBar.Value / 100;
+        _audioPresenter.ChangeVolume((float)SoundLevelTrackBar.Value / 100);
     }
 
-    private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) => _currentPositionInListMedia = listBoxMedia.SelectedIndex;
+    private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) =>
+        _currentPositionInListMedia = listBoxMedia.SelectedIndex;
 
     private void AudioPlayer_Load(object sender, EventArgs e)
     {
@@ -399,17 +464,27 @@ public partial class MainForm : Form
         LoadPreviousAudioList();
 
         if (File.Exists(Properties.Settings.Default.pathToImage))
+        {
             titlePictureBox.Image = new Bitmap(Properties.Settings.Default.pathToImage);
+        }
         else
+        {
             LoadDefaultImage();
+        }
     }
 
     private void LoadDefaultImage()
     {
+        var defaultFilePath = Directory.GetCurrentDirectory() + "\\defaultPicture.jpg";
+        
         if (PathToDefaultImage != null && File.Exists(PathToDefaultImage))
+        {
             titlePictureBox.Image = new Bitmap(PathToDefaultImage);
-        else if (File.Exists(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg"))
-            titlePictureBox.Image = new Bitmap(Directory.GetCurrentDirectory() + "\\defaultPicture.jpg");
+        }
+        else if (File.Exists(defaultFilePath))
+        {
+            titlePictureBox.Image = new Bitmap(defaultFilePath);
+        }
     }
 
     private void LoadPreviousSettings()
@@ -426,64 +501,73 @@ public partial class MainForm : Form
 
     private void LoadTitleImage()
     {
-        if (!string.IsNullOrEmpty(PathToFolder))
+        if (string.IsNullOrEmpty(PathToFolder))
         {
-            var images = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
+            LoadDefaultImage();
+            return;
+        }
+
+        var images = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
+            .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
+
+        if (images.Length != 0)
+        {
+            titlePictureBox.Image = new Bitmap(images[0]);
+            PathToImage = images[0];
+        }
+        else if (Directory.Exists(PathToFolder + "//Cover"))
+        {
+            images = Directory.EnumerateFiles(PathToFolder + "//Cover", "*.*", SearchOption.TopDirectoryOnly)
                 .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
+
             if (images.Length != 0)
             {
                 titlePictureBox.Image = new Bitmap(images[0]);
                 PathToImage = images[0];
             }
-            else if (Directory.Exists(PathToFolder + "//Cover"))
-            {
-                images = Directory.EnumerateFiles(PathToFolder + "//Cover", "*.*", SearchOption.TopDirectoryOnly)
-                    .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
-                if (images.Length != 0)
-                {
+        }
+        else if (Directory.Exists(PathToFolder + "//Covers"))
+        {
+            images = Directory.EnumerateFiles(PathToFolder + "//Covers", "*.*", SearchOption.TopDirectoryOnly)
+                .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
 
-                    titlePictureBox.Image = new Bitmap(images[0]);
-                    PathToImage = images[0];
-                }
-            }
-            else if (Directory.Exists(PathToFolder + "//Covers"))
+            if (images.Length != 0)
             {
-                images = Directory.EnumerateFiles(PathToFolder + "//Covers", "*.*", SearchOption.TopDirectoryOnly)
-                    .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
-                if (images.Length != 0)
-                {
-                    titlePictureBox.Image = new Bitmap(images[0]);
-                    PathToImage = images[0];
-                }
+                titlePictureBox.Image = new Bitmap(images[0]);
+                PathToImage = images[0];
             }
         }
-
-        else
-            LoadDefaultImage();
     }
 
     private void LoadPreviousAudioList()
     {
-        if (SavePathToFolder)
+        if (!SavePathToFolder)
         {
-            var pathToFolderNotEmpty = !string.IsNullOrEmpty(Properties.Settings.Default.pathToFolder);
-            if (pathToFolderNotEmpty)
+            return;
+        }
+
+        var pathToFolderNotEmpty = !string.IsNullOrEmpty(Properties.Settings.Default.pathToFolder);
+
+        if (pathToFolderNotEmpty)
+        {
+            PathToFolder = Properties.Settings.Default.pathToFolder;
+            if (Directory.Exists(PathToFolder))
             {
-                PathToFolder = Properties.Settings.Default.pathToFolder;
-                if (Directory.Exists(PathToFolder))
+                var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
+                    .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") ||
+                                s.EndsWith(".ogg") || s.EndsWith(".m4a"));
+
+                foreach (var str in files)
                 {
-                    pathToFolderNotEmpty = true;
-                    var files = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-                        .Where(s => s.EndsWith(".mp3") || s.EndsWith(".wav") || s.EndsWith(".wma") || s.EndsWith(".flac") || s.EndsWith(".ogg") || s.EndsWith(".m4a"));
-                    foreach (var str in files)
-                    {
-                        var item = new PathHolder(str);
-                        listBoxMedia.Items.Add(item);
-                    }
+                    var item = new PathHolder(str);
+                    listBoxMedia.Items.Add(item);
                 }
-                if (!pathToFolderNotEmpty)
-                    PathToFolder = null;
             }
+        }
+
+        if (!pathToFolderNotEmpty)
+        {
+            PathToFolder = null;
         }
     }
 
@@ -495,93 +579,77 @@ public partial class MainForm : Form
 
         BackColor = Color.GhostWhite;
         mainMenuStrip.BackColor = Color.GhostWhite;
-            
     }
+
     private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentPlaylist();
 
     private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) => OpenFolder();
     private void chooseColorToolStripMenuItem_Click(object sender, EventArgs e) => ShowColorDialog();
     private void settingsToolStripMenuItem_Click(object sender, EventArgs e) => OpenSettingsForm();
     private void openFilesToolStripMenuItem_Click(object sender, EventArgs e) => OpenFiles();
-    private void ButtonPause_Click(object sender, EventArgs e) => PauseAudio();
+    private void ButtonPause_Click(object sender, EventArgs e) => _audioPresenter.PauseAudio();
 
     private void ShowColorDialog()
     {
-        using (var colorDialog = new ColorDialog())
+        using var colorDialog = new ColorDialog();
+        if (colorDialog.ShowDialog() == DialogResult.OK)
         {
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
+            BackColor = colorDialog.Color;
+            mainMenuStrip.BackColor = colorDialog.Color;
 
-                BackColor = colorDialog.Color;
-                mainMenuStrip.BackColor = colorDialog.Color;
-
-                if (_playlistForm != null)
-                    _playlistForm.BackColor = colorDialog.Color; ;
-            }
+            if (_playlistForm != null)
+                _playlistForm.BackColor = colorDialog.Color;
+            ;
         }
     }
-
-    private void toolStripButtonPLay_Click(object sender, EventArgs e) => PlaySoundEvent();
-    private void toolStripButtonPause_Click(object sender, EventArgs e) => PauseAudio();
-    private void toolStripButtonStop_Click(object sender, EventArgs e) => StopSoundEvent();
-
-
-    private void toolStripButtonNext_Click(object sender, EventArgs e) => NextAudio();
-    private void toolStripButtonPrevious_Click(object sender, EventArgs e) => PreviousAudio();
 
     private void NextAudio()
     {
         if (listBoxMedia.Items.Count == 0)
-            return;
-        else
         {
-            var currentPosition = listBoxMedia.FindString(_currentAudio);
-            var tmpPos = currentPosition;
-
-            if (currentPosition == listBoxMedia.Items.Count - 1 || currentPosition == -1)
-                tmpPos = 0;
-            else
-                tmpPos = ++currentPosition;
-
-            listBoxMedia.ClearSelected();
-            listBoxMedia.SetSelected(tmpPos, true);
-            PlaySoundEvent();
+            return;
         }
+
+        var currentPosition = listBoxMedia.FindString(_audioPresenter.CurrentAudioFileName);
+        int tmpPos;
+
+        if (currentPosition == listBoxMedia.Items.Count - 1 || currentPosition == -1)
+            tmpPos = 0;
+        else
+            tmpPos = ++currentPosition;
+
+        listBoxMedia.ClearSelected();
+        listBoxMedia.SetSelected(tmpPos, true);
+        
+        StartAudio();
     }
 
     private void PreviousAudio()
     {
         if (listBoxMedia.Items.Count == 0)
-            return;
-        else
         {
-            var currentPosition = listBoxMedia.FindString(_currentAudio);
-            var tmpPos = currentPosition;
-
-            if (currentPosition == 0 || currentPosition == -1)
-                tmpPos = listBoxMedia.Items.Count - 1;
-            else
-                tmpPos = --currentPosition;
-
-            listBoxMedia.ClearSelected();
-            listBoxMedia.SetSelected(tmpPos, true);
-            PlaySoundEvent();
+            return;
         }
-    }
 
-    private void toolStripButtonRepeat_Click(object sender, EventArgs e) => Replay();
+        var currentPosition = listBoxMedia.FindString(_audioPresenter.CurrentAudioFileName);
+        int tmpPos;
 
-    private void Replay()
-    {
-        if (_waveOut != null)
-            PlaySoundEvent();
+        if (currentPosition == 0 || currentPosition == -1)
+            tmpPos = listBoxMedia.Items.Count - 1;
+        else
+            tmpPos = --currentPosition;
+
+        listBoxMedia.ClearSelected();
+        listBoxMedia.SetSelected(tmpPos, true);
+
+        StartAudio();
     }
 
     private void ButtonClose_Click(object sender, EventArgs e) => Close();
+
     private void ButtonRollUp_Click(object sender, EventArgs e)
     {
         WindowState = FormWindowState.Minimized;
-        //this.notifyIcon.ShowBalloonTip(5000);
     }
 
     private void expandToolStripMenuItem_Click(object sender, EventArgs e)
@@ -591,33 +659,34 @@ public partial class MainForm : Form
     }
 
     private void closeToolStripMenuItem_Click(object sender, EventArgs e) => Close();
-    private void playToolStripMenuItem_Click(object sender, EventArgs e) => PlaySoundEvent();
-    private void pauseToolStripMenuItem_Click(object sender, EventArgs e) => PauseAudio();
-    private void stopToolStripMenuItem_Click(object sender, EventArgs e) => StopSoundEvent();
+    private void playToolStripMenuItem_Click(object sender, EventArgs e) => StartAudio();
+    private void pauseToolStripMenuItem_Click(object sender, EventArgs e) => _audioPresenter.PauseAudio();
+    private void stopToolStripMenuItem_Click(object sender, EventArgs e) => _audioPresenter.StopAudio();
     private void nextToolStripMenuItem_Click(object sender, EventArgs e) => NextAudio();
     private void previousToolStripMenuItem_Click(object sender, EventArgs e) => PreviousAudio();
     private void exitToolStripMenuItem_Click(object sender, EventArgs e) => Close();
-    private void OpenFileButton_Click(object sender, EventArgs e) => OpenFiles();
     private void ClearCurrentPlaylistButton_Click(object sender, EventArgs e) => ClearCurrentPlaylist();
 
     private void OpenFiles()
     {
-        using (var fileDialog = new OpenFileDialog())
+        using var fileDialog = new OpenFileDialog();
+        fileDialog.Multiselect = true;
+        fileDialog.Filter = AudioPresenter.FormatFilter;
+
+        if (fileDialog.ShowDialog() == DialogResult.OK)
         {
-            fileDialog.Multiselect = true;
-            fileDialog.Filter = FormatFilter;
-            if (fileDialog.ShowDialog() == DialogResult.OK)
+            if (fileDialog.FileNames.Length != 0)
             {
-                if (fileDialog.FileNames.Length != 0)
+                foreach (var str in fileDialog.FileNames)
                 {
-                    foreach (var str in fileDialog.FileNames)
-                    {
-                        var item = new PathHolder(str);
-                        listBoxMedia.Items.Add(item);
-                    }
+                    var item = new PathHolder(str);
+                    listBoxMedia.Items.Add(item);
                 }
-                if (fileDialog.FileNames.Length == 1)
-                    PlaySoundEvent();
+            }
+
+            if (fileDialog.FileNames.Length == 1)
+            {
+                StartAudio();
             }
         }
     }
@@ -627,11 +696,16 @@ public partial class MainForm : Form
 
     private void RemoveFiles()
     {
-        if (listBoxMedia.SelectedItems != null)
+        if (listBoxMedia.SelectedItems.Count <= 0)
         {
-            var selectedItems = listBoxMedia.SelectedItems;
-            for (var i = selectedItems.Count - 1; i >= 0; --i)
-                listBoxMedia.Items.Remove(selectedItems[i]);
+            return;
+        }
+
+        var selectedItems = listBoxMedia.SelectedItems;
+
+        for (var i = selectedItems.Count - 1; i >= 0; --i)
+        {
+            listBoxMedia.Items.Remove(selectedItems[i]);
         }
     }
 
@@ -644,22 +718,22 @@ public partial class MainForm : Form
             _playlistForm = new PlaylistForm(this);
             _playlistForm.Show();
         }
-        else 
+        else
         {
             _playlistForm.Close();
             _playlistForm.Dispose();
             _playlistForm = null;
         }
     }
-       
+
     private void ClearCurrentPlaylist()
     {
-        StopSoundEvent();
+        _audioPresenter.StopAudio();
         LoadDefaultImage();
         PathToFolder = null;
         PathToImage = null;
 
-        CurrentAudioLabel.Text = null;
+        CurrentAudioLabel.Text = "";
 
         listBoxMedia.Items.Clear();
     }
@@ -669,32 +743,34 @@ public partial class MainForm : Form
     private void OpenImage()
     {
         if (File.Exists(PathToImage))
+        {
             Process.Start(PathToImage);
+        }
         else if (File.Exists(PathToDefaultImage))
+        {
             Process.Start(PathToImage);
+        }
         else if (File.Exists("defaultPicture.jpg"))
+        {
             Process.Start("defaultPicture.jpg");
+        }
     }
 
     private void openFileDestinationToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var curAudio = (listBoxMedia.SelectedItem as PathHolder);
-        if (File.Exists(curAudio.FullPath))
+        var currentAudio = (listBoxMedia.SelectedItem as PathHolder);
+
+        if (File.Exists(currentAudio?.FullPath))
         {
-            var splitedPath = curAudio.FullPath.Split('\\').ToList();
-            splitedPath.RemoveAt(splitedPath.Count - 1);
-            var path = string.Join("\\", splitedPath.ToArray());
+            var splitPath = currentAudio.FullPath.Split('\\').ToList();
+            splitPath.RemoveAt(splitPath.Count - 1);
+            var path = string.Join("\\", splitPath.ToArray());
 
             Process.Start(path);
         }
     }
 
     private void removeToolStripMenuItem_Click(object sender, EventArgs e) => RemoveFiles();
-
-    private void CredentialButton_Click(object sender, EventArgs e) 
-    {
-
-    }
 
     private void SettingsButton_Click(object sender, EventArgs e) => OpenSettingsForm();
 
