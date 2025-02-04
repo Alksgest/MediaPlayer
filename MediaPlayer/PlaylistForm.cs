@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -13,26 +12,26 @@ namespace MediaPlayer
     public partial class PlaylistForm : Form
     {
         public string CurrentName { get; set; }
-        MainForm AudioPlayer;
-        List<PlaylistData> PlaylistData = new List<PlaylistData>();
+        private MainForm AudioPlayer;
+        private List<PlaylistData> PlaylistData = new List<PlaylistData>();
 
         public PlaylistForm(MainForm audioPlayer)
         {
             InitializeComponent();
 
-            this.AudioPlayer = audioPlayer;
-            this.Location = new Point(AudioPlayer.Location.X + 10 + AudioPlayer.Width, AudioPlayer.Location.Y);
-            this.BackColor = audioPlayer.BackColor;
+            AudioPlayer = audioPlayer;
+            Location = new Point(AudioPlayer.Location.X + 10 + AudioPlayer.Width, AudioPlayer.Location.Y);
+            BackColor = audioPlayer.BackColor;
 
             RegisterOnEvents();
         }
 
         private void RegisterOnEvents()
         {
-            this.MainListBox.DoubleClick += MainListBox_DoubleClick;
-            this.FormClosing += PlaylistForm_FormClosing;
-            this.Load += PlaylistForm_Load;
-            this.MainListBox.KeyDown += MainListBox_KeyDown;
+            MainListBox.DoubleClick += MainListBox_DoubleClick;
+            FormClosing += PlaylistForm_FormClosing;
+            Load += PlaylistForm_Load;
+            MainListBox.KeyDown += MainListBox_KeyDown;
         }
 
         private void MainListBox_KeyDown(object sender, KeyEventArgs e)
@@ -85,10 +84,10 @@ namespace MediaPlayer
 
         private void MainListBox_DoubleClick(object sender, EventArgs e)
         {
-            if (this.MainListBox.SelectedIndex != -1)
+            if (MainListBox.SelectedIndex != -1)
             {
                 AudioPlayer.listBoxMedia.Items.Clear();
-                foreach (var item in (this.MainListBox.SelectedItem as PlaylistData).AudioFiles)
+                foreach (var item in (MainListBox.SelectedItem as PlaylistData).AudioFiles)
                 {
                     AudioPlayer.listBoxMedia.Items.Add(item);
                 }
@@ -116,12 +115,12 @@ namespace MediaPlayer
 
         private void DeletePlaylist()
         {
-            if (this.MainListBox.SelectedIndex != -1)
+            if (MainListBox.SelectedIndex != -1)
             {
                 if (MessageBox.Show("Delete this playlist?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    int tmpIndex = this.MainListBox.SelectedIndex;
-                    this.MainListBox.Items.RemoveAt(this.MainListBox.SelectedIndex);
+                    int tmpIndex = MainListBox.SelectedIndex;
+                    MainListBox.Items.RemoveAt(MainListBox.SelectedIndex);
                     PlaylistData.RemoveAt(tmpIndex);
                 }
             }
@@ -137,16 +136,16 @@ namespace MediaPlayer
         }
         private void ShowRenameDialog()
         {
-            if (this.MainListBox.SelectedIndex != -1)
+            if (MainListBox.SelectedIndex != -1)
             {
                 EnterNameForm enterNameForm = new EnterNameForm(this);
                 enterNameForm.ShowDialog();
                 if (!String.IsNullOrEmpty(CurrentName))
-                    (this.MainListBox.SelectedItem as PlaylistData).Title = CurrentName;
-                var items = this.MainListBox.Items.Cast<PlaylistData>().ToList();
-                this.MainListBox.Items.Clear();
+                    (MainListBox.SelectedItem as PlaylistData).Title = CurrentName;
+                var items = MainListBox.Items.Cast<PlaylistData>().ToList();
+                MainListBox.Items.Clear();
                 foreach (var item in items)
-                    this.MainListBox.Items.Add(item);
+                    MainListBox.Items.Add(item);
             }
         }
     }

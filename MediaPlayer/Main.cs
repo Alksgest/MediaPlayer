@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MediaPlayer
 {
-    static class Program 
+    internal static class Program 
     {
         private static List<string> list = new List<string>();
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             using (Mutex mutex = new Mutex(true, "MediaPlayer", out bool oneOnly))
             {

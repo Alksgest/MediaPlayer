@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MediaPlayer
 {
     public partial class EnterNameForm : Form
     {
-        PlaylistForm playlistForm;
+        private PlaylistForm playlistForm;
         public EnterNameForm(PlaylistForm form)
         {
             InitializeComponent();
             playlistForm = form;
-            this.KeyDown += EnterNameForm_KeyDown;
-            this.NameTextBox.KeyDown += NameTextBox_KeyDown;
-            this.NameTextBox.Focus();
+            KeyDown += EnterNameForm_KeyDown;
+            NameTextBox.KeyDown += NameTextBox_KeyDown;
+            NameTextBox.Focus();
         }
 
         private void NameTextBox_KeyDown(object sender, KeyEventArgs e) => EnterPressedOnForm(e);
@@ -37,12 +30,12 @@ namespace MediaPlayer
 
         private void AcceptName()
         {
-            if (!String.IsNullOrEmpty(this.NameTextBox.Text))
-                playlistForm.CurrentName = this.NameTextBox.Text;
-            this.Close();
+            if (!String.IsNullOrEmpty(NameTextBox.Text))
+                playlistForm.CurrentName = NameTextBox.Text;
+            Close();
         }
 
-        private void CloseButton_Click(object sender, EventArgs e) => this.Close();
+        private void CloseButton_Click(object sender, EventArgs e) => Close();
 
     }
 }

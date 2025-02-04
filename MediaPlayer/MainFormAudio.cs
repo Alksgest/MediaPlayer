@@ -1,9 +1,5 @@
 ﻿using NAudio.Wave;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MediaPlayer
@@ -16,21 +12,21 @@ namespace MediaPlayer
 
         private void InitializeAudio()
         {
-            string fullPath = (this.listBoxMedia.SelectedItem as PathHolder).FullPath;
-            this.waveOut = new WaveOut();
-            this.reader = new AudioFileReader(fullPath);
-            this.reader.Position = this.TrackBarAudio.Value * (int)Math.Round(reader.TotalTime.TotalSeconds);
-            this.waveOut.Init(reader);
-            this.waveOut.PlaybackStopped += OnPlaybackStopped;
-            this.waveOut.Volume = (float)this.SoundLevelTrackBar.Value / 100;
-            this.waveOut.Play();
+            string fullPath = (listBoxMedia.SelectedItem as PathHolder).FullPath;
+            waveOut = new WaveOut();
+            reader = new AudioFileReader(fullPath);
+            reader.Position = TrackBarAudio.Value * (int)Math.Round(reader.TotalTime.TotalSeconds);
+            waveOut.Init(reader);
+            waveOut.PlaybackStopped += OnPlaybackStopped;
+            waveOut.Volume = (float)SoundLevelTrackBar.Value / 100;
+            waveOut.Play();
         }
 
         private void PlaySound()
         {
             if (listBoxMedia.Items.Count == 0)
                 return;
-            if (this.listBoxMedia.SelectedIndex == -1)
+            if (listBoxMedia.SelectedIndex == -1)
                 listBoxMedia.SelectedIndex = 0;
             if (!isPaused)
             {
@@ -39,17 +35,17 @@ namespace MediaPlayer
 
                 SetupTrackBarAudio();
 
-                this.Timer.Start();
+                Timer.Start();
 
-                this.CurrentAudioLabel.Text = (this.listBoxMedia.SelectedItem as PathHolder).Title;
+                CurrentAudioLabel.Text = (listBoxMedia.SelectedItem as PathHolder).Title;
 
-                this.currentAudio = (this.listBoxMedia.SelectedItem as PathHolder).Title;
+                currentAudio = (listBoxMedia.SelectedItem as PathHolder).Title;
             }
             else
             {
-                this.waveOut.Play();
-                this.isPaused = false;
-                this.Timer.Start();
+                waveOut.Play();
+                isPaused = false;
+                Timer.Start();
             }
         }
 
@@ -75,10 +71,10 @@ namespace MediaPlayer
                 reader.Dispose();
                 reader = null;
             }
-            this.TrackBarAudio.Value = 0;
+            TrackBarAudio.Value = 0;
             isPaused = false;
             Timer.Stop();
-            this.CurrentTimeLabel.Text = "00.00.00";
+            CurrentTimeLabel.Text = "00.00.00";
         }
 
         private void UninitializeAudio()
@@ -100,10 +96,10 @@ namespace MediaPlayer
         {
             UninitializeAudio();
 
-            this.TrackBarAudio.Value = 0;
+            TrackBarAudio.Value = 0;
             if (listBoxMedia.SelectedIndex != listBoxMedia.Items.Count - 1)
                 NextAudio();
-            else if (this.RepeatByCircle)
+            else if (RepeatByCircle)
             {
                 listBoxMedia.ClearSelected();
                 listBoxMedia.SelectedIndex = 0;

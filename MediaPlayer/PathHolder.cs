@@ -12,13 +12,13 @@ namespace MediaPlayer
         public PathHolder(string fullPath)
         {
             var splitedPath = fullPath.Split('\\');
-            this.Title = splitedPath[splitedPath.Length - 1];
-            this.FullPath = fullPath;
+            Title = splitedPath[splitedPath.Length - 1];
+            FullPath = fullPath;
         }
         public override string ToString() => Title;
 
-        public override bool Equals(object obj) => (obj as PathHolder).Title == this.Title && 
-                                                   (obj as PathHolder).FullPath == this.FullPath;
+        public override bool Equals(object obj) => (obj as PathHolder).Title == Title && 
+                                                   (obj as PathHolder).FullPath == FullPath;
         public static bool operator ==(PathHolder left, PathHolder right) => left.Equals(right);
         public static bool operator !=(PathHolder left, PathHolder right) => !left.Equals(right);
 

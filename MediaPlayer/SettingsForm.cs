@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MediaPlayer
@@ -18,12 +12,12 @@ namespace MediaPlayer
         {
             InitializeComponent();
 
-            this.StartPosition = FormStartPosition.Manual;
+            StartPosition = FormStartPosition.Manual;
             this.audioPlayer = audioPlayer;
-            this.Location = new Point(audioPlayer.Location.X - 10 - this.Width, audioPlayer.Location.Y);
-            this.BackColor = audioPlayer.BackColor;
+            Location = new Point(audioPlayer.Location.X - 10 - Width, audioPlayer.Location.Y);
+            BackColor = audioPlayer.BackColor;
 
-            this.PathTextBox.Text = audioPlayer.PathToDefaultImage;
+            PathTextBox.Text = audioPlayer.PathToDefaultImage;
         }
 
         private void checkBoxSavePathToFolder_CheckedChanged(object sender, EventArgs e)
@@ -54,7 +48,7 @@ namespace MediaPlayer
             openFileDialog.Filter = FormatFilter;
             if(openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                this.PathTextBox.Text = openFileDialog.FileName;
+                PathTextBox.Text = openFileDialog.FileName;
                 audioPlayer.PathToDefaultImage = openFileDialog.FileName;
             }
         }
