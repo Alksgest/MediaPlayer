@@ -5,11 +5,11 @@ namespace MediaPlayer
 {
     public partial class EnterNameForm : Form
     {
-        private PlaylistForm playlistForm;
+        private PlaylistForm _playlistForm;
         public EnterNameForm(PlaylistForm form)
         {
             InitializeComponent();
-            playlistForm = form;
+            _playlistForm = form;
             KeyDown += EnterNameForm_KeyDown;
             NameTextBox.KeyDown += NameTextBox_KeyDown;
             NameTextBox.Focus();
@@ -31,7 +31,7 @@ namespace MediaPlayer
         private void AcceptName()
         {
             if (!String.IsNullOrEmpty(NameTextBox.Text))
-                playlistForm.CurrentName = NameTextBox.Text;
+                _playlistForm.CurrentName = NameTextBox.Text;
             Close();
         }
 

@@ -13,7 +13,7 @@ namespace MediaPlayer
         protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e) //полоска на левом краю
         {
             // base.OnRenderToolStripBackground(e);
-            using (Pen p = new Pen(Color.Blue))
+            using (var p = new Pen(Color.Blue))
             {
                 e.Graphics.DrawEllipse(p, e.ToolStrip.ClientRectangle);
             }

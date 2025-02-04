@@ -7,14 +7,14 @@ namespace MediaPlayer
 {
     internal static class Program 
     {
-        private static List<string> list = new List<string>();
+        private static List<string> _list = new List<string>();
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
         private static void Main(string[] args)
         {
-            using (Mutex mutex = new Mutex(true, "MediaPlayer", out bool oneOnly))
+            using (var mutex = new Mutex(true, "MediaPlayer", out var oneOnly))
             {
                 if (oneOnly)
                 {

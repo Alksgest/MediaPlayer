@@ -13,4 +13,21 @@
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="EnterNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainFormAudio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="PlaylistForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

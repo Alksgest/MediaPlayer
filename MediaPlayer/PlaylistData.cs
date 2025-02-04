@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace MediaPlayer
 {
     [Serializable]
@@ -9,13 +8,13 @@ namespace MediaPlayer
     {
         public string Title { get; set; }
         public List<PathHolder> AudioFiles { get; }
+        public override string ToString() => Title;
+
+
         public PlaylistData(string title, List<PathHolder> audioFiles)
         {
             Title = title;
             AudioFiles = audioFiles;
-
         }
-        
-        public override string ToString() => Title;
     }
 }

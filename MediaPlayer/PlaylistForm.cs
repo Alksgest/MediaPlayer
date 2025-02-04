@@ -5,22 +5,25 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace MediaPlayer
 {
     [Serializable]
     public partial class PlaylistForm : Form
     {
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string CurrentName { get; set; }
-        private MainForm AudioPlayer;
-        private List<PlaylistData> PlaylistData = new List<PlaylistData>();
+        
+        private MainForm _audioPlayer;
+        private List<PlaylistData> _playlistData = new List<PlaylistData>();
 
         public PlaylistForm(MainForm audioPlayer)
         {
             InitializeComponent();
 
-            AudioPlayer = audioPlayer;
-            Location = new Point(AudioPlayer.Location.X + 10 + AudioPlayer.Width, AudioPlayer.Location.Y);
+            _audioPlayer = audioPlayer;
+            Location = new Point(_audioPlayer.Location.X + 10 + _audioPlayer.Width, _audioPlayer.Location.Y);
             BackColor = audioPlayer.BackColor;
 
             RegisterOnEvents();
@@ -49,14 +52,16 @@ namespace MediaPlayer
         {
             if (File.Exists("Playlists.dat"))
             {
-                using (FileStream fileStream = new FileStream("Playlists.dat", FileMode.Open, FileAccess.Read))
+                using (var fileStream = new FileStream("Playlists.dat", FileMode.Open, FileAccess.Read))
                 {
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    PlaylistData = (List<PlaylistData>)binaryFormatter.Deserialize(fileStream);
+#pragma warning disable SYSLIB0011
+                    var binaryFormatter = new BinaryFormatter();
+#pragma warning restore SYSLIB0011
+                    _playlistData = (List<PlaylistData>)binaryFormatter.Deserialize(fileStream);
                     fileStream.Close();
                 }
             }
-            foreach (var item in PlaylistData)
+            foreach (var item in _playlistData)
             {
                 MainListBox.Items.Add(item);
             }
@@ -73,10 +78,12 @@ namespace MediaPlayer
             }
             else
             {
-                using (FileStream fileStream = new FileStream("Playlists.dat", FileMode.Create, FileAccess.Write))
+                using (var fileStream = new FileStream("Playlists.dat", FileMode.Create, FileAccess.Write))
                 {
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    binaryFormatter.Serialize(fileStream, PlaylistData);
+#pragma warning disable SYSLIB0011
+                    var binaryFormatter = new BinaryFormatter();
+#pragma warning restore SYSLIB0011
+                    binaryFormatter.Serialize(fileStream, _playlistData);
                     fileStream.Close();
                 }
             }
@@ -86,10 +93,10 @@ namespace MediaPlayer
         {
             if (MainListBox.SelectedIndex != -1)
             {
-                AudioPlayer.listBoxMedia.Items.Clear();
+                _audioPlayer.listBoxMedia.Items.Clear();
                 foreach (var item in (MainListBox.SelectedItem as PlaylistData).AudioFiles)
                 {
-                    AudioPlayer.listBoxMedia.Items.Add(item);
+                    _audioPlayer.listBoxMedia.Items.Add(item);
                 }
             }
         }
@@ -101,13 +108,13 @@ namespace MediaPlayer
             SetNameDialog();
             if (String.IsNullOrEmpty(CurrentName))
                 CurrentName = "Unnamed playlist";
-            var playList = AudioPlayer.listBoxMedia.Items.Cast<PathHolder>();
-            PlaylistData data = new PlaylistData(CurrentName, playList.ToList<PathHolder>());
+            var playList = _audioPlayer.listBoxMedia.Items.Cast<PathHolder>();
+            var data = new PlaylistData(CurrentName, playList.ToList<PathHolder>());
 
             if (data.AudioFiles.Count != 0)
             {
                 MainListBox.Items.Add(data);
-                PlaylistData.Add(data);
+                _playlistData.Add(data);
             }
         }
 
@@ -119,9 +126,9 @@ namespace MediaPlayer
             {
                 if (MessageBox.Show("Delete this playlist?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                 {
-                    int tmpIndex = MainListBox.SelectedIndex;
+                    var tmpIndex = MainListBox.SelectedIndex;
                     MainListBox.Items.RemoveAt(MainListBox.SelectedIndex);
-                    PlaylistData.RemoveAt(tmpIndex);
+                    _playlistData.RemoveAt(tmpIndex);
                 }
             }
         }
@@ -131,14 +138,14 @@ namespace MediaPlayer
 
         private void SetNameDialog()
         {
-            EnterNameForm enterNameForm = new EnterNameForm(this);
+            var enterNameForm = new EnterNameForm(this);
             enterNameForm.ShowDialog();
         }
         private void ShowRenameDialog()
         {
             if (MainListBox.SelectedIndex != -1)
             {
-                EnterNameForm enterNameForm = new EnterNameForm(this);
+                var enterNameForm = new EnterNameForm(this);
                 enterNameForm.ShowDialog();
                 if (!String.IsNullOrEmpty(CurrentName))
                     (MainListBox.SelectedItem as PlaylistData).Title = CurrentName;

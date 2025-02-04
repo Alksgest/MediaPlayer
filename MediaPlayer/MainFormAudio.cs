@@ -6,20 +6,22 @@ namespace MediaPlayer
 {
     public partial class MainForm : Form
     {
-        private WaveOut waveOut;
-        private AudioFileReader reader;
+        private WaveOut _waveOut;
+        private AudioFileReader _reader;
 
 
         private void InitializeAudio()
         {
-            string fullPath = (listBoxMedia.SelectedItem as PathHolder).FullPath;
-            waveOut = new WaveOut();
-            reader = new AudioFileReader(fullPath);
-            reader.Position = TrackBarAudio.Value * (int)Math.Round(reader.TotalTime.TotalSeconds);
-            waveOut.Init(reader);
-            waveOut.PlaybackStopped += OnPlaybackStopped;
-            waveOut.Volume = (float)SoundLevelTrackBar.Value / 100;
-            waveOut.Play();
+            var fullPath = (listBoxMedia.SelectedItem as PathHolder)?.FullPath;
+            
+            _reader = new AudioFileReader(fullPath);
+            _reader.Position = TrackBarAudio.Value * (long)Math.Round(_reader.TotalTime.TotalSeconds);
+            
+            _waveOut = new WaveOut();
+            _waveOut.Init(_reader);
+            _waveOut.PlaybackStopped += OnPlaybackStopped;
+            _waveOut.Volume = (float)SoundLevelTrackBar.Value / 100;
+            _waveOut.Play();
         }
 
         private void PlaySound()
@@ -28,67 +30,67 @@ namespace MediaPlayer
                 return;
             if (listBoxMedia.SelectedIndex == -1)
                 listBoxMedia.SelectedIndex = 0;
-            if (!isPaused)
+            if (!_isPaused)
             {
                 UninitializeAudio();
                 InitializeAudio();
 
                 SetupTrackBarAudio();
 
-                Timer.Start();
+                _timer.Start();
 
-                CurrentAudioLabel.Text = (listBoxMedia.SelectedItem as PathHolder).Title;
+                CurrentAudioLabel.Text = (listBoxMedia.SelectedItem as PathHolder)?.Title ?? "default_title"; 
 
-                currentAudio = (listBoxMedia.SelectedItem as PathHolder).Title;
+                _currentAudio = (listBoxMedia.SelectedItem as PathHolder)?.Title ?? "default_title";
             }
             else
             {
-                waveOut.Play();
-                isPaused = false;
-                Timer.Start();
+                _waveOut.Play();
+                _isPaused = false;
+                _timer.Start();
             }
         }
 
         private void PauseAudio()
         {
-            if (waveOut != null)
+            if (_waveOut != null)
             {
-                waveOut.Pause();
-                isPaused = true;
-                Timer.Stop();
+                _waveOut.Pause();
+                _isPaused = true;
+                _timer.Stop();
             }
         }
         private void StopAudio()
         {
-            if (waveOut != null)
+            if (_waveOut != null)
             {
-                waveOut.Stop();
-                waveOut.Dispose();
-                waveOut = null;
+                _waveOut.Stop();
+                _waveOut.Dispose();
+                _waveOut = null;
             }
-            if (reader != null)
+            if (_reader != null)
             {
-                reader.Dispose();
-                reader = null;
+                _reader.Dispose();
+                _reader = null;
             }
             TrackBarAudio.Value = 0;
-            isPaused = false;
-            Timer.Stop();
+            _isPaused = false;
+            _timer.Stop();
             CurrentTimeLabel.Text = "00.00.00";
         }
 
         private void UninitializeAudio()
         {
-            if (waveOut != null)
+            if (_waveOut != null)
             {
-                waveOut.Stop();
-                waveOut.Dispose();
-                waveOut = null;
+                _waveOut.Stop();
+                _waveOut.Dispose();
+                _waveOut = null;
             }
-            if (reader != null)
+            if (_reader != null)
             {
-                reader.Dispose();
-                reader = null;
+                _reader.Dispose();
+                _reader = null;
             }
         }
 
