@@ -11,17 +11,16 @@ internal static class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        using var mutex = new Mutex(true, "MediaPlayer", out var oneOnly);
+        using var mutex = new Mutex(true, "MediaPlayer_hash", out var onlyOne);
+
+        if (!onlyOne)
+        {
+            return;
+        }
         
-        if (oneOnly)
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(args.Length == 0 ? null : args, new AudioPresenter()));
-            mutex.ReleaseMutex();
-        }
-        else if (args.Length != 0)
-        {
-        }
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.Run(new MainForm(args, new MainFormPresenter()));
+        mutex.ReleaseMutex();
     }
 }

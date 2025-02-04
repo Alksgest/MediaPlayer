@@ -6,6 +6,7 @@ namespace MediaPlayer.Forms;
 public partial class EnterNameForm : Form
 {
     private readonly PlaylistForm _playlistForm;
+
     public EnterNameForm(PlaylistForm form)
     {
         InitializeComponent();
@@ -25,16 +26,17 @@ public partial class EnterNameForm : Form
     }
 
 
-
     private void OKButton_Click(object sender, EventArgs e) => AcceptName();
 
     private void AcceptName()
     {
         if (!string.IsNullOrEmpty(NameTextBox.Text))
+        {
             _playlistForm.CurrentName = NameTextBox.Text;
+        }
+
         Close();
     }
 
     private void CloseButton_Click(object sender, EventArgs e) => Close();
-
 }

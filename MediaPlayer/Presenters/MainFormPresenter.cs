@@ -4,17 +4,17 @@ using NAudio.Wave;
 
 namespace MediaPlayer.Presenters;
 
-public class AudioPresenter
+public class MainFormPresenter
 {
     private WaveOut _waveOut;
     private AudioFileReader _reader;
-    private PathHolder _currentFile;
+    private AudioFileInfo _currentFile;
+    private float _soundLevel;
 
     public const string FormatFilter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg; *.m4a) " +
                                        "|*.mp3;*.wav;*.wma;*.flac;*.ogg;*.m4a";
 
     public bool IsPaused { get; private set; }
-    public float SoundLevel { get; set; }
     public string CurrentAudioFileName => _currentFile.Title;
 
     public double? TotalSeconds => _reader?.TotalTime.TotalSeconds;
@@ -31,11 +31,11 @@ public class AudioPresenter
     {
         if (_waveOut != null)
         {
-            StartAudio(_currentFile, SoundLevel);
+            StartAudio(_currentFile, _soundLevel);
         }
     }
 
-    public void StartAudio(PathHolder pathHolder, float soundLevel, long trackBarAudioValue = 0)
+    public void StartAudio(AudioFileInfo audioFileInfo, float soundLevel, long trackBarAudioValue = 0)
     {
         if (IsPaused)
         {
@@ -44,20 +44,12 @@ public class AudioPresenter
         }
 
         UninitializeAudio();
-        InitializeAudio(pathHolder.FullPath, soundLevel, trackBarAudioValue);
+        InitializeAudio(audioFileInfo.FullPath, soundLevel, trackBarAudioValue);
 
-        SoundLevel = soundLevel;
-        _currentFile = pathHolder;
+        _soundLevel = soundLevel;
+        _currentFile = audioFileInfo;
 
-        AudioStarted?.Invoke(pathHolder.Title);
-    }
-
-    public void UnPauseAudio()
-    {
-        _waveOut.Play();
-        IsPaused = false;
-
-        AudioUnPaused?.Invoke();
+        AudioStarted?.Invoke(audioFileInfo.Title);
     }
 
     public void PauseAudio()
@@ -93,28 +85,12 @@ public class AudioPresenter
         AudioStopped?.Invoke();
     }
 
-    private void UninitializeAudio()
-    {
-        if (_waveOut != null)
-        {
-            _waveOut.Stop();
-            _waveOut.Dispose();
-            _waveOut = null;
-        }
-        
-        if (_reader != null)
-        {
-            _reader.Dispose();
-            _reader = null;
-        }
-    }
-
     public void ChangeVolume(float value)
     {
         if (_waveOut != null)
         {
             _waveOut.Volume = value;
-            SoundLevel = value;
+            _soundLevel = value;
         }
     }
 
@@ -123,6 +99,30 @@ public class AudioPresenter
         if (_reader != null)
         {
             _reader.CurrentTime = TimeSpan.FromSeconds(value);
+        }
+    }
+
+    private void UnPauseAudio()
+    {
+        _waveOut.Play();
+        IsPaused = false;
+
+        AudioUnPaused?.Invoke();
+    }
+
+    private void UninitializeAudio()
+    {
+        if (_waveOut != null)
+        {
+            _waveOut.Stop();
+            _waveOut.Dispose();
+            _waveOut = null;
+        }
+
+        if (_reader != null)
+        {
+            _reader.Dispose();
+            _reader = null;
         }
     }
 
@@ -146,7 +146,7 @@ public class AudioPresenter
         }
 
         UninitializeAudio();
-        
+
         WaveOutClosed?.Invoke();
     }
 }

@@ -6,13 +6,8 @@ namespace MediaPlayer.Renderers;
 
 internal class ContextMenuStripExtraRenderer : ToolStripProfessionalRenderer
 {
-    //protected override void OnRenderButtonBackground(ToolStripItemRenderEventArgs e) 
-    //{
-    //    //base.OnRenderButtonBackground(e);
-    //}
-    protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e) //полоска на левом краю
+    protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
     {
-        // base.OnRenderToolStripBackground(e);
         using (var p = new Pen(Color.Blue))
         {
             e.Graphics.DrawEllipse(p, e.ToolStrip.ClientRectangle);

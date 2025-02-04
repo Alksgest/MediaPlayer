@@ -7,13 +7,6 @@ namespace MediaPlayer.Models;
 internal class PlaylistData
 {
     public string Title { get; set; }
-    public List<PathHolder> AudioFiles { get; }
+    public List<AudioFileInfo> AudioFiles { get; init; }
     public override string ToString() => Title;
-
-
-    public PlaylistData(string title, List<PathHolder> audioFiles)
-    {
-        Title = title;
-        AudioFiles = audioFiles;
-    }
 }

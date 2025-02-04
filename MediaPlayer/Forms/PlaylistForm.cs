@@ -15,7 +15,7 @@ public partial class PlaylistForm : Form
 {
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string CurrentName { get; set; }
-        
+
     private MainForm _audioPlayer;
     private List<PlaylistData> _playlistData = [];
 
@@ -60,6 +60,7 @@ public partial class PlaylistForm : Form
             _playlistData = (List<PlaylistData>)binaryFormatter.Deserialize(fileStream);
             fileStream.Close();
         }
+
         foreach (var item in _playlistData)
         {
             MainListBox.Items.Add(item);
@@ -73,7 +74,9 @@ public partial class PlaylistForm : Form
         if (MainListBox.Items.Count == 0)
         {
             if (File.Exists("Playlists.dat"))
+            {
                 File.Delete("Playlists.dat");
+            }
         }
         else
         {
@@ -91,7 +94,7 @@ public partial class PlaylistForm : Form
         if (MainListBox.SelectedIndex != -1)
         {
             _audioPlayer.listBoxMedia.Items.Clear();
-            foreach (var item in (MainListBox.SelectedItem as PlaylistData).AudioFiles)
+            foreach (var item in (MainListBox.SelectedItem as PlaylistData)!.AudioFiles)
             {
                 _audioPlayer.listBoxMedia.Items.Add(item);
             }
@@ -104,9 +107,16 @@ public partial class PlaylistForm : Form
     {
         SetNameDialog();
         if (string.IsNullOrEmpty(CurrentName))
+        {
             CurrentName = "Unnamed playlist";
-        var playList = _audioPlayer.listBoxMedia.Items.Cast<PathHolder>();
-        var data = new PlaylistData(CurrentName, playList.ToList());
+        }
+
+        var playList = _audioPlayer.listBoxMedia.Items.Cast<AudioFileInfo>();
+        var data = new PlaylistData
+        {
+            Title = CurrentName,
+            AudioFiles = playList.ToList()
+        };
 
         if (data.AudioFiles.Count != 0)
         {
@@ -121,7 +131,13 @@ public partial class PlaylistForm : Form
     {
         if (MainListBox.SelectedIndex != -1)
         {
-            if (MessageBox.Show("Delete this playlist?", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            var dialogResult = MessageBox.Show(
+                "Delete this playlist?",
+                "",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question);
+
+            if (dialogResult == DialogResult.OK)
             {
                 var tmpIndex = MainListBox.SelectedIndex;
                 MainListBox.Items.RemoveAt(MainListBox.SelectedIndex);
@@ -138,18 +154,28 @@ public partial class PlaylistForm : Form
         var enterNameForm = new EnterNameForm(this);
         enterNameForm.ShowDialog();
     }
+
     private void ShowRenameDialog()
     {
-        if (MainListBox.SelectedIndex != -1)
+        if (MainListBox.SelectedIndex == -1)
         {
-            var enterNameForm = new EnterNameForm(this);
-            enterNameForm.ShowDialog();
-            if (!string.IsNullOrEmpty(CurrentName))
-                (MainListBox.SelectedItem as PlaylistData).Title = CurrentName;
-            var items = MainListBox.Items.Cast<PlaylistData>().ToList();
-            MainListBox.Items.Clear();
-            foreach (var item in items)
-                MainListBox.Items.Add(item);
+            return;
+        }
+
+        var enterNameForm = new EnterNameForm(this);
+        enterNameForm.ShowDialog();
+
+        if (!string.IsNullOrEmpty(CurrentName))
+        {
+            (MainListBox.SelectedItem as PlaylistData)!.Title = CurrentName;
+        }
+
+        var items = MainListBox.Items.Cast<PlaylistData>().ToList();
+        MainListBox.Items.Clear();
+
+        foreach (var item in items)
+        {
+            MainListBox.Items.Add(item);
         }
     }
 }
