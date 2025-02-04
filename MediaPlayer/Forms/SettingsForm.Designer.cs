@@ -1,4 +1,4 @@
-﻿namespace MediaPlayer
+﻿namespace MediaPlayer.Forms
 {
     partial class SettingsForm
     {
