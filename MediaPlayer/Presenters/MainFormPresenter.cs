@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using MediaPlayer.Models;
 using NAudio.Wave;
 
@@ -6,30 +7,31 @@ namespace MediaPlayer.Presenters;
 
 public class MainFormPresenter
 {
-    private WaveOut _waveOut;
-    private AudioFileReader _reader;
-    private AudioFileInfo _currentFile;
+    private WaveOut? _waveOut;
+    private AudioFileReader? _reader;
+    private AudioFileInfo? _currentFile;
     private float _soundLevel;
 
     public const string FormatFilter = "Audio Files (*.mp3; *.wav; *.wma; *.flac; *.ogg; *.m4a) " +
                                        "|*.mp3;*.wav;*.wma;*.flac;*.ogg;*.m4a";
 
-    public bool IsPaused { get; private set; }
-    public string CurrentAudioFileName => _currentFile.Title;
+    public PlaybackState? PlaybackState => _waveOut?.PlaybackState;
+    
+    public string? CurrentAudioFileName => _currentFile?.Title;
 
     public double? TotalSeconds => _reader?.TotalTime.TotalSeconds;
     public TimeSpan? TotalTime => _reader?.TotalTime;
     public string CurrentTime => _reader?.CurrentTime.ToString()[..8] ?? "00.00.00";
 
-    public event Action<string> AudioStarted;
-    public event Action AudioStopped;
-    public event Action AudioPaused;
-    public event Action AudioUnPaused;
-    public event Action WaveOutClosed;
+    public event Action<string>? AudioStarted;
+    public event Action? AudioStopped;
+    public event Action? AudioPaused;
+    public event Action? AudioUnPaused;
+    public event Action? WaveOutClosed;
 
     public void Replay()
     {
-        if (_waveOut != null)
+        if (_waveOut != null && _currentFile != null)
         {
             StartAudio(_currentFile, _soundLevel);
         }
@@ -37,7 +39,7 @@ public class MainFormPresenter
 
     public void StartAudio(AudioFileInfo audioFileInfo, float soundLevel, long trackBarAudioValue = 0)
     {
-        if (IsPaused)
+        if (PlaybackState == NAudio.Wave.PlaybackState.Paused)
         {
             UnPauseAudio();
             return;
@@ -60,7 +62,6 @@ public class MainFormPresenter
         }
 
         _waveOut.Pause();
-        IsPaused = true;
 
         AudioPaused?.Invoke();
     }
@@ -79,8 +80,6 @@ public class MainFormPresenter
             _reader.Dispose();
             _reader = null;
         }
-
-        IsPaused = false;
 
         AudioStopped?.Invoke();
     }
@@ -105,7 +104,6 @@ public class MainFormPresenter
     private void UnPauseAudio()
     {
         _waveOut.Play();
-        IsPaused = false;
 
         AudioUnPaused?.Invoke();
     }
@@ -140,7 +138,7 @@ public class MainFormPresenter
 
     private void CloseWaveOut(object _, StoppedEventArgs __)
     {
-        if (!IsPaused)
+        if (PlaybackState != NAudio.Wave.PlaybackState.Stopped)
         {
             return;
         }

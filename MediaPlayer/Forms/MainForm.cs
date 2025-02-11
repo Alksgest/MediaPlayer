@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using MediaPlayer.Helpers;
 using MediaPlayer.Models;
 using MediaPlayer.Presenters;
+using NAudio.Wave;
 
 namespace MediaPlayer.Forms;
 
@@ -241,7 +242,7 @@ public partial class MainForm : Form
 
     private void ToggleAudio()
     {
-        if (_mainFormPresenter.IsPaused)
+        if (_mainFormPresenter.PlaybackState is PlaybackState.Paused or PlaybackState.Stopped)
         {
             StartAudio();
         }
@@ -266,7 +267,7 @@ public partial class MainForm : Form
         var audioFileInfo = listBoxMedia.SelectedItem as AudioFileInfo;
         var soundLevel = (float)SoundLevelTrackBar.Value / 100;
 
-        _mainFormPresenter.StartAudio(audioFileInfo, soundLevel, TrackBarAudio.Value);
+        _mainFormPresenter.StartAudio(audioFileInfo!, soundLevel, TrackBarAudio.Value);
     }
 
     private void MainMenuStrip_MouseMove(object sender, MouseEventArgs e) => MouseMoveHandler(e);
@@ -327,12 +328,14 @@ public partial class MainForm : Form
 
     private void MouseMoveHandler(MouseEventArgs e)
     {
-        if ((e.Button & MouseButtons.Left) != 0)
+        if ((e.Button & MouseButtons.Left) == 0)
         {
-            var deltaPos = new Point(e.X - _moveStart.X, e.Y - _moveStart.Y);
-            Location = new Point(Location.X + deltaPos.X,
-                Location.Y + deltaPos.Y);
+            return;
         }
+
+        var deltaPos = new Point(e.X - _moveStart.X, e.Y - _moveStart.Y);
+        Location = new Point(Location.X + deltaPos.X,
+            Location.Y + deltaPos.Y);
     }
 
     private void NotifyIcon_DoubleClick(object sender, EventArgs e) => ResizeUp();
@@ -429,7 +432,7 @@ public partial class MainForm : Form
 
     private void Timer_Tick(object sender, EventArgs e)
     {
-        if (_mainFormPresenter.IsPaused)
+        if (_mainFormPresenter.PlaybackState == PlaybackState.Paused)
         {
             return;
         }
@@ -490,7 +493,7 @@ public partial class MainForm : Form
         LoadPreviousSettings();
         LoadPreviousAudioList();
 
-        this.Region = new Region(GraphicsHelper.CreateRoundedBorders(Width, Height, 20));
+        this.Region = new Region(GraphicsHelper.CreateRoundedBorders(Width, Height));
     }
 
     private void LoadPreviousSettings()
@@ -547,14 +550,17 @@ public partial class MainForm : Form
     private void ShowColorDialog()
     {
         using var colorDialog = new ColorDialog();
-        if (colorDialog.ShowDialog() == DialogResult.OK)
+        if (colorDialog.ShowDialog() != DialogResult.OK)
         {
-            BackColor = colorDialog.Color;
-            mainMenuStrip.BackColor = colorDialog.Color;
+            return;
+        }
+        
+        BackColor = colorDialog.Color;
+        mainMenuStrip.BackColor = colorDialog.Color;
 
-            if (_playlistForm != null)
-                _playlistForm.BackColor = colorDialog.Color;
-            ;
+        if (_playlistForm != null)
+        {
+            _playlistForm.BackColor = colorDialog.Color;
         }
     }
 
@@ -565,16 +571,23 @@ public partial class MainForm : Form
             return;
         }
 
-        var currentPosition = listBoxMedia.FindString(_mainFormPresenter.CurrentAudioFileName);
-        int tmpPos;
+        var currentPosition = _mainFormPresenter.CurrentAudioFileName == null
+            ? -1
+            : listBoxMedia.FindString(_mainFormPresenter.CurrentAudioFileName);
 
-        if (currentPosition == listBoxMedia.Items.Count - 1 || currentPosition == -1)
-            tmpPos = 0;
+        int nextPosition;
+
+        if (currentPosition == -1 || currentPosition == listBoxMedia.Items.Count - 1)
+        {
+            nextPosition = 0;
+        }
         else
-            tmpPos = ++currentPosition;
+        {
+            nextPosition = ++currentPosition;
+        }
 
         listBoxMedia.ClearSelected();
-        listBoxMedia.SetSelected(tmpPos, true);
+        listBoxMedia.SetSelected(nextPosition, true);
 
         StartAudio();
     }
@@ -586,16 +599,23 @@ public partial class MainForm : Form
             return;
         }
 
-        var currentPosition = listBoxMedia.FindString(_mainFormPresenter.CurrentAudioFileName);
-        int tmpPos;
+        var currentPosition = _mainFormPresenter.CurrentAudioFileName == null
+            ? 0
+            : listBoxMedia.FindString(_mainFormPresenter.CurrentAudioFileName);
 
-        if (currentPosition == 0 || currentPosition == -1)
-            tmpPos = listBoxMedia.Items.Count - 1;
+        int nextPosition;
+
+        if (currentPosition is 0 or -1)
+        {
+            nextPosition = listBoxMedia.Items.Count - 1;
+        }
         else
-            tmpPos = --currentPosition;
+        {
+            nextPosition = --currentPosition;
+        }
 
         listBoxMedia.ClearSelected();
-        listBoxMedia.SetSelected(tmpPos, true);
+        listBoxMedia.SetSelected(nextPosition, true);
 
         StartAudio();
     }
@@ -659,7 +679,7 @@ public partial class MainForm : Form
 
         for (var i = selectedItems.Count - 1; i >= 0; --i)
         {
-            listBoxMedia.Items.Remove(selectedItems[i]);
+            listBoxMedia.Items.Remove(selectedItems[i]!);
         }
     }
 
@@ -689,24 +709,6 @@ public partial class MainForm : Form
         CurrentAudioLabel.Text = "";
 
         listBoxMedia.Items.Clear();
-    }
-
-    private void titlePictureBox_Click(object sender, EventArgs e) => OpenImage();
-
-    private void OpenImage()
-    {
-        if (File.Exists(PathToImage))
-        {
-            Process.Start(PathToImage);
-        }
-        else if (File.Exists(PathToDefaultImage))
-        {
-            Process.Start(PathToImage);
-        }
-        else if (File.Exists("defaultPicture.jpg"))
-        {
-            Process.Start("defaultPicture.jpg");
-        }
     }
 
     private void openFileDestinationToolStripMenuItem_Click(object sender, EventArgs e)
