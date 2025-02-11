@@ -1,4 +1,6 @@
-﻿using System;
+﻿#pragma warning disable CA1416
+
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -6,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using MediaPlayer.Helpers;
 using MediaPlayer.Models;
 using MediaPlayer.Presenters;
-using MediaPlayer.Renderers;
 
 namespace MediaPlayer.Forms;
 
@@ -52,6 +54,8 @@ public partial class MainForm : Form
     private ToolTip _clearCurrentPlaylistToolTip;
     private ToolTip _settingsToolTip;
 
+    private readonly KeyboardListener _keyboardListener = new();
+
     public MainForm(string[] args, MainFormPresenter mainFormPresenter)
     {
         _mainFormPresenter = mainFormPresenter;
@@ -72,6 +76,26 @@ public partial class MainForm : Form
         RegisterOnEvents();
 
         OpenWithCommandLine(args);
+
+        notifyIcon.Visible = true;
+
+        _keyboardListener.OnKeyDown += KeyboardListenerOnOnKeyDown;
+    }
+
+    private void KeyboardListenerOnOnKeyDown(Keys key)
+    {
+        switch (key)
+        {
+            case Keys.MediaPlayPause:
+                ToggleAudio();
+                break;
+            case Keys.MediaNextTrack:
+                NextAudio();
+                break;
+            case Keys.MediaPreviousTrack:
+                PreviousAudio();
+                break;
+        }
     }
 
     private void OpenWithCommandLine(string[] args)
@@ -215,6 +239,18 @@ public partial class MainForm : Form
         CurrentAudioLabel.Text = fileName;
     }
 
+    private void ToggleAudio()
+    {
+        if (_mainFormPresenter.IsPaused)
+        {
+            StartAudio();
+        }
+        else
+        {
+            _mainFormPresenter.PauseAudio();
+        }
+    }
+
     private void StartAudio()
     {
         if (listBoxMedia.Items.Count == 0)
@@ -253,8 +289,8 @@ public partial class MainForm : Form
 
     private void InitializeCustomGraphic()
     {
-        contextMenuStripNI.Renderer = new ContextMenuStripExtraRenderer();
-        contextMenuStripForListBoxItem.Renderer = new ContextMenuStripExtraRenderer();
+        // contextMenuStripNI.Renderer = new ContextMenuStripExtraRenderer();
+        // contextMenuStripForListBoxItem.Renderer = new ContextMenuStripExtraRenderer();
     }
 
     private void AudioPlayer_FormClosing(object sender, FormClosingEventArgs e) => SaveSettings();
@@ -387,7 +423,8 @@ public partial class MainForm : Form
     {
         TrackBarAudio.Value = 0;
         TotalDurationLabel.Text = _mainFormPresenter.TotalTime.ToString()[..8];
-        TrackBarAudio.Maximum = _mainFormPresenter.TotalSeconds.HasValue ? (int)_mainFormPresenter.TotalSeconds.Value : 0;
+        TrackBarAudio.Maximum =
+            _mainFormPresenter.TotalSeconds.HasValue ? (int)_mainFormPresenter.TotalSeconds.Value : 0;
     }
 
     private void Timer_Tick(object sender, EventArgs e)
@@ -438,15 +475,6 @@ public partial class MainForm : Form
             var item = new AudioFileInfo(str);
             listBoxMedia.Items.Add(item);
         }
-
-        if (listBoxMedia.Items.Count != 0)
-        {
-            LoadTitleImage();
-        }
-        else
-        {
-            LoadDefaultImage();
-        }
     }
 
     private void SoundLevelTrackBar_Scroll(object sender, EventArgs e)
@@ -457,36 +485,12 @@ public partial class MainForm : Form
     private void listBoxMedia_SelectedIndexChanged(object sender, EventArgs e) =>
         _currentPositionInListMedia = listBoxMedia.SelectedIndex;
 
-    private void AudioPlayer_Load(object sender, EventArgs e)
+    private void MainForm_Load(object sender, EventArgs e)
     {
         LoadPreviousSettings();
-
-        LoadImages();
-
         LoadPreviousAudioList();
 
-        if (File.Exists(Properties.Settings.Default.pathToImage))
-        {
-            titlePictureBox.Image = new Bitmap(Properties.Settings.Default.pathToImage);
-        }
-        else
-        {
-            LoadDefaultImage();
-        }
-    }
-
-    private void LoadDefaultImage()
-    {
-        var defaultFilePath = Directory.GetCurrentDirectory() + "\\defaultPicture.jpg";
-
-        if (PathToDefaultImage != null && File.Exists(PathToDefaultImage))
-        {
-            titlePictureBox.Image = new Bitmap(PathToDefaultImage);
-        }
-        else if (File.Exists(defaultFilePath))
-        {
-            titlePictureBox.Image = new Bitmap(defaultFilePath);
-        }
+        this.Region = new Region(GraphicsHelper.CreateRoundedBorders(Width, Height, 20));
     }
 
     private void LoadPreviousSettings()
@@ -499,46 +503,6 @@ public partial class MainForm : Form
         PathToImage = Properties.Settings.Default.pathToImage;
         PathToFolder = Properties.Settings.Default.pathToFolder;
         PathToDefaultImage = Properties.Settings.Default.pathToDefaultImage;
-    }
-
-    private void LoadTitleImage()
-    {
-        if (string.IsNullOrEmpty(PathToFolder))
-        {
-            LoadDefaultImage();
-            return;
-        }
-
-        var images = Directory.EnumerateFiles(PathToFolder, "*.*", SearchOption.TopDirectoryOnly)
-            .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
-
-        if (images.Length != 0)
-        {
-            titlePictureBox.Image = new Bitmap(images[0]);
-            PathToImage = images[0];
-        }
-        else if (Directory.Exists(PathToFolder + "//Cover"))
-        {
-            images = Directory.EnumerateFiles(PathToFolder + "//Cover", "*.*", SearchOption.TopDirectoryOnly)
-                .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
-
-            if (images.Length != 0)
-            {
-                titlePictureBox.Image = new Bitmap(images[0]);
-                PathToImage = images[0];
-            }
-        }
-        else if (Directory.Exists(PathToFolder + "//Covers"))
-        {
-            images = Directory.EnumerateFiles(PathToFolder + "//Covers", "*.*", SearchOption.TopDirectoryOnly)
-                .Where(s => s.EndsWith(".jpg") || s.EndsWith(".png") || s.EndsWith(".bmp")).ToArray();
-
-            if (images.Length != 0)
-            {
-                titlePictureBox.Image = new Bitmap(images[0]);
-                PathToImage = images[0];
-            }
-        }
     }
 
     private void LoadPreviousAudioList()
@@ -570,16 +534,6 @@ public partial class MainForm : Form
         {
             PathToFolder = null;
         }
-    }
-
-    private void LoadImages()
-    {
-        notifyIcon.Icon = Icon.FromHandle(Properties.Resources.music_player.GetHicon());
-
-        Icon = Icon.FromHandle(Properties.Resources.music_player.GetHicon());
-
-        BackColor = Color.GhostWhite;
-        mainMenuStrip.BackColor = Color.GhostWhite;
     }
 
     private void clearCurrentListToolStripMenuItem_Click(object sender, EventArgs e) => ClearCurrentPlaylist();
@@ -729,7 +683,6 @@ public partial class MainForm : Form
     private void ClearCurrentPlaylist()
     {
         _mainFormPresenter.StopAudio();
-        LoadDefaultImage();
         PathToFolder = null;
         PathToImage = null;
 
@@ -787,5 +740,11 @@ public partial class MainForm : Form
             _settingsForm.Dispose();
             _settingsForm = null;
         }
+    }
+
+    protected override void OnFormClosing(FormClosingEventArgs e)
+    {
+        _keyboardListener.Dispose();
+        base.OnFormClosing(e);
     }
 }
