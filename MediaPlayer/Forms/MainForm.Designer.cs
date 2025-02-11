@@ -34,8 +34,6 @@
             contextMenuStripForListBoxItem = new System.Windows.Forms.ContextMenuStrip(components);
             openFileDestinationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            TrackBarAudio = new System.Windows.Forms.TrackBar();
-            SoundLevelTrackBar = new System.Windows.Forms.TrackBar();
             CurrentTimeLabel = new System.Windows.Forms.Label();
             mainMenuStrip = new System.Windows.Forms.MenuStrip();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,26 +66,25 @@
             NextButton = new System.Windows.Forms.Button();
             ButtonRollUp = new System.Windows.Forms.Button();
             ButtonClose = new System.Windows.Forms.Button();
-            PauseButton = new System.Windows.Forms.Button();
-            OpenFolderButton = new System.Windows.Forms.Button();
-            StopButton = new System.Windows.Forms.Button();
             PlayButton = new System.Windows.Forms.Button();
+            TrackBarAudio = new Controls.CustomTrackBar();
+            SoundLevelTrackBar = new Controls.CustomTrackBar();
             contextMenuStripForListBoxItem.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)TrackBarAudio).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)SoundLevelTrackBar).BeginInit();
             mainMenuStrip.SuspendLayout();
             contextMenuStripNI.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)TrackBarAudio).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SoundLevelTrackBar).BeginInit();
             SuspendLayout();
             // 
             // listBoxMedia
             // 
             listBoxMedia.AllowDrop = true;
             listBoxMedia.ContextMenuStrip = contextMenuStripForListBoxItem;
-            listBoxMedia.Location = new System.Drawing.Point(15, 72);
+            listBoxMedia.Location = new System.Drawing.Point(13, 41);
             listBoxMedia.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             listBoxMedia.Name = "listBoxMedia";
             listBoxMedia.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            listBoxMedia.Size = new System.Drawing.Size(319, 184);
+            listBoxMedia.Size = new System.Drawing.Size(320, 169);
             listBoxMedia.TabIndex = 0;
             listBoxMedia.SelectedIndexChanged += listBoxMedia_SelectedIndexChanged;
             // 
@@ -111,31 +108,10 @@
             removeToolStripMenuItem.Text = "Remove";
             removeToolStripMenuItem.Click += removeToolStripMenuItem_Click;
             // 
-            // TrackBarAudio
-            // 
-            TrackBarAudio.Location = new System.Drawing.Point(13, 262);
-            TrackBarAudio.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            TrackBarAudio.Maximum = 0;
-            TrackBarAudio.Name = "TrackBarAudio";
-            TrackBarAudio.Size = new System.Drawing.Size(324, 45);
-            TrackBarAudio.TabIndex = 4;
-            // 
-            // SoundLevelTrackBar
-            // 
-            SoundLevelTrackBar.Location = new System.Drawing.Point(342, 72);
-            SoundLevelTrackBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            SoundLevelTrackBar.Maximum = 100;
-            SoundLevelTrackBar.Name = "SoundLevelTrackBar";
-            SoundLevelTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-            SoundLevelTrackBar.Size = new System.Drawing.Size(45, 184);
-            SoundLevelTrackBar.TabIndex = 5;
-            SoundLevelTrackBar.Value = 100;
-            SoundLevelTrackBar.Scroll += SoundLevelTrackBar_Scroll;
-            // 
             // CurrentTimeLabel
             // 
             CurrentTimeLabel.AutoSize = true;
-            CurrentTimeLabel.Location = new System.Drawing.Point(15, 292);
+            CurrentTimeLabel.Location = new System.Drawing.Point(6, 239);
             CurrentTimeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             CurrentTimeLabel.Name = "CurrentTimeLabel";
             CurrentTimeLabel.Size = new System.Drawing.Size(49, 15);
@@ -148,7 +124,7 @@
             mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             mainMenuStrip.Name = "mainMenuStrip";
             mainMenuStrip.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            mainMenuStrip.Size = new System.Drawing.Size(380, 24);
+            mainMenuStrip.Size = new System.Drawing.Size(360, 24);
             mainMenuStrip.TabIndex = 9;
             mainMenuStrip.Text = "Main menu";
             // 
@@ -274,7 +250,7 @@
             // TotalDurationLabel
             // 
             TotalDurationLabel.AutoSize = true;
-            TotalDurationLabel.Location = new System.Drawing.Point(285, 292);
+            TotalDurationLabel.Location = new System.Drawing.Point(284, 236);
             TotalDurationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             TotalDurationLabel.Name = "TotalDurationLabel";
             TotalDurationLabel.Size = new System.Drawing.Size(49, 15);
@@ -295,7 +271,7 @@
             // 
             SettingsButton.BackgroundImage = Properties.Resources.settings;
             SettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            SettingsButton.Location = new System.Drawing.Point(342, 41);
+            SettingsButton.Location = new System.Drawing.Point(312, 254);
             SettingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             SettingsButton.Name = "SettingsButton";
             SettingsButton.Size = new System.Drawing.Size(35, 35);
@@ -307,7 +283,7 @@
             // 
             CredentialButton.BackgroundImage = Properties.Resources.credentials;
             CredentialButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            CredentialButton.Location = new System.Drawing.Point(285, 12);
+            CredentialButton.Location = new System.Drawing.Point(220, 12);
             CredentialButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             CredentialButton.Name = "CredentialButton";
             CredentialButton.Size = new System.Drawing.Size(23, 23);
@@ -331,7 +307,7 @@
             // 
             PlaylistFormButton.BackgroundImage = Properties.Resources.list;
             PlaylistFormButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            PlaylistFormButton.Location = new System.Drawing.Point(15, 310);
+            PlaylistFormButton.Location = new System.Drawing.Point(269, 254);
             PlaylistFormButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             PlaylistFormButton.Name = "PlaylistFormButton";
             PlaylistFormButton.Size = new System.Drawing.Size(35, 35);
@@ -343,10 +319,10 @@
             // 
             RemoveFilesButton.BackgroundImage = Properties.Resources.minus;
             RemoveFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            RemoveFilesButton.Location = new System.Drawing.Point(144, 310);
+            RemoveFilesButton.Location = new System.Drawing.Point(275, 52);
             RemoveFilesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             RemoveFilesButton.Name = "RemoveFilesButton";
-            RemoveFilesButton.Size = new System.Drawing.Size(35, 35);
+            RemoveFilesButton.Size = new System.Drawing.Size(25, 25);
             RemoveFilesButton.TabIndex = 22;
             RemoveFilesButton.UseVisualStyleBackColor = true;
             RemoveFilesButton.Click += buttonRemoveFiles_Click;
@@ -355,10 +331,10 @@
             // 
             AddFilesButton.BackgroundImage = Properties.Resources.plus;
             AddFilesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            AddFilesButton.Location = new System.Drawing.Point(101, 310);
+            AddFilesButton.Location = new System.Drawing.Point(308, 52);
             AddFilesButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             AddFilesButton.Name = "AddFilesButton";
-            AddFilesButton.Size = new System.Drawing.Size(35, 35);
+            AddFilesButton.Size = new System.Drawing.Size(25, 25);
             AddFilesButton.TabIndex = 21;
             AddFilesButton.UseVisualStyleBackColor = true;
             AddFilesButton.Click += buttonAddFile_Click;
@@ -367,7 +343,7 @@
             // 
             ReplayButton.BackgroundImage = Properties.Resources.replay;
             ReplayButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ReplayButton.Location = new System.Drawing.Point(230, 31);
+            ReplayButton.Location = new System.Drawing.Point(6, 257);
             ReplayButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ReplayButton.Name = "ReplayButton";
             ReplayButton.Size = new System.Drawing.Size(35, 35);
@@ -379,7 +355,7 @@
             // 
             PreviousButton.BackgroundImage = Properties.Resources.back_1;
             PreviousButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            PreviousButton.Location = new System.Drawing.Point(144, 31);
+            PreviousButton.Location = new System.Drawing.Point(117, 257);
             PreviousButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             PreviousButton.Name = "PreviousButton";
             PreviousButton.Size = new System.Drawing.Size(35, 35);
@@ -391,7 +367,7 @@
             // 
             NextButton.BackgroundImage = Properties.Resources.next_1;
             NextButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            NextButton.Location = new System.Drawing.Point(187, 31);
+            NextButton.Location = new System.Drawing.Point(203, 257);
             NextButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             NextButton.Name = "NextButton";
             NextButton.Size = new System.Drawing.Size(35, 35);
@@ -403,7 +379,7 @@
             // 
             ButtonRollUp.BackgroundImage = Properties.Resources.minus;
             ButtonRollUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ButtonRollUp.Location = new System.Drawing.Point(313, 12);
+            ButtonRollUp.Location = new System.Drawing.Point(293, 12);
             ButtonRollUp.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ButtonRollUp.Name = "ButtonRollUp";
             ButtonRollUp.Size = new System.Drawing.Size(23, 23);
@@ -416,7 +392,7 @@
             ButtonClose.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             ButtonClose.BackgroundImage = Properties.Resources.cancel;
             ButtonClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ButtonClose.Location = new System.Drawing.Point(344, 12);
+            ButtonClose.Location = new System.Drawing.Point(324, 12);
             ButtonClose.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             ButtonClose.Name = "ButtonClose";
             ButtonClose.Size = new System.Drawing.Size(23, 23);
@@ -424,47 +400,11 @@
             ButtonClose.UseVisualStyleBackColor = false;
             ButtonClose.Click += ButtonClose_Click;
             // 
-            // PauseButton
-            // 
-            PauseButton.BackgroundImage = Properties.Resources.pause;
-            PauseButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            PauseButton.Location = new System.Drawing.Point(58, 31);
-            PauseButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            PauseButton.Name = "PauseButton";
-            PauseButton.Size = new System.Drawing.Size(35, 35);
-            PauseButton.TabIndex = 11;
-            PauseButton.UseVisualStyleBackColor = true;
-            PauseButton.Click += ButtonPause_Click;
-            // 
-            // OpenFolderButton
-            // 
-            OpenFolderButton.BackgroundImage = Properties.Resources.openFolder;
-            OpenFolderButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            OpenFolderButton.Location = new System.Drawing.Point(58, 310);
-            OpenFolderButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            OpenFolderButton.Name = "OpenFolderButton";
-            OpenFolderButton.Size = new System.Drawing.Size(35, 35);
-            OpenFolderButton.TabIndex = 3;
-            OpenFolderButton.UseVisualStyleBackColor = true;
-            OpenFolderButton.Click += SelectFolder_Click;
-            // 
-            // StopButton
-            // 
-            StopButton.BackgroundImage = Properties.Resources.stop;
-            StopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            StopButton.Location = new System.Drawing.Point(101, 31);
-            StopButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            StopButton.Name = "StopButton";
-            StopButton.Size = new System.Drawing.Size(35, 35);
-            StopButton.TabIndex = 2;
-            StopButton.UseVisualStyleBackColor = true;
-            StopButton.Click += StopButton_Click;
-            // 
             // PlayButton
             // 
             PlayButton.BackgroundImage = Properties.Resources.play_button;
             PlayButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            PlayButton.Location = new System.Drawing.Point(15, 31);
+            PlayButton.Location = new System.Drawing.Point(160, 257);
             PlayButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             PlayButton.Name = "PlayButton";
             PlayButton.Size = new System.Drawing.Size(35, 35);
@@ -472,12 +412,39 @@
             PlayButton.UseVisualStyleBackColor = true;
             PlayButton.Click += ButtonPlay_Click;
             // 
+            // TrackBarAudio
+            // 
+            TrackBarAudio.Location = new System.Drawing.Point(12, 216);
+            TrackBarAudio.Maximum = 0;
+            TrackBarAudio.MaximumSize = new System.Drawing.Size(0, 20);
+            TrackBarAudio.MinimumSize = new System.Drawing.Size(0, 10);
+            TrackBarAudio.Name = "TrackBarAudio";
+            TrackBarAudio.Size = new System.Drawing.Size(321, 20);
+            TrackBarAudio.TabIndex = 29;
+            TrackBarAudio.TickStyle = System.Windows.Forms.TickStyle.None;
+            TrackBarAudio.Scroll += TrackBarAudio_Scroll;
+            // 
+            // SoundLevelTrackBar
+            // 
+            SoundLevelTrackBar.Location = new System.Drawing.Point(335, 41);
+            SoundLevelTrackBar.Maximum = 100;
+            SoundLevelTrackBar.MaximumSize = new System.Drawing.Size(20, 0);
+            SoundLevelTrackBar.MinimumSize = new System.Drawing.Size(0, 10);
+            SoundLevelTrackBar.Name = "SoundLevelTrackBar";
+            SoundLevelTrackBar.Orientation = System.Windows.Forms.Orientation.Vertical;
+            SoundLevelTrackBar.Size = new System.Drawing.Size(20, 169);
+            SoundLevelTrackBar.TabIndex = 30;
+            SoundLevelTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            SoundLevelTrackBar.Scroll += SoundLevelTrackBar_Scroll;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            ClientSize = new System.Drawing.Size(380, 360);
+            ClientSize = new System.Drawing.Size(360, 300);
+            Controls.Add(SoundLevelTrackBar);
+            Controls.Add(TrackBarAudio);
             Controls.Add(SettingsButton);
             Controls.Add(CredentialButton);
             Controls.Add(CurrentAudioLabel);
@@ -491,12 +458,7 @@
             Controls.Add(TotalDurationLabel);
             Controls.Add(ButtonRollUp);
             Controls.Add(ButtonClose);
-            Controls.Add(PauseButton);
             Controls.Add(CurrentTimeLabel);
-            Controls.Add(SoundLevelTrackBar);
-            Controls.Add(TrackBarAudio);
-            Controls.Add(OpenFolderButton);
-            Controls.Add(StopButton);
             Controls.Add(PlayButton);
             Controls.Add(listBoxMedia);
             Controls.Add(mainMenuStrip);
@@ -507,31 +469,25 @@
             Name = "MainForm";
             ShowInTaskbar = false;
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            Text = "AudioPlayer";
-            TopMost = true;
+            Text = resources.GetString("$this.Text");
             Load += MainForm_Load;
             contextMenuStripForListBoxItem.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)TrackBarAudio).EndInit();
-            ((System.ComponentModel.ISupportInitialize)SoundLevelTrackBar).EndInit();
             mainMenuStrip.ResumeLayout(false);
             mainMenuStrip.PerformLayout();
             contextMenuStripNI.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)TrackBarAudio).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SoundLevelTrackBar).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private System.Windows.Forms.Button PlayButton;
-        private System.Windows.Forms.Button StopButton;
-        private System.Windows.Forms.Button OpenFolderButton;
-        private System.Windows.Forms.TrackBar TrackBarAudio;
-        private System.Windows.Forms.TrackBar SoundLevelTrackBar;
         private System.Windows.Forms.Label CurrentTimeLabel;
         private System.Windows.Forms.MenuStrip mainMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearCurrentListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
-        private System.Windows.Forms.Button PauseButton;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Button ButtonClose;
         private System.Windows.Forms.Button ButtonRollUp;
@@ -563,6 +519,8 @@
         private System.Windows.Forms.Button CredentialButton;
         private System.Windows.Forms.Button SettingsButton;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private Controls.CustomTrackBar TrackBarAudio;
+        private Controls.CustomTrackBar SoundLevelTrackBar;
     }
 }
 

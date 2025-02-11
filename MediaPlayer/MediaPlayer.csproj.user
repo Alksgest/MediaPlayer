@@ -13,5 +13,9 @@
   <PropertyGroup>
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Update="Controls\CustomTrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
