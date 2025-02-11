@@ -67,8 +67,8 @@
             ButtonRollUp = new System.Windows.Forms.Button();
             ButtonClose = new System.Windows.Forms.Button();
             PlayButton = new System.Windows.Forms.Button();
-            TrackBarAudio = new Controls.CustomTrackBar();
-            SoundLevelTrackBar = new Controls.CustomTrackBar();
+            TrackBarAudio = new Controls.Slider();
+            SoundLevelTrackBar = new Controls.Slider();
             contextMenuStripForListBoxItem.SuspendLayout();
             mainMenuStrip.SuspendLayout();
             contextMenuStripNI.SuspendLayout();
@@ -519,8 +519,8 @@
         private System.Windows.Forms.Button CredentialButton;
         private System.Windows.Forms.Button SettingsButton;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private Controls.CustomTrackBar TrackBarAudio;
-        private Controls.CustomTrackBar SoundLevelTrackBar;
+        private Controls.Slider TrackBarAudio;
+        private Controls.Slider SoundLevelTrackBar;
     }
 }
 

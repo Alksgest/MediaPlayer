@@ -9,12 +9,12 @@ using System.Windows.Forms;
 namespace MediaPlayer.Controls
 {
     [ToolboxItem(true)]
-    public class CustomTrackBar : TrackBar
+    public class Slider : TrackBar
     {
         private const int ThumbRadius = 5;
         private bool _isDragging;
 
-        public CustomTrackBar()
+        public Slider()
         {
             TickStyle = TickStyle.None;
 
