@@ -14,7 +14,7 @@
     <EnableSecurityDebugging>false</EnableSecurityDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="Controls\CustomTrackBar.cs">
+    <Compile Update="Controls\Slider.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

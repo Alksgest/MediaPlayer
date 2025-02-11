@@ -11,7 +11,7 @@ namespace MediaPlayer.Controls
     [ToolboxItem(true)]
     public class Slider : TrackBar
     {
-        private const int ThumbRadius = 5;
+        private const int ThumbRadius = 5;  
         private bool _isDragging;
 
         public Slider()
@@ -37,7 +37,7 @@ namespace MediaPlayer.Controls
             using var trackPen = new Pen(Color.Black, 3);
             float range = Maximum - Minimum;
             // Protect against division by zero:
-            var percent = range > 0 ? (float)(Value - Minimum) / range : 0f;
+            var percent = range > 0 ? (Value - Minimum) / range : 0f;
 
             if (Orientation == Orientation.Horizontal)
             {
@@ -49,7 +49,7 @@ namespace MediaPlayer.Controls
                     new Point(Width - ThumbRadius, trackY));
 
                 // Calculate the thumb’s X position within the available width.
-                var availableWidth = Width - 2 * ThumbRadius;
+                var availableWidth = Width - 2 * ThumbRadius - 1;
                 var thumbX = (int)(percent * availableWidth) + ThumbRadius;
 
                 // Define the rectangle in which the thumb (a circle) is drawn.
@@ -69,9 +69,8 @@ namespace MediaPlayer.Controls
                     new Point(trackX, ThumbRadius),
                     new Point(trackX, Height - ThumbRadius));
 
-                var availableHeight = Height - 2 * ThumbRadius;
-                // var thumbY = (int)(percent * availableHeight) + ThumbRadius;
-                var thumbY = Height - ThumbRadius - (int)(percent * availableHeight);
+                var availableHeight = Height - 2 * ThumbRadius ;
+                var thumbY = Height - ThumbRadius - (int)(percent * availableHeight) - 1;
 
                 var thumbRect = new Rectangle(
                     trackX - ThumbRadius,
@@ -159,7 +158,7 @@ namespace MediaPlayer.Controls
 
                 if (newValue != Value)
                 {
-                    Value = newValue;
+                    Value = 100 - newValue;
                 }
             }
             

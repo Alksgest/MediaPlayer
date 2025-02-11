@@ -271,7 +271,7 @@
             // 
             SettingsButton.BackgroundImage = Properties.Resources.settings;
             SettingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            SettingsButton.Location = new System.Drawing.Point(312, 254);
+            SettingsButton.Location = new System.Drawing.Point(308, 257);
             SettingsButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             SettingsButton.Name = "SettingsButton";
             SettingsButton.Size = new System.Drawing.Size(35, 35);
@@ -307,7 +307,7 @@
             // 
             PlaylistFormButton.BackgroundImage = Properties.Resources.list;
             PlaylistFormButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            PlaylistFormButton.Location = new System.Drawing.Point(269, 254);
+            PlaylistFormButton.Location = new System.Drawing.Point(265, 257);
             PlaylistFormButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             PlaylistFormButton.Name = "PlaylistFormButton";
             PlaylistFormButton.Size = new System.Drawing.Size(35, 35);
@@ -415,13 +415,14 @@
             // TrackBarAudio
             // 
             TrackBarAudio.Location = new System.Drawing.Point(12, 216);
-            TrackBarAudio.Maximum = 0;
+            TrackBarAudio.Maximum = 100;
             TrackBarAudio.MaximumSize = new System.Drawing.Size(0, 20);
             TrackBarAudio.MinimumSize = new System.Drawing.Size(0, 10);
             TrackBarAudio.Name = "TrackBarAudio";
             TrackBarAudio.Size = new System.Drawing.Size(321, 20);
             TrackBarAudio.TabIndex = 29;
             TrackBarAudio.TickStyle = System.Windows.Forms.TickStyle.None;
+            TrackBarAudio.Value = 100;
             TrackBarAudio.Scroll += TrackBarAudio_Scroll;
             // 
             // SoundLevelTrackBar
@@ -435,6 +436,7 @@
             SoundLevelTrackBar.Size = new System.Drawing.Size(20, 169);
             SoundLevelTrackBar.TabIndex = 30;
             SoundLevelTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            SoundLevelTrackBar.Value = 100;
             SoundLevelTrackBar.Scroll += SoundLevelTrackBar_Scroll;
             // 
             // MainForm
